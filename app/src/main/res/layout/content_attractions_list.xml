@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ActivityTour">
 
-    <upgrade.ntv.superleague.TourList.AttractionsRecyclerView
+    <ntv.upgrade.superleaguemaster.TourList.AttractionsRecyclerView
 
         android:id="@+id/recyclerView_tour"
         android:layout_width="match_parent"

@@ -150,7 +150,7 @@
             android:src="@mipmap/ic_garrincha_fc"
             app:finalHeight="@dimen/image_final_width"
             app:finalYPosition="2dp"
-            app:layout_behavior="upgrade.ntv.superleague.Avatar.AvatarImageBehavior"
+            app:layout_behavior=".Avatar.AvatarImageBehavior"
             app:startHeight="2dp"
             app:startToolbarPosition="2dp"
             app:startXPosition="16dp"
