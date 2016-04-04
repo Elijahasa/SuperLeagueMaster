@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    // Base Colors
+    <color name="colorBlack">#212121</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    // Primary Colors
+    <!--<color name="colorPrimary">#ff5722</color>
+    <color name="colorPrimaryDark">#E64A19</color>
+    <color name="colorPrimaryLight">#FF8A65</color>-->
+    // Accent Colors
+    <color name="colorAccent">#ff3a1d</color>
+    <color name="colorAccentLight">#ff3a1d</color>
+
+
+    // FAKE Primary Colors
+    <color name="colorPrimary">#ff8300</color>
+    <color name="colorPrimaryDark">#ca6800</color>
+    <color name="colorNewsFeed">#e313110b</color>
+    <color name="colorPrimaryLight">#ffa648</color>
+    <color name="textColorPrimary">#66000000</color>
+
+    <color name="text_background">#90000000</color>
+    <color name="transparent_actionbar_background">#22000000</color>
+    <color name="lighter_gray">#ddd</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <!--newsfeed card colors-->
+    <color name="colorNewsFeedGradient3">#05ffffff</color>
+    <color name="colorNewsFeedGradient2">#15d6d331</color>
+    <color name="colorNewsFeedGradient1">#74030a0b</color>
+
 </resources>

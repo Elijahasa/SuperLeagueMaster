@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActivityTour">
+
+
+    <item
+        android:id="@+id/test_toggle_geofence"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:showAsAction="ifRoom"
+        android:title="test_toggle_geofence" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
