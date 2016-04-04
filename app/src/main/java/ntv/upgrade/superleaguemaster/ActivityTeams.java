@@ -13,20 +13,28 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 public class ActivityTeams extends AppCompatActivity implements CollapsingToolbarLayout.OnClickListener, NavigationView.OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener,
@@ -60,9 +68,23 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
         mAppBarLayout.addOnOffsetChangedListener(this);
 
+
         mToolbar.inflateMenu(R.menu.main);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
 
+
+        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
+                mToolbar, false);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mToolbar.addView(spinnerContainer, lp);
+
+        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater());
+        spinnerAdapter.addItems(setLeagueDivisions());
+
+        final Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+
+        spinner.setAdapter(spinnerAdapter);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -95,6 +117,18 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
             }
         });
 
+    }
+
+    public List<String> setLeagueDivisions(){
+        List<String> myLeagueDiv = new ArrayList<>(6);
+        myLeagueDiv.add("Primera");
+        myLeagueDiv.add("Segunda");
+        myLeagueDiv.add("Tercera");
+        myLeagueDiv.add("Social");
+        myLeagueDiv.add("Femenino");
+        myLeagueDiv.add("Juvenil");
+
+        return myLeagueDiv;
     }
 
     private void bindActivity() {
