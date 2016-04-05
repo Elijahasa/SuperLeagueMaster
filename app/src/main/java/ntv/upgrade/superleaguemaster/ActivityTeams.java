@@ -70,7 +70,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
 
         mToolbar.inflateMenu(R.menu.main);
-        startAlphaAnimation(mTitle, 0, View.INVISIBLE);
+     //   startAlphaAnimation(mTitle, 0, View.INVISIBLE);
 
 
         View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
@@ -133,7 +133,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
     private void bindActivity() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mTitle = (TextView) findViewById(R.id.main_textview_title);
+     //   mTitle = (TextView) findViewById(R.id.main_textview_title);
         mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
     }
@@ -243,7 +243,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
         alphaAnimation.setDuration(duration);
         alphaAnimation.setFillAfter(true);
-        v.startAnimation(alphaAnimation);
+ //       v.startAnimation(alphaAnimation);
     }
 
     @Override
