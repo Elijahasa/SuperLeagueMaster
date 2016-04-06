@@ -9,8 +9,8 @@
         android:id="@+id/toolbar_spinner"
         style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="wrap_content"
-        android:dropDownSelector="@color/colorAccent"
+        android:layout_height="wrap_content"
+        android:dropDownSelector="@color/colorAccent"/>
 
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
