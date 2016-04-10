@@ -59,7 +59,7 @@ public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
             view.setTag("DROPDOWN");
         }
 
-        TextView textView = (TextView) view.findViewById(android.R.id.text1);
+        TextView textView = (TextView) view.findViewById(R.id.spinner_dropdown);
         textView.setText(getTitle(position));
 
         return view;
@@ -72,8 +72,11 @@ public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
                     toolbar_spinner_item_actionbar, parent, false);
             view.setTag("NON_DROPDOWN");
         }
-        TextView textView = (TextView) view.findViewById(android.R.id.text1);
-        textView.setText(getTitle(position));
+        TextView textView = (TextView) view.findViewById(R.id.spinner_club_name);
+        textView.setText("Garrincha FC");
+
+        TextView textView1 = (TextView) view.findViewById(R.id.spinner_club_team);
+        textView1.setText(getTitle(position));
         return view;
     }
 

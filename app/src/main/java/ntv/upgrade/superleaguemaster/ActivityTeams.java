@@ -65,8 +65,8 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         setContentView(R.layout.activity_teams);
 
         bindActivity();
-
-        mAppBarLayout.addOnOffsetChangedListener(this);
+      //  setupCollapsingToolbar();
+      //  mAppBarLayout.addOnOffsetChangedListener(this);
 
 
         mToolbar.inflateMenu(R.menu.main);
@@ -82,10 +82,9 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater());
         spinnerAdapter.addItems(setLeagueDivisions());
 
-        final Spinner spinner = (Spinner) spinnerContainer.findViewById(R.id.toolbar_spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);
 
         spinner.setAdapter(spinnerAdapter);
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -97,6 +96,8 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,11 +134,18 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
     private void bindActivity() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
      //   mTitle = (TextView) findViewById(R.id.main_textview_title);
       //  mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+    //    mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
     }
+    private void setupCollapsingToolbar() {
+        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(
+                R.id.main_collapsing);
 
+        collapsingToolbar.setTitleEnabled(false);
+    }
 
     @Override
     public void onBackPressed() {
