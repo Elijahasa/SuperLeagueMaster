@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ntv.upgrade.superleaguemaster.R;
+import ntv.upgrade.superleaguemaster.Schedule.Team;
 
 /**
  * Created by jfrom on 4/4/2016.
@@ -20,9 +21,16 @@ import ntv.upgrade.superleaguemaster.R;
 public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
     private List<String> mItems = new ArrayList<>();
     private LayoutInflater mInfalter;
+    private Team team = null;
+
+    public TeamsToolBarSpinnerAdapter(LayoutInflater inflater, Team team){
+        this.mInfalter=inflater;
+        this.team = team;
+    }
 
     public TeamsToolBarSpinnerAdapter(LayoutInflater inflater){
         this.mInfalter=inflater;
+
     }
 
     public void clear() {
@@ -73,7 +81,8 @@ public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
             view.setTag("NON_DROPDOWN");
         }
         TextView textView = (TextView) view.findViewById(R.id.spinner_club_name);
-        textView.setText("Garrincha FC");
+        if(team != null) {textView.setText(team.getmName());}
+        else{textView.setText("Copa Garrincha");}
 
         TextView textView1 = (TextView) view.findViewById(R.id.spinner_club_team);
         textView1.setText(getTitle(position));

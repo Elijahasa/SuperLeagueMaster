@@ -55,7 +55,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
         public NewsFeedViewHolder(View v){
             super(v);
             vImage = (ImageView) v.findViewById(R.id.newsfeed_imageView);
-
             vTitleTextView = (TextView) v.findViewById(R.id.newsfeed_text_news_title);
 
         }

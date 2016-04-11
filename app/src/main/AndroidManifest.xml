@@ -37,6 +37,14 @@
         </activity>
 
         <activity
+            android:name=".ActivityClubSelect"
+            android:label="Clubes"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+
+        <activity
             android:name=".ActivityMatchesCalendar"
             android:label="Juegos"
             android:parentActivityName=".ActivityMain"

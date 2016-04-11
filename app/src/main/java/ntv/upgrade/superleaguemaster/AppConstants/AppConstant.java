@@ -1,12 +1,20 @@
 package ntv.upgrade.superleaguemaster.AppConstants;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import  ntv.upgrade.superleaguemaster.R;
 
 /**
  * Created by Jose on 3/15/2015.
  */
 public class AppConstant {
+
+    public static List<String> availableTourneys = Arrays.asList(
+            "Copa Garrincha","LDF", "Copa CoCa Cola"
+    );
 
 
 

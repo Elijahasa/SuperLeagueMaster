@@ -49,11 +49,11 @@
         If you really have faith in your idea email us at info@upgrade.do and make us believe in it.
         We make the things we love, and we love beautiful things, functional things. We love things that kick ass and look good doing it. 
     </string>
-    <string name="dev_email">pgomez@upgrade.do</string>
-    <string name="email_subject">About RF Network Simulator</string>
+    <string name="dev_email">jfrometa@upgrade.do</string>
+    <string name="email_subject">About fapp!</string>
     <string name="email_body">
         "Upgrade Developers Group.\n\n
-        email: pgomez@upgrade.do"
+        email: jfrometa@upgrade.do"
     </string>
 
     <string name="area_type_touristic">Touristic Area</string>

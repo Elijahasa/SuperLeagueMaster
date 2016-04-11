@@ -1,6 +1,7 @@
 package ntv.upgrade.superleaguemaster;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,11 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,6 +34,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Attraction.Area;
 import ntv.upgrade.superleaguemaster.Attraction.Attraction;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
@@ -62,6 +66,7 @@ public class ActivityMain extends AppCompatActivity
     // name of the file to preserve areas
     private final String AREAS_DATA_FILE_NAME = "areas_data";
     private DrawerLayout drawer;
+    private Activity thisActivity;
     private List<NewsFeedItem> newsFeedItems = new ArrayList<>();
 
     @Override
@@ -91,10 +96,11 @@ public class ActivityMain extends AppCompatActivity
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.thisActivity=this;
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -109,23 +115,28 @@ public class ActivityMain extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_main);
 
-        final Menu menu = navigationView.getMenu();
-       // Menu topChannelMenu = menu.getItem(5);
+   /*     SwitchCompat piano = (SwitchCompat)
+                navigationView.getMenu().findItem(R.id.tourney_switch); // But this depends on how you made your view in XML. It may be navigationView.getMenu().getItem(0).findItem(R.id.piano_switch);
+        piano.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               *//* Settings.piano = isChecked;*//*
+                Log.d("Switch", "You a-toggled mah switch");
+            }
+        });*/
 
-        menu.add  (R.id.nav_dynamic_tourney,Menu.FLAG_APPEND_TO_GROUP,Menu.FLAG_APPEND_TO_GROUP,"lero lero");
-        menu.findItem(R.id.nav_dynamic_tourney).getSubMenu()
-                .add(Menu.NONE, 1, Menu.NONE, "Action");
-/*        Menu topChannelMenu1 = menu.addSubMenu(R.id.nav_dynamic_tourney,2,2,"test");
-        topChannelMenu1.add(R.id.nav_dynamic_tourney,2,2,"test");*/
+     /*   SwitchCompat switchCompat = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_dynamic_tourney).getActionView();
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-        Area a1= new Area(1,"Garrincha FC",new LatLng(18.437013, -69.964647),1);
-        mAreasArrayList.add(a1);
-
-        LatLng myTestLatLong  = new LatLng(18.467425, -69.915474);
-       Attraction a2= new Attraction(1, "Garrincha FC", myTestLatLong, "Nace con el espíritu de nunca rendirse, de estar siempre juntos y de lograr metas mediante el trabajo duro y el amor por el deporte.", "Nuestro nombre es el primer paso de nuestra originalidad, y en el nombre basamos todas nuestras acciones, líneas a seguir, método de trabajo y mercadeo de imagen. Garrincha fue uno de los mejores jugadores que ha tenido nuestro deporte, brasileño, nació con problemas físicos graves en una de las favelas mas pobres de Brasil. Era imposible apostar por este sujeto, sin embargo Garrincha es para los brasileños el jugador que mas Alegría le dio al Pueblo, ganando dos Copas Mundiales y siendo el mejor jugador de su posición y del Campeonato. ",
-               ContextCompat.getDrawable(this, R.drawable.garrincha_attraction),
-        1, "8:00am - 10:00pm", "Colegio Dominicano de la Salle, Av Simón Bolívar 807, Santo Domingo 10106", "Garrincha F.C nosotros nunca ponemos excusas.");
-        mAttractionsArrayList.add(a2);
+            }
+        });
+*/
+        //dynamically adds the tourneys to follow
+        createDynamicTournamentMenu(navigationView);
+        //adds a dummy area and Attraction
+        setDummyAreaNdAttraction();
 
         if (!Permissions.checkInternetPermission(this)) {
             // See if user has denied permission in the past
@@ -144,10 +155,8 @@ public class ActivityMain extends AppCompatActivity
             onInternetPermissionGranted();
         }
 
+        populateDummyNewsFeedItems();
 
-        newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed5, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed2, "Garrincha FC logra primer Lugar en Copa \"Pempén\" de Media Cancha."));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed3, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
       /*  newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade,"Upgrade, we Create"));*/
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_newsfeed_cardList);
@@ -161,6 +170,72 @@ public class ActivityMain extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
+    }
+
+        //dummy data for the global news feed
+    public void populateDummyNewsFeedItems(){
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
+
+    }
+
+    public void setDummyAreaNdAttraction() {
+
+        Area a1 = new Area(1, "Garrincha FC", new LatLng(18.437013, -69.964647), 1);
+        mAreasArrayList.add(a1);
+
+        LatLng myTestLatLong = new LatLng(18.467425, -69.915474);
+        Attraction a2 = new Attraction(1, "Garrincha FC", myTestLatLong, "Nace con el espíritu de nunca rendirse, de estar siempre juntos y de lograr metas mediante el trabajo duro y el amor por el deporte.", "Nuestro nombre es el primer paso de nuestra originalidad, y en el nombre basamos todas nuestras acciones, líneas a seguir, método de trabajo y mercadeo de imagen. Garrincha fue uno de los mejores jugadores que ha tenido nuestro deporte, brasileño, nació con problemas físicos graves en una de las favelas mas pobres de Brasil. Era imposible apostar por este sujeto, sin embargo Garrincha es para los brasileños el jugador que mas Alegría le dio al Pueblo, ganando dos Copas Mundiales y siendo el mejor jugador de su posición y del Campeonato. ",
+                ContextCompat.getDrawable(this, R.drawable.garrincha_attraction),
+                1, "8:00am - 10:00pm", "Colegio Dominicano de la Salle, Av Simón Bolívar 807, Santo Domingo 10106", "Garrincha F.C nosotros nunca ponemos excusas.");
+        mAttractionsArrayList.add(a2);
+    }
+
+    /***
+     * add the all the tournament available to follow from the DB
+     ***/
+    public void createDynamicTournamentMenu(NavigationView navigationView) {
+        final Menu menu = navigationView.getMenu();
+
+        //adds all the available tourneys to the navigation Torneos Group
+        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
+            final int torneyID = tourney ;
+            menu.findItem(R.id.nav_dynamic_tourney)
+                    .getSubMenu()
+                    .add(Menu.NONE,  torneyID , Menu.NONE, AppConstant.availableTourneys.get( torneyID))
+                   // .setIcon(R.drawable.ic_team_24dp)
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setChecked(true);
+                            int id = item.getItemId();
+
+                            if (id != torneyID) {
+
+                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
+
+                                if (intent != null) {
+
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                }
+                            }
+                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                            drawer.closeDrawer(GravityCompat.START);
+
+                            return false;
+                        }
+                    });
+        }
     }
 
     /*********************************************************************************************
@@ -246,6 +321,7 @@ public class ActivityMain extends AppCompatActivity
                     }
                 }).show();
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -284,7 +360,7 @@ public class ActivityMain extends AppCompatActivity
 
         List<Geofence> geofenceList = new ArrayList<>();
 
-      for (Area area : mAreasArrayList) {
+        for (Area area : mAreasArrayList) {
 
             geofenceList.add(new Geofence.Builder()
                     .setCircularRegion(area.getGeo().latitude, area.getGeo().longitude, TRIGGER_RADIUS)
@@ -292,7 +368,7 @@ public class ActivityMain extends AppCompatActivity
                     .setTransitionTypes(TRIGGER_TRANSITION)
                     .setExpirationDuration(EXPIRATION_DURATION)
                     .build());
-            Log.i("Geofence List", String.format("Added area %d - ",area.getId()) + area.getName());
+            Log.i("Geofence List", String.format("Added area %d - ", area.getId()) + area.getName());
         }
         return geofenceList;
     }
@@ -304,7 +380,7 @@ public class ActivityMain extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id != R.id.nav_main) {
+        if (id != R.id.nav_main) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 

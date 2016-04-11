@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <group android:checkableBehavior="single">
@@ -10,9 +11,9 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Noticias" />
         <item
-            android:id="@+id/nav_teams"
+            android:id="@+id/nav_clubs"
             android:icon="@drawable/ic_group_work_black_24dp"
-            android:title="Equipos" />
+            android:title="Clubes" />
 
         <item
             android:id="@+id/nav_history"
@@ -30,17 +31,10 @@
 
         <item
             android:id="@+id/nav_dynamic_tourney"
-            android:title="Torneos">
-            <menu><!--
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_setting_light"
-                android:title="Settings" />-->
-                <item
-                    android:id="@+id/nav_matches"
-                    android:icon="@drawable/ic_action_name"
-                    android:title="Copa CocaCola" />
-
+            android:title="Torneos"
+            app:actionLayout="@layout/drawer_switch"
+            >
+            <menu>
 
             </menu>
         </item>

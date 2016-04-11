@@ -1,5 +1,6 @@
 package ntv.upgrade.superleaguemaster;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 
@@ -44,6 +46,7 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DrawerLayout drawer;
+    private Activity thisActivity;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -53,7 +56,7 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-
+this.thisActivity=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,7 +95,12 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_matches);
+       // navigationView.setCheckedItem(R.id.nav_matches);
+        //dynamically adds the tourneys to follow
+        createDynamicTournamentMenu(navigationView);
+
+
+
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -101,6 +109,46 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
             }
         });
 
+    }
+
+    /***
+     * add the all the tournament available to follow from the DB
+     ***/
+    public void createDynamicTournamentMenu(NavigationView navigationView) {
+        final Menu menu = navigationView.getMenu();
+
+        //adds all the available tourneys to the navigation Torneos Group
+        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
+            final int torneyID = tourney ;
+            menu.findItem(R.id.nav_dynamic_tourney)
+                    .getSubMenu()
+                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_team_24dp)
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setChecked(true);
+                            int id = item.getItemId();
+
+                            if (id != torneyID) {
+
+                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
+
+                                if (intent != null) {
+
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                }
+                            }
+                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                            drawer.closeDrawer(GravityCompat.START);
+
+                            return false;
+                        }
+                    });
+        }
     }
 
     public List<String> setLeagueDivisions(){
@@ -156,7 +204,7 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id !=R.id.nav_matches) {
+        if(id != 1) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 

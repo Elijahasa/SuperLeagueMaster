@@ -1,8 +1,9 @@
 package ntv.upgrade.superleaguemaster;
 
-import android.content.ComponentName;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,16 +18,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +38,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
+import ntv.upgrade.superleaguemaster.Schedule.Team;
 
 public class ActivityTeams extends AppCompatActivity implements CollapsingToolbarLayout.OnClickListener, NavigationView.OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener,
         FragmentPlayers.OnListFragmentInteractionListener, FragmentHistory.OnListFragmentInteractionListener {
@@ -62,18 +64,23 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
     private Toolbar mToolbar;
     private ViewPager mViewPager;
 
+    private Activity thisActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teams);
+        this.thisActivity = this;
+        int _teamID = (int) getIntent().getExtras().get("CLUBID");
+        Team selectedTeam = new Team(_teamID);
 
         bindActivity();
-      //  setupCollapsingToolbar();
-      //  mAppBarLayout.addOnOffsetChangedListener(this);
+        //  setupCollapsingToolbar();
+        //  mAppBarLayout.addOnOffsetChangedListener(this);
 
 
         mToolbar.inflateMenu(R.menu.main);
-       // startAlphaAnimation(mTitle, 0, View.INVISIBLE);
+        // startAlphaAnimation(mTitle, 0, View.INVISIBLE);
 
 
         View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
@@ -82,7 +89,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mToolbar.addView(spinnerContainer, lp);
 
-        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater());
+        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater(), selectedTeam);
         spinnerAdapter.addItems(setLeagueDivisions());
 
         Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);
@@ -95,7 +102,6 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
 
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -113,17 +119,10 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_teams);
+        navigationView.setCheckedItem(R.id.nav_clubs);
 
 
-        final Menu menu = navigationView.getMenu();
-        Menu topChannelMenu = menu.addSubMenu("Top Channels");
-        Menu topChannelMenu1 = menu.addSubMenu(R.id.nav_dynamic_tourney,2,2,"test");
-        topChannelMenu1.add(R.id.nav_dynamic_tourney,2,2,"test");
-        topChannelMenu.add("Foo");
-        topChannelMenu.add("Bar");
-        topChannelMenu.add("Baz");
-
+        createDynamicTournamentMenu(navigationView);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -133,132 +132,42 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
     }
 
-    public void createFollowingTourneysDrawerMenu(){
+    public void createDynamicTournamentMenu(NavigationView navigationView) {
+        final Menu menu = navigationView.getMenu();
 
-        Menu menu = new Menu() {
-            @Override
-            public MenuItem add(CharSequence title) {
-                return null;
-            }
+        //adds all the available tourneys to the navigation Torneos Group
+        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
+            final int torneyID = tourney;
+            menu.findItem(R.id.nav_dynamic_tourney)
+                    .getSubMenu()
+                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_team_24dp)
 
-            @Override
-            public MenuItem add(int titleRes) {
-                return null;
-            }
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setChecked(true);
+                            int id = item.getItemId();
 
-            @Override
-            public MenuItem add(int groupId, int itemId, int order, CharSequence title) {
-                return null;
-            }
+                            if (id != torneyID) {
+                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
+                                if (intent != null) {
 
-            @Override
-            public MenuItem add(int groupId, int itemId, int order, int titleRes) {
-                return null;
-            }
-
-            @Override
-            public SubMenu addSubMenu(CharSequence title) {
-                return null;
-            }
-
-            @Override
-            public SubMenu addSubMenu(int titleRes) {
-                return null;
-            }
-
-            @Override
-            public SubMenu addSubMenu(int groupId, int itemId, int order, CharSequence title) {
-                return null;
-            }
-
-            @Override
-            public SubMenu addSubMenu(int groupId, int itemId, int order, int titleRes) {
-                return null;
-            }
-
-            @Override
-            public int addIntentOptions(int groupId, int itemId, int order, ComponentName caller, Intent[] specifics, Intent intent, int flags, MenuItem[] outSpecificItems) {
-                return 0;
-            }
-
-            @Override
-            public void removeItem(int id) {
-
-            }
-
-            @Override
-            public void removeGroup(int groupId) {
-
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public void setGroupCheckable(int group, boolean checkable, boolean exclusive) {
-
-            }
-
-            @Override
-            public void setGroupVisible(int group, boolean visible) {
-
-            }
-
-            @Override
-            public void setGroupEnabled(int group, boolean enabled) {
-
-            }
-
-            @Override
-            public boolean hasVisibleItems() {
-                return false;
-            }
-
-            @Override
-            public MenuItem findItem(int id) {
-                return null;
-            }
-
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public MenuItem getItem(int index) {
-                return null;
-            }
-
-            @Override
-            public void close() {
-
-            }
-
-            @Override
-            public boolean performShortcut(int keyCode, KeyEvent event, int flags) {
-                return false;
-            }
-
-            @Override
-            public boolean isShortcutKey(int keyCode, KeyEvent event) {
-                return false;
-            }
-
-            @Override
-            public boolean performIdentifierAction(int id, int flags) {
-                return false;
-            }
-
-            @Override
-            public void setQwertyMode(boolean isQwerty) {
-
-            }
-        };
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+                                }
+                            }
+                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                            drawer.closeDrawer(GravityCompat.START);
+                            return false;
+                        }
+                    });
+        }
     }
 
-    public List<String> setLeagueDivisions(){
+
+    public List<String> setLeagueDivisions() {
         List<String> myLeagueDiv = new ArrayList<>(6);
         myLeagueDiv.add("Primera");
         myLeagueDiv.add("Segunda");
@@ -274,16 +183,11 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-     //   mTitle = (TextView) findViewById(R.id.main_textview_title);
-      //  mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
-    //    mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        //   mTitle = (TextView) findViewById(R.id.main_textview_title);
+        //  mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
+        //    mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
     }
-    private void setupCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(
-                R.id.main_collapsing);
 
-        collapsingToolbar.setTitleEnabled(false);
-    }
 
     @Override
     public void onBackPressed() {
@@ -325,7 +229,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id != R.id.nav_teams) {
+        if (id != R.id.nav_clubs) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 
@@ -345,52 +249,8 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         int maxScroll = appBarLayout.getTotalScrollRange();
         float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
 
-        handleAlphaOnTitle(percentage);
-        handleToolbarTitleVisibility(percentage);
     }
 
-    private void handleToolbarTitleVisibility(float percentage) {
-        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-
-            if (!mIsTheTitleVisible) {
-                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleVisible = true;
-            }
-
-        } else {
-
-            if (mIsTheTitleVisible) {
-                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleVisible = false;
-            }
-        }
-    }
-
-    private void handleAlphaOnTitle(float percentage) {
-        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if (mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleContainerVisible = false;
-            }
-
-        } else {
-
-            if (!mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleContainerVisible = true;
-            }
-        }
-    }
-
-    public static void startAlphaAnimation(View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
-
-        alphaAnimation.setDuration(duration);
-        alphaAnimation.setFillAfter(true);
- //       v.startAnimation(alphaAnimation);
-    }
 
     @Override
     public void onListFragmentInteraction() {
@@ -444,7 +304,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
 
 
             } else {
-                FragmentHistory fragmentHistory= FragmentHistory.newInstance(position + 1);
+                FragmentHistory fragmentHistory = FragmentHistory.newInstance(position + 1);
                 mPageReferenceMap.put("3", tag);
                 return fragmentHistory;
 
