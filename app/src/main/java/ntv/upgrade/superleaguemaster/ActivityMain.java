@@ -109,6 +109,14 @@ public class ActivityMain extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_main);
 
+        final Menu menu = navigationView.getMenu();
+       // Menu topChannelMenu = menu.getItem(5);
+
+        menu.add  (R.id.nav_dynamic_tourney,Menu.FLAG_APPEND_TO_GROUP,Menu.FLAG_APPEND_TO_GROUP,"lero lero");
+        menu.findItem(R.id.nav_dynamic_tourney).getSubMenu()
+                .add(Menu.NONE, 1, Menu.NONE, "Action");
+/*        Menu topChannelMenu1 = menu.addSubMenu(R.id.nav_dynamic_tourney,2,2,"test");
+        topChannelMenu1.add(R.id.nav_dynamic_tourney,2,2,"test");*/
 
         Area a1= new Area(1,"Garrincha FC",new LatLng(18.437013, -69.964647),1);
         mAreasArrayList.add(a1);
@@ -140,7 +148,7 @@ public class ActivityMain extends AppCompatActivity
         newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed5, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
         newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed2, "Garrincha FC logra primer Lugar en Copa \"Pempén\" de Media Cancha."));
         newsFeedItems.add(new NewsFeedItem(R.drawable.garrincha_newsfeed3, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade,"Upgrade, we Create"));
+      /*  newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade,"Upgrade, we Create"));*/
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_newsfeed_cardList);
         recyclerView.setHasFixedSize(true);

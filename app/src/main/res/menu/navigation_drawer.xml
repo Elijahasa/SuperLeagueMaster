@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_main"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Noticias" />
-        <item
-            android:id="@+id/nav_matches"
-            android:icon="@drawable/ic_calendar_black_24dp"
-            android:title="Torneos" />
-
         <item
             android:id="@+id/nav_teams"
             android:icon="@drawable/ic_group_work_black_24dp"
@@ -25,6 +23,27 @@
             android:icon="@drawable/ic_place_black_24dp"
             android:title="Locaciones" />
 
+    </group>
+
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_dynamic_tourney"
+            android:title="Torneos">
+            <menu><!--
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_setting_light"
+                android:title="Settings" />-->
+                <item
+                    android:id="@+id/nav_matches"
+                    android:icon="@drawable/ic_action_name"
+                    android:title="Copa CocaCola" />
+
+
+            </menu>
+        </item>
     </group>
 
     <item android:title="Communicate">
