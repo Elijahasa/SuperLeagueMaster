@@ -42,7 +42,7 @@ import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.Schedule.Team;
 
-public class ActivityTeams extends AppCompatActivity implements CollapsingToolbarLayout.OnClickListener, NavigationView.OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener,
+public class ActivityClubs extends AppCompatActivity implements CollapsingToolbarLayout.OnClickListener, NavigationView.OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener,
         FragmentPlayers.OnListFragmentInteractionListener, FragmentHistory.OnListFragmentInteractionListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -121,7 +121,6 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_clubs);
 
-
         createDynamicTournamentMenu(navigationView);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -131,18 +130,17 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
         });
 
     }
-
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
-
+        final NavigationView nav = navigationView;
         //adds all the available tourneys to the navigation Torneos Group
-        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
-            final int torneyID = tourney;
+        //TODO:replace the appconstans for the localDB
+        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
+            final int torneyID = tourney ;
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
-                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
-                    .setIcon(R.drawable.ic_team_24dp)
-
+                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_soccer_ball)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -150,16 +148,20 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
                             int id = item.getItemId();
 
                             if (id != torneyID) {
+                                nav.setCheckedItem(torneyID);
+
                                 Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
+
                                 if (intent != null) {
 
                                     startActivity(intent);
                                     finish();
-                                    overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                                 }
                             }
                             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                             drawer.closeDrawer(GravityCompat.START);
+
                             return false;
                         }
                     });
@@ -343,6 +345,7 @@ public class ActivityTeams extends AppCompatActivity implements CollapsingToolba
                     return "JUGADORES";
                 case 2:
                     return "historial".toUpperCase(l);
+
 
             }
             return null;

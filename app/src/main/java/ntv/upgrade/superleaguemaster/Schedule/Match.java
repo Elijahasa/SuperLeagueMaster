@@ -22,6 +22,14 @@ public class Match {
      *   setters & getters
      */
 
+    public Team getmTeam1() {
+        return mTeam1;
+    }
+
+    public Team getmTeam2() {
+        return mTeam2;
+    }
+
     private void setmTime(String mTime) {
         this.mTime = mTime;
     }

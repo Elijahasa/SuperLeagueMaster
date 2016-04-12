@@ -19,8 +19,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -31,10 +33,11 @@ import java.util.Map;
 
 import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 
-public class ActivityMatchesCalendar extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ActivityTourneyCalendar extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,9 +47,11 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private TourneyCalendarPagerAdapter mTourneyCalendarPagerAdapter;
     private DrawerLayout drawer;
     private Activity thisActivity;
+    private TabLayout tabLayout;
+    private static int mLastSpinnerSelectedItem = 0;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -56,8 +61,11 @@ public class ActivityMatchesCalendar extends AppCompatActivity implements Naviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches);
-this.thisActivity=this;
+
+        getSelectedSpinnerItem();
+        this.thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -74,19 +82,19 @@ this.thisActivity=this;
 
         spinner.setAdapter(spinnerAdapter);
 
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mTourneyCalendarPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -95,20 +103,98 @@ this.thisActivity=this;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       // navigationView.setCheckedItem(R.id.nav_matches);
+
+        // navigationView.setCheckedItem(R.id.nav_matches);
         //dynamically adds the tourneys to follow
         createDynamicTournamentMenu(navigationView);
 
-
-
-
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-              /*  actionBar.setSelectedNavigationItem(position);*/
+            public void onPageSelected(int position) {/*  actionBar.setSelectedNavigationItem(position);*/}
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                changeScreenForTourney(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
+
+    }
+
+    //catches the extras to set the appropriate display
+    public int getSelectedSpinnerItem() {
+        int selected = 0;
+        List<String> extras = setLeagueDivisions();
+
+        for (int i = 0; i < extras.size(); i++) {
+            if (getIntent().hasExtra(extras.get(i))) {
+                selected = (int) getIntent().getExtras().get(extras.get(i));
+            }
+        }
+        return selected;
+    }
+
+    public void changeScreenForTourney(int position) {
+
+        if (mLastSpinnerSelectedItem != position) {
+            if (position == 0) {
+
+                Intent intent = DrawerSelector.onItemSelected(thisActivity, Constants.TOURNAMENT_ACTIVITY);
+                intent.putExtra("Partidos", position);
+                if (intent != null) {
+                    mLastSpinnerSelectedItem = position;
+                    tabLayout.setVisibility(View.VISIBLE);
+                    mViewPager.setCurrentItem(5, false);
+                    mViewPager.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return false;
+                        }
+                    });
+
+
+                }
+            } else if (position == 1) {
+
+                Intent intent = DrawerSelector.onItemSelected(thisActivity, Constants.TOURNAMENT_ACTIVITY);
+                intent.putExtra("Noticias", position);
+
+                if (intent != null) {
+                    mLastSpinnerSelectedItem = position;
+                    if(tabLayout.isShown()){
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                    mViewPager.removeAllViews();
+                    mViewPager.getAdapter().notifyDataSetChanged();
+
+            }} else if (position == 2) {
+
+                Intent intent = DrawerSelector.onItemSelected(thisActivity, Constants.TOURNAMENT_ACTIVITY);
+                intent.putExtra("Lideres", position);
+                if (intent != null) {
+                    mLastSpinnerSelectedItem = position;
+                    if(tabLayout.isShown()){
+                        tabLayout.setVisibility(View.GONE);
+                    }
+
+                    mViewPager.setCurrentItem(12, false);
+                    mViewPager.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return true;
+                        }
+                    });
+
+
+                }
+            }
+        }
     }
 
     /***
@@ -116,14 +202,14 @@ this.thisActivity=this;
      ***/
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
-
+        final NavigationView nav = navigationView;
         //adds all the available tourneys to the navigation Torneos Group
-        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
-            final int torneyID = tourney ;
+        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
+            final int torneyID = tourney;
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
-                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
-                    .setIcon(R.drawable.ic_team_24dp)
+                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_soccer_ball)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -131,6 +217,7 @@ this.thisActivity=this;
                             int id = item.getItemId();
 
                             if (id != torneyID) {
+                                nav.setCheckedItem(torneyID);
 
                                 Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
 
@@ -142,7 +229,6 @@ this.thisActivity=this;
                                 }
                             }
                             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
                             drawer.closeDrawer(GravityCompat.START);
 
                             return false;
@@ -151,14 +237,11 @@ this.thisActivity=this;
         }
     }
 
-    public List<String> setLeagueDivisions(){
+    public List<String> setLeagueDivisions() {
         List<String> myLeagueDiv = new ArrayList<>(6);
-        myLeagueDiv.add("Primera");
-        myLeagueDiv.add("Segunda");
-        myLeagueDiv.add("Tercera");
-        myLeagueDiv.add("Social");
-        myLeagueDiv.add("Femenino");
-        myLeagueDiv.add("Juvenil");
+        myLeagueDiv.add("Partidos");
+        myLeagueDiv.add("Noticias");
+        myLeagueDiv.add("Lideres");
 
         return myLeagueDiv;
     }
@@ -174,7 +257,6 @@ this.thisActivity=this;
             finish();
         }
     }
-
 
 
     @Override
@@ -204,7 +286,7 @@ this.thisActivity=this;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id != 1) {
+        if (id != 1) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 
@@ -221,17 +303,17 @@ this.thisActivity=this;
 
     /**
      * A placeholder fragment containing a simple view.
-
-
-    /**
+     * <p>
+     * <p>
+     * /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class NewsPagerAdapter extends FragmentPagerAdapter {
 
         private Map<String, FragmentMatches> mPageReferenceMap = new HashMap<>();
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public NewsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -240,7 +322,7 @@ this.thisActivity=this;
             return mPageReferenceMap.get(key);
         }
 
-        private  String makeFragmentName(int viewId, int index) {
+        private String makeFragmentName(int viewId, int index) {
             return "android:switcher:" + viewId + ":" + index;
         }
 
@@ -249,19 +331,143 @@ this.thisActivity=this;
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            String tag = makeFragmentName(mViewPager.getId(),(int) getItemId(position));
-            FragmentMatches fragmentMatches =   FragmentMatches.newInstance(position + 1);
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            FragmentMatches fragmentMatches = FragmentMatches.newInstance(position + 1);
 
             mPageReferenceMap.put(tag, fragmentMatches);
 
-            return  fragmentMatches;
+            return fragmentMatches;
 
         }
 
-        public @Nullable
-        Fragment getFragmentForPosition(int position)
-        {
-            String tag = makeFragmentName(mViewPager.getId(),(int) getItemId(position));
+        public
+        @Nullable
+        Fragment getFragmentForPosition(int position) {
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            return fragment;
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 1 total pages.
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return "noticias".toUpperCase(l);
+            }
+            return null;
+        }
+    }
+
+    public class LeadersPagerAdapter extends FragmentPagerAdapter {
+
+        private Map<String, FragmentMatches> mPageReferenceMap = new HashMap<>();
+
+        public LeadersPagerAdapter (FragmentManager fm) {
+            super(fm);
+        }
+
+        public FragmentMatches getFragment(String key) {
+
+            return mPageReferenceMap.get(key);
+        }
+
+        private String makeFragmentName(int viewId, int index) {
+            return "android:switcher:" + viewId + ":" + index;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            FragmentMatches fragmentMatches = FragmentMatches.newInstance(position + 1);
+
+            mPageReferenceMap.put(tag, fragmentMatches);
+
+            return fragmentMatches;
+
+        }
+
+        public
+        @Nullable
+        Fragment getFragmentForPosition(int position) {
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            return fragment;
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 1 total pages.
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return "Lideres".toUpperCase(l);
+            }
+            return null;
+        }
+    }
+
+    public class TourneyCalendarPagerAdapter extends FragmentPagerAdapter {
+
+        private Map<String, FragmentMatches> mPageReferenceMap = new HashMap<>();
+
+        public TourneyCalendarPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public FragmentMatches getFragment(String key) {
+
+            return mPageReferenceMap.get(key);
+        }
+
+        private String makeFragmentName(int viewId, int index) {
+            return "android:switcher:" + viewId + ":" + index;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            FragmentMatches fragmentMatches = FragmentMatches.newInstance(position + 1);
+
+            mPageReferenceMap.put(tag, fragmentMatches);
+
+            return fragmentMatches;
+
+        }
+
+        public
+        @Nullable
+        Fragment getFragmentForPosition(int position) {
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
             return fragment;
         }
@@ -275,7 +481,7 @@ this.thisActivity=this;
         @Override
         public int getCount() {
             // Show 10 total pages.
-            return 12;
+            return 14;
         }
 
         @Override
@@ -306,6 +512,10 @@ this.thisActivity=this;
                     return getString(R.string.title_section11).toUpperCase(l);
                 case 11:
                     return getString(R.string.title_section112).toUpperCase(l);
+                case 12:
+                    return "Noticias";
+                case 13:
+                    return "Lideres";
             }
             return null;
         }

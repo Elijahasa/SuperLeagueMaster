@@ -45,8 +45,8 @@
 
 
         <activity
-            android:name=".ActivityMatchesCalendar"
-            android:label="Juegos"
+            android:name=".ActivityTourneyCalendar"
+            android:label="Torneos"
             android:parentActivityName=".ActivityMain"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -85,8 +85,8 @@
         </activity>
 
         <activity
-            android:name=".ActivityTeams"
-            android:label="teams"
+            android:name=".ActivityClubs"
+            android:label="Clubs"
             android:parentActivityName=".ActivityMain"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

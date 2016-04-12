@@ -18,7 +18,7 @@
             android:layout_width="@dimen/image_size"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_action_name"
+            android:src="@drawable/ic_upgraden"
             android:transitionName="image" />
 
         <TextView

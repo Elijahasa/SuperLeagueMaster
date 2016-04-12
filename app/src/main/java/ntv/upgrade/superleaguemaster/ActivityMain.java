@@ -182,7 +182,7 @@ public class ActivityMain extends AppCompatActivity
         newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
         newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
         newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
+        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Upgrade, We Create"));
 
     }
 
@@ -203,14 +203,14 @@ public class ActivityMain extends AppCompatActivity
      ***/
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
-
+        final NavigationView nav = navigationView;
         //adds all the available tourneys to the navigation Torneos Group
         for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
             final int torneyID = tourney ;
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
-                    .add(Menu.NONE,  torneyID , Menu.NONE, AppConstant.availableTourneys.get( torneyID))
-                   // .setIcon(R.drawable.ic_team_24dp)
+                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_soccer_ball)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -218,6 +218,7 @@ public class ActivityMain extends AppCompatActivity
                             int id = item.getItemId();
 
                             if (id != torneyID) {
+                                nav.setCheckedItem(torneyID);
 
                                 Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
 
@@ -229,7 +230,6 @@ public class ActivityMain extends AppCompatActivity
                                 }
                             }
                             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
                             drawer.closeDrawer(GravityCompat.START);
 
                             return false;

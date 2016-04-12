@@ -1,6 +1,8 @@
 package ntv.upgrade.superleaguemaster.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
+import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.R;
 import ntv.upgrade.superleaguemaster.Schedule.WeeklySchedule;
 
@@ -57,12 +62,44 @@ public ScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 public void onBindViewHolder(ScheduleHolder holder, int position) {
         // - get element from your dataset at this vPlayerPosition
         // - replace the contents of the view with that element
-
+final int pos = position;
     holder.teamName.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTime());
 
     //     holder.team2.setText( mTeam.getmWeeklyMatch().get(vPlayerPosition).getTeamName(2));
     holder.teamLogo1.setImageResource(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamImage(1));
+    holder.teamLogo1.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        //calls the Team1 Screen based on the teamID
+            //TODO: replace with local DBSource
+            Intent intent = DrawerSelector.onItemSelected((Activity) mContext, Constants.CLUBS_ACTIVITY_BY_TEAM);
+            intent.putExtra("CLUBID", mWeeklySchedule.getmWeeklyMatch().get(pos).getmTeam1().getmTeamID());
+
+            if (intent != null) {
+
+               mContext.startActivity(intent);
+               // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        }
+
+    });
     holder.teamLogo2.setImageResource(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamImage(2));
+    holder.teamLogo2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //calls the Team2 Screen based on the teamID
+            //TODO: replace with local DBSource
+            Intent intent = DrawerSelector.onItemSelected((Activity) mContext, Constants.CLUBS_ACTIVITY_BY_TEAM);
+            intent.putExtra("CLUBID", mWeeklySchedule.getmWeeklyMatch().get(pos).getmTeam2().getmTeamID());
+
+            if (intent != null) {
+
+                mContext.startActivity(intent);
+                // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        }
+
+    });
     holder.time.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getDate());
 
     holder.stadium.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getStadium());

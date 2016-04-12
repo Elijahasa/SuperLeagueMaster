@@ -1,5 +1,6 @@
 package ntv.upgrade.superleaguemaster;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.Utils.Tools;
 import ntv.upgrade.superleaguemaster.Utils.Utils;
@@ -44,7 +46,7 @@ public class ActivityTour extends AppCompatActivity implements
     private SectionsPagerAdapter mSectionsPagerAdapter;
     // The {@link ViewPager} that will host the section contents.
     private ViewPager mViewPager;
-
+private Activity thisActivity;
 
 
     /**
@@ -73,7 +75,7 @@ public class ActivityTour extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
-
+        thisActivity=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -115,6 +117,7 @@ public class ActivityTour extends AppCompatActivity implements
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_location);
 
+        createDynamicTournamentMenu(navigationView);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -136,6 +139,42 @@ public class ActivityTour extends AppCompatActivity implements
         builder.create().show();
     }
 
+    public void createDynamicTournamentMenu(NavigationView navigationView) {
+        final Menu menu = navigationView.getMenu();
+        final NavigationView nav = navigationView;
+        //adds all the available tourneys to the navigation Torneos Group
+        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
+            final int torneyID = tourney ;
+            menu.findItem(R.id.nav_dynamic_tourney)
+                    .getSubMenu()
+                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .setIcon(R.drawable.ic_soccer_ball)
+                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setChecked(true);
+                            int id = item.getItemId();
+
+                            if (id != torneyID) {
+                                nav.setCheckedItem(torneyID);
+
+                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
+
+                                if (intent != null) {
+
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                                }
+                            }
+                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                            drawer.closeDrawer(GravityCompat.START);
+
+                            return false;
+                        }
+                    });
+        }
+    }
     /**
      * Navigates to Google play to download google maps
      */
