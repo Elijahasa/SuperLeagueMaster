@@ -1,4 +1,4 @@
-package ntv.upgrade.superleaguemaster.NewsFeed;
+package ntv.upgrade.superleaguemaster.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
 import ntv.upgrade.superleaguemaster.R;
 
 

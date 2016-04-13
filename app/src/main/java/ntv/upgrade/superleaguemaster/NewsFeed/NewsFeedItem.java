@@ -5,9 +5,9 @@ package ntv.upgrade.superleaguemaster.NewsFeed;
  */
 public class NewsFeedItem {
 
-    protected int image;
-    protected String tittle;
-    protected String description;
+    public int image, newsID;
+    public String tittle;
+    public String description;
 
     public NewsFeedItem(int image, String tittle) {
         this.image = image;
