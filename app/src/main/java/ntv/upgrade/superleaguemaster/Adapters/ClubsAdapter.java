@@ -22,7 +22,7 @@ public class ClubsAdapter extends RecyclerView.Adapter<ClubsAdapter.TeamHolder>{
 
     List<Team> mTeamList;
     Context mContext;
-
+    LayoutInflater inflater ;
 
     public ClubsAdapter(List<Team> list, Context context) {
         this.mTeamList = list;

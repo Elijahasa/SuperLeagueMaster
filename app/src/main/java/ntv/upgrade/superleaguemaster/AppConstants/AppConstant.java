@@ -13,7 +13,7 @@ import  ntv.upgrade.superleaguemaster.R;
 public class AppConstant {
 
     public static List<String> availableTourneys = Arrays.asList(
-            "Copa Garrincha","LDF", "Copa CoCa Cola"
+            "Copa Garrincha"
     );
 
 
@@ -60,13 +60,16 @@ public class AppConstant {
 
         public static String[][] mTeamPlayerArrayList = {
                 {
+                        "0",  "Josean Acevedo", "00", "Defenza", "Vegueta", "Primera"
+                },
+                {
                         "2",  "Josean Acevedo", "00", "Defenza", "Vegueta", "Primera"
                 },
                 {
                         "1", "player1", "21", "Delantero", "MangaTuGoal", "Primera"
                 },
                 {
-                        "2",  "Jose Frometa", "21", "Portero", "Vacota", "Primera"
+                        "2",  "El Chino", "666", "Portero", "#blindadoporDios", "Primera"
                 },
                 {
                         "2",  "Elias Serulle", "69", "OneKidArmy", "Perullo", "Primera"

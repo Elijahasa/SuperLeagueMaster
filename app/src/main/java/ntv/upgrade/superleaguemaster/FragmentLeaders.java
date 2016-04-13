@@ -1,7 +1,6 @@
 package ntv.upgrade.superleaguemaster;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,12 +13,11 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import ntv.upgrade.superleaguemaster.Adapters.NewsFeedAdapter;
+import ntv.upgrade.superleaguemaster.Adapters.LeadersAdapter;
 import ntv.upgrade.superleaguemaster.Adapters.PlayersAdapter;
-import ntv.upgrade.superleaguemaster.AppConstants.Constants;
+import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Decorators.DividerItemDecoration;
-import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
-import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
+import ntv.upgrade.superleaguemaster.Schedule.Team;
 
 /**
  * A fragment representing a list of Items.
@@ -27,13 +25,15 @@ import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FragmentNewsFeed extends Fragment {
+public class FragmentLeaders extends Fragment {
 
-    private List<NewsFeedItem> newsFeedItems = new ArrayList<>();
+
+    private List<Team> clubItems = new ArrayList<>();
+
     // TODO: Customize parameter argument names
-    private static final String NEWS_ID = "news-id";
-    private static int mNewsID;
-    private NewsFeedAdapter newsFeedAdapter;
+    private static final String TEAM_ID = "team-id";
+    private int mTeamID;
+    private LeadersAdapter mLeadersAdapter;
    private Context mContext;
     private OnListFragmentInteractionListener mListener;
 
@@ -41,50 +41,45 @@ public class FragmentNewsFeed extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public FragmentNewsFeed() {
+    public FragmentLeaders() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static FragmentNewsFeed newInstance() {
-        FragmentNewsFeed fragment = new FragmentNewsFeed();
-       // Bundle args = new Bundle();
-       // args.putInt(NEWS_ID, newId);
-       // fragment.setArguments(args);
+    public static FragmentLeaders newInstance() {
+        FragmentLeaders fragment = new FragmentLeaders();
+     /*   Bundle args = new Bundle();
+        args.putInt(TEAM_ID, teamId);
+        fragment.setArguments(args);*/
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        populateDummyClubsItems();
         if (getArguments() != null) {
-            mNewsID = getArguments().getInt(NEWS_ID);
+            mTeamID = getArguments().getInt(TEAM_ID);
         }
 
 
     }
-    public void populateDummyNewsFeedItems(){
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC defenderá título de Copa Regional en El Seibo"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Domingo 27 abril será la Convivencia Fútbolera de Garrincha FC"));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Garrincha FC logra primer Lugar en Copa Pempén de Media Cancha."));
-        newsFeedItems.add(new NewsFeedItem(R.drawable.bg_upgrade, "Upgrade, We Create"));
 
+    //dummy data for the global news feed
+    public void populateDummyClubsItems() {
+        for (int i = 0; i < AppConstant.mTeamArrayList.length; i++) {
+            Team myTeam = new Team(i);
+            clubItems.add(myTeam);
+        }
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_newsfeed, container, false);
+        View view = inflater.inflate(R.layout.fragment_leaders, container, false);
 
-        populateDummyNewsFeedItems();
-        newsFeedAdapter = new NewsFeedAdapter(newsFeedItems);
+        mLeadersAdapter = new LeadersAdapter(clubItems, getActivity());
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
@@ -93,31 +88,9 @@ public class FragmentNewsFeed extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(newsFeedAdapter);
+        recyclerView.setAdapter(mLeadersAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(ActivityTourneyCalendar.getReference()
-                , recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                Intent intent = DrawerSelector.onItemSelected(ActivityTourneyCalendar.getReference(),
-                        Constants.NEWS_FEED_DETAILS_ACTIVITY);
-                //intent.putExtra("CLUBID", position);
-
-                if (intent != null) {
-                    startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-                // ...
-            }
-        }));
-
         return view;
     }
 

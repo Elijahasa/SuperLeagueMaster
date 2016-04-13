@@ -237,7 +237,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
             if (intent != null) {
                 startActivity(intent);
-                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }

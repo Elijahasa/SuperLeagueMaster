@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Attraction.Area;
 import ntv.upgrade.superleaguemaster.Attraction.Attraction;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
@@ -65,6 +66,7 @@ public class ActivityMain extends AppCompatActivity
     private final String AREAS_DATA_FILE_NAME = "areas_data";
     private DrawerLayout drawer;
     private Activity thisActivity;
+    private NewsFeedAdapter newsFeedAdapter;
     private List<NewsFeedItem> newsFeedItems = new ArrayList<>();
 
     @Override
@@ -113,24 +115,6 @@ public class ActivityMain extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_main);
 
-   /*     SwitchCompat piano = (SwitchCompat)
-                navigationView.getMenu().findItem(R.id.tourney_switch); // But this depends on how you made your view in XML. It may be navigationView.getMenu().getItem(0).findItem(R.id.piano_switch);
-        piano.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               *//* Settings.piano = isChecked;*//*
-                Log.d("Switch", "You a-toggled mah switch");
-            }
-        });*/
-
-     /*   SwitchCompat switchCompat = (SwitchCompat) navigationView.getMenu().findItem(R.id.nav_dynamic_tourney).getActionView();
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-*/
         //dynamically adds the tourneys to follow
         createDynamicTournamentMenu(navigationView);
         //adds a dummy area and Attraction
@@ -163,9 +147,29 @@ public class ActivityMain extends AppCompatActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        NewsFeedAdapter newsFeedAdapter = new NewsFeedAdapter(newsFeedItems);
+       newsFeedAdapter = new NewsFeedAdapter(newsFeedItems);
         recyclerView.setAdapter(newsFeedAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(this, recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Intent intent = DrawerSelector.onItemSelected(thisActivity, Constants.NEWS_FEED_DETAILS_ACTIVITY);
+                //intent.putExtra("CLUBID", position);
+
+                if (intent != null) {
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                // ...
+            }
+        }));
 
 
     }
@@ -385,7 +389,6 @@ public class ActivityMain extends AppCompatActivity
             if (intent != null) {
 
                 startActivity(intent);
-                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }

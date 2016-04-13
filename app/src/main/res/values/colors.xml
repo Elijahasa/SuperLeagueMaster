@@ -15,8 +15,8 @@
 
 
     // FAKE Primary Colors
-    <color name="colorPrimary">#ff8300</color>
-    <color name="colorPrimaryDark">#ca6800</color>
+    <color name="colorPrimary">#120126</color>
+    <color name="colorPrimaryDark">#0b0018</color>
     <color name="colorNewsFeed">#e313110b</color>
     <color name="colorPrimaryLight">#ffa648</color>
     <color name="textColorPrimary">#66000000</color>

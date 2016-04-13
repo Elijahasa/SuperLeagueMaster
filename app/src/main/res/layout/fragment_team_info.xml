@@ -72,8 +72,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1.8"
             android:text="Ultimo Partido"
-            android:textColor="@color/colorBlack"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/_info_last_game_date"
@@ -82,8 +81,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="0.2"
             android:text="21-MAR-16"
-            android:textColor="@color/colorBlack"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack"/>
 
     </LinearLayout>
 
@@ -108,7 +106,7 @@
             android:layout_weight="1.8"
             android:text="Proximo Partido"
             android:textColor="@color/colorBlack"
-            android:textStyle="bold" />
+             />
 
         <TextView
             android:id="@+id/_info_next_game_date"
@@ -118,7 +116,7 @@
             android:layout_weight="0.2"
             android:text="29-MAR-16"
             android:textColor="@color/colorBlack"
-            android:textStyle="bold" />
+             />
 
     </LinearLayout>
 

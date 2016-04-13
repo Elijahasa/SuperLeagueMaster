@@ -25,7 +25,7 @@
         android:drawablePadding="8dp"
         android:textIsSelectable="true"
         android:fontFamily="sans-serif"
-        android:textColor="#ffffffff"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="normal"/>
 

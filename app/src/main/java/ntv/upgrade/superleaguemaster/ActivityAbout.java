@@ -68,7 +68,7 @@ public class ActivityAbout extends AppCompatActivity implements CollapsingToolba
         } else {
             startActivity(getParentActivityIntent());
             overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-            finish();
+
         }
     }
 
@@ -125,7 +125,6 @@ public class ActivityAbout extends AppCompatActivity implements CollapsingToolba
 
             if (intent != null) {
                 startActivity(intent);
-                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }

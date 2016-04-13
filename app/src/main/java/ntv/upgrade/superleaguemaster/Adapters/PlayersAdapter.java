@@ -17,11 +17,11 @@ import ntv.upgrade.superleaguemaster.Schedule.Team;
 /**
  * Created by jfrom on 3/22/2016.
  */
-public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHolder>{
+public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHolder> {
 
-    Team mTeam;
-    Context mContext;
-    LayoutInflater inflater ;
+    private Team mTeam;
+    private Context mContext;
+    private LayoutInflater inflater;
     int mTeamID;
 
     public PlayersAdapter(int teamID, Context context) {
@@ -35,7 +35,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
 
     private List<TeamHolder> TeamItems;
 
-    public PlayersAdapter(List<TeamHolder> teamItems){
+    public PlayersAdapter(List<TeamHolder> teamItems) {
         this.TeamItems = teamItems;
     }
 
@@ -68,10 +68,10 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
         holder.vPlayerAlias.setText(mTeam.getmPlayersList().get(position).getmPlayerAlias());
     }
 
-        // Provides a reference to the views for each data item
+    // Provides a reference to the views for each data item
 
 
-    public static class TeamHolder extends RecyclerView.ViewHolder{
+    public static class TeamHolder extends RecyclerView.ViewHolder {
         TextView vPlayerName;
         CircleImageView vPlayerAvatar;
         TextView vPlayerNumber;
@@ -79,7 +79,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
         TextView vPlayerTeamDivision;
         TextView vPlayerAlias;
 
-        public TeamHolder(View v){
+        public TeamHolder(View v) {
             super(v);
 
             vPlayerName = (TextView) v.findViewById(R.id.player_name);

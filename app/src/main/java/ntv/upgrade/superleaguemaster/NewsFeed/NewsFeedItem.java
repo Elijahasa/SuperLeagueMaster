@@ -13,4 +13,12 @@ public class NewsFeedItem {
         this.image = image;
         this.tittle = tittle;
     }
+
+    public int getNewsID() {
+        return newsID;
+    }
+
+    public void setNewsID(int newsID) {
+        this.newsID = newsID;
+    }
 }

@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,12 +32,11 @@ import java.util.Map;
 
 import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
-import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 
 public class ActivityTourneyCalendar extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        FragmentNewsFeed.OnListFragmentInteractionListener {
+        FragmentNewsFeed.OnListFragmentInteractionListener, FragmentLeaders.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,7 +50,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     private NewsPagerAdapter mNewsFeedPageAdapater;
     private LeadersPagerAdapter mLeaderPageAdapter;
     private DrawerLayout drawer;
-    private Activity thisActivity;
+    private static Activity thisActivity;
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private static int mLastSpinnerSelectedItem = 0;
@@ -60,6 +58,16 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    public static Activity getReference(){
+        return thisActivity;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mLastSpinnerSelectedItem =0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,11 +124,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             @Override
             public void onPageSelected(int position) {/*  actionBar.setSelectedNavigationItem(position);*/}
         });
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                changeScreenForTourney(position);
+                onSpinnerSelectionChangeScreen(position);
             }
 
             @Override
@@ -148,28 +155,36 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
         switch (pos) {
             case 0:
-                mTourneyCalendarPagerAdapter.clearAll();
+                if(mTourneyCalendarPagerAdapter !=null ){
+                    mTourneyCalendarPagerAdapter.clearAll();
+                }
                 break;
             case 1:
-                mNewsFeedPageAdapater.clearAll();
+                if(mTourneyCalendarPagerAdapter != null ) {
+                    mNewsFeedPageAdapater.clearAll();
+                }
                 break;
             case 2:
-                mLeaderPageAdapter.clearAll();
+                if(mTourneyCalendarPagerAdapter != null ) {
+                    mLeaderPageAdapter.clearAll();
+                }
                 break;
-
-        }
+       }
     }
 
-    public void changeScreenForTourney(int position) {
+
+
+    public void onSpinnerSelectionChangeScreen(int position) {
 
         if (mLastSpinnerSelectedItem != position) {
 
             if (position == 0) {
+                tabLayout.setVisibility(View.VISIBLE);
                 cleanAdapters(mLastSpinnerSelectedItem);
                 mViewPager = null;
                 mViewPager = (ViewPager) findViewById(R.id.container);
                 mLastSpinnerSelectedItem = position;
-                tabLayout.setVisibility(View.VISIBLE);
+
                 // Create the adapter that will return a fragment for each of the three
                 // primary sections of the activity.
                 mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
@@ -188,34 +203,33 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
 
             } else if (position == 1) {
+                if (tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.GONE);
+                }
                 cleanAdapters(mLastSpinnerSelectedItem);
                 mViewPager = null;
                 mViewPager = (ViewPager) findViewById(R.id.container);
                 mLastSpinnerSelectedItem = position;
-                if (tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.GONE);
-                }
                 mNewsFeedPageAdapater = new NewsPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
                 mViewPager.setAdapter(mNewsFeedPageAdapater);
 
 
             } else if (position == 2) {
+                if (tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.GONE);
+                }
                 cleanAdapters(mLastSpinnerSelectedItem);
                 mViewPager = null;
                 mViewPager = (ViewPager) findViewById(R.id.container);
                 mLastSpinnerSelectedItem = position;
-                if (tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.GONE);
-                }
+
                 mLeaderPageAdapter = new LeadersPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
                 mViewPager.setAdapter(mLeaderPageAdapter);
             }
         }
     }
-
-
     /***
      * add the all the tournament available to follow from the DB
      ***/
@@ -311,7 +325,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
             if (intent != null) {
                 startActivity(intent);
-                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }
@@ -405,13 +418,13 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
     public class LeadersPagerAdapter extends FragmentPagerAdapter {
 
-        private Map<String, FragmentMatches> mPageReferenceMap = new HashMap<>();
+        private Map<String, FragmentLeaders> mPageReferenceMap = new HashMap<>();
 
         public LeadersPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public FragmentMatches getFragment(String key) {
+        public FragmentLeaders getFragment(String key) {
 
             return mPageReferenceMap.get(key);
         }
@@ -433,11 +446,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             // Return a PlaceholderFragment (defined as a static inner class below).
 
             String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
-            FragmentMatches fragmentMatches = FragmentMatches.newInstance(position + 1);
+            FragmentLeaders fragmentLeaders = FragmentLeaders.newInstance();
 
-            mPageReferenceMap.put(tag, fragmentMatches);
+            mPageReferenceMap.put(tag, fragmentLeaders);
 
-            return fragmentMatches;
+            return fragmentLeaders;
 
         }
 

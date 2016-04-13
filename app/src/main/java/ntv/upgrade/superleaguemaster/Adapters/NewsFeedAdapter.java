@@ -21,6 +21,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
         this.newsFeedItems = newsFeedItems;
     }
 
+
     @Override
     public int getItemCount() {
         return newsFeedItems.size();
@@ -44,7 +45,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
 
         holder.vImage.setImageResource(newsFeedItem.image);
         holder.vTitleTextView.setText(newsFeedItem.tittle);
-
+        holder.ID =position;
     }
 
     // Provides a reference to the views for each data item
@@ -52,6 +53,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
 
         protected ImageView vImage;
         protected TextView vTitleTextView;
+        protected int ID;
 
         public NewsFeedViewHolder(View v){
             super(v);

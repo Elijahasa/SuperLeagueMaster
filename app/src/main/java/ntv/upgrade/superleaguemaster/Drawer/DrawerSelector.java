@@ -7,6 +7,7 @@ import ntv.upgrade.superleaguemaster.ActivityAbout;
 import ntv.upgrade.superleaguemaster.ActivityClubSelect;
 import ntv.upgrade.superleaguemaster.ActivityClubs;
 import ntv.upgrade.superleaguemaster.ActivityMain;
+import ntv.upgrade.superleaguemaster.ActivityNewsDetails;
 import ntv.upgrade.superleaguemaster.ActivityTourneyCalendar;
 import ntv.upgrade.superleaguemaster.ActivityTour;
 import ntv.upgrade.superleaguemaster.AppConstants.Constants;
@@ -61,8 +62,8 @@ public class DrawerSelector {
             case Constants.TOURNAMENT_ACTIVITY:
                 intent = new Intent(callingActivity, ActivityTourneyCalendar.class);
                 break;
-            case 1:
-                intent = new Intent(callingActivity, ActivityTourneyCalendar.class);
+            case Constants.NEWS_FEED_DETAILS_ACTIVITY:
+                intent = new Intent(callingActivity, ActivityNewsDetails.class);
                 break;
             case 2:
                 intent = new Intent(callingActivity, ActivityTourneyCalendar.class);
