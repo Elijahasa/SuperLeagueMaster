@@ -60,7 +60,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private static ViewPager mViewPager;
 
     public static Activity getReference(){
         return thisActivity;
@@ -297,7 +297,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         } else {
             startActivity(getParentActivityIntent());
             overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-            finish();
         }
     }
 

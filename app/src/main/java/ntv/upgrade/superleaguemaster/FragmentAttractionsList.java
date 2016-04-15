@@ -21,6 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -120,7 +121,7 @@ public class FragmentAttractionsList extends Fragment {
                 * Constants.IMAGE_ANIM_MULTIPLIER;
 
         mLatestLocation = Utils.getLocation(getActivity());
-        List<Attraction> attractions = loadAttractionsFromLocation(mLatestLocation);
+        List<Attraction> attractions = ActivityMain.mAttractionsArrayList;
         mAdapter = new AttractionAdapter(getActivity(), attractions);
 
         View view = inflater.inflate(R.layout.content_attractions_list, container, false);
@@ -220,9 +221,9 @@ public class FragmentAttractionsList extends Fragment {
             holder.mTitleTextView.setText(attraction.getName());
             holder.mDescriptionTextView.setText(attraction.getShortDescription());
             Glide.with(mContext)
-                    .load(attraction.getImage())
+                    .load(R.drawable.garrincha_attraction)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .placeholder(R.drawable.empty_photo)
+                    .placeholder(R.drawable.garrincha_attraction)
                     .override(mImageSize, mImageSize)
                     .into(holder.mImageView);
 

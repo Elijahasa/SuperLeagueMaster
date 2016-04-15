@@ -45,8 +45,6 @@ public class ActivityTour extends AppCompatActivity implements
         FragmentAttractionsList.OnFragmentInteractionListener, FragmentMap.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
 
-    @InjectView(R.id.elastic_download_view)
-    ElasticDownloadView mElasticDownloadView;
     // for log porpuses
     private final String TAG = ActivityTour.class.getSimpleName();
     // Client used to interact with Google APIs.
@@ -66,7 +64,7 @@ private Activity thisActivity;
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-        ButterKnife.inject(this);
+
      //   startLoading(Constants.LOADING_SUCCESS);
     }
 
@@ -151,7 +149,7 @@ private Activity thisActivity;
         builder.create().show();
     }
 
-    public boolean startLoading(int id){
+   /* public boolean startLoading(int id){
 
         //noinspection SimplifiableIfStatement
         if (id == Constants.LOADING_SUCCESS) {
@@ -199,7 +197,7 @@ private Activity thisActivity;
 
         return false;
     }
-
+*/
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
         final NavigationView nav = navigationView;
