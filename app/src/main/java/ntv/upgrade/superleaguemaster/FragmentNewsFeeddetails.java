@@ -30,8 +30,8 @@ public class FragmentNewsFeedDetails extends Fragment implements CollapsingToolb
     // TODO: Customize parameter argument names
     private static final String NEWS_ID = "news-id";
     private static int mNewsID;
-    public static Toolbar toolbar;
-    private Context mContext;
+    private static Toolbar toolbar;
+    private static Context mContext;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -70,9 +70,18 @@ public class FragmentNewsFeedDetails extends Fragment implements CollapsingToolb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_bar_news_details, container, false);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) view.findViewById(R.id.collapse_toolbar);
+       toolbar = (Toolbar) collapsingToolbar.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     /*   toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);*/
+
 /*
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);

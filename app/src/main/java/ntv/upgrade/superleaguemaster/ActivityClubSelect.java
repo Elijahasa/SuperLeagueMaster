@@ -77,7 +77,6 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
 
                 if (intent != null) {
                     startActivity(intent);
-                    finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }
             }
@@ -109,7 +108,6 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
 
         if (intent != null) {
             startActivity(intent);
-            finish();
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }
 

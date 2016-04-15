@@ -89,7 +89,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mToolbar.addView(spinnerContainer, lp);
 
-        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater(), selectedTeam);
+        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this, selectedTeam);
         spinnerAdapter.addItems(setLeagueDivisions());
 
         Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);

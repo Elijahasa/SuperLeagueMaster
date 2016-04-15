@@ -1,5 +1,9 @@
 package ntv.upgrade.superleaguemaster.Adapters;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +22,21 @@ import ntv.upgrade.superleaguemaster.Schedule.Team;
 
 
 
-public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
+public class TeamsToolBarSpinnerAdapter extends BaseAdapter implements ThemedSpinnerAdapter {
     private List<String> mItems = new ArrayList<>();
     private LayoutInflater mInfalter;
     private Team team = null;
+    private ThemedSpinnerAdapter.Helper mDropDownHelper;
 
-    public TeamsToolBarSpinnerAdapter(LayoutInflater inflater, Team team){
-        this.mInfalter=inflater;
+    public TeamsToolBarSpinnerAdapter(Context context, Team team){
+        mDropDownHelper =  new ThemedSpinnerAdapter.Helper(context);
         this.team = team;
+        mInfalter = mDropDownHelper.getDropDownViewInflater();
     }
 
-    public TeamsToolBarSpinnerAdapter(LayoutInflater inflater){
-        this.mInfalter=inflater;
-
+    public TeamsToolBarSpinnerAdapter(Context context){
+        mDropDownHelper =  new ThemedSpinnerAdapter.Helper(context);
+        mInfalter = mDropDownHelper.getDropDownViewInflater();
     }
 
     public void clear() {
@@ -91,5 +97,16 @@ public class TeamsToolBarSpinnerAdapter extends BaseAdapter {
 
     private String getTitle(int position) {
         return position >= 0 && position < mItems.size() ? mItems.get(position) : "";
+    }
+
+    @Override
+    public void setDropDownViewTheme(@Nullable Resources.Theme theme) {
+        mDropDownHelper.setDropDownViewTheme(theme);
+    }
+
+    @Nullable
+    @Override
+    public Resources.Theme getDropDownViewTheme() {
+        return  mDropDownHelper.getDropDownViewTheme();
     }
 }

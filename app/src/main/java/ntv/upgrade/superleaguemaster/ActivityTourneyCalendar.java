@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 import ntv.upgrade.superleaguemaster.Adapters.TeamsToolBarSpinnerAdapter;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 
@@ -53,6 +55,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     private static Activity thisActivity;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+    private Spinner spinner;
     private static int mLastSpinnerSelectedItem = 0;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -87,10 +90,17 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         toolbar.addView(spinnerContainer, lp);
 
-        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(getLayoutInflater());
+   /*     LinearLayout mLinearLayout= (LinearLayout) findViewById(R.id.spinner_layout);
+        mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
+        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this);
         spinnerAdapter.addItems(setLeagueDivisions());
 
-        Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);
+        spinner = (Spinner) findViewById(R.id.toolbar_spinner);
 
         spinner.setAdapter(spinnerAdapter);
 
@@ -116,7 +126,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // navigationView.setCheckedItem(R.id.nav_matches);
+         navigationView.setCheckedItem(Constants.TOURNAMENT_ACTIVITY);
         //dynamically adds the tourneys to follow
         createDynamicTournamentMenu(navigationView);
 
@@ -174,15 +184,17 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
 
 
+
     public void onSpinnerSelectionChangeScreen(int position) {
 
         if (mLastSpinnerSelectedItem != position) {
 
             if (position == 0) {
-                tabLayout.setVisibility(View.VISIBLE);
+                if(!tabLayout.isShown()){
+                    tabLayout.setVisibility(View.VISIBLE);
+                }
+
                 cleanAdapters(mLastSpinnerSelectedItem);
-                mViewPager = null;
-                mViewPager = (ViewPager) findViewById(R.id.container);
                 mLastSpinnerSelectedItem = position;
 
                 // Create the adapter that will return a fragment for each of the three
@@ -190,6 +202,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
 
                 // Set up the ViewPager with the sections adapter.
+                mViewPager = (ViewPager) findViewById(R.id.container);
                 mViewPager.setAdapter(mTourneyCalendarPagerAdapter);
 
                 tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -207,11 +220,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                     tabLayout.setVisibility(View.GONE);
                 }
                 cleanAdapters(mLastSpinnerSelectedItem);
-                mViewPager = null;
-                mViewPager = (ViewPager) findViewById(R.id.container);
                 mLastSpinnerSelectedItem = position;
                 mNewsFeedPageAdapater = new NewsPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
+                mViewPager = (ViewPager) findViewById(R.id.container);
                 mViewPager.setAdapter(mNewsFeedPageAdapater);
 
 
@@ -220,12 +232,12 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                     tabLayout.setVisibility(View.GONE);
                 }
                 cleanAdapters(mLastSpinnerSelectedItem);
-                mViewPager = null;
-                mViewPager = (ViewPager) findViewById(R.id.container);
+
                 mLastSpinnerSelectedItem = position;
 
                 mLeaderPageAdapter = new LeadersPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
+                mViewPager = (ViewPager) findViewById(R.id.container);
                 mViewPager.setAdapter(mLeaderPageAdapter);
             }
         }
@@ -250,8 +262,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                             int id = item.getItemId();
 
                             if (id != torneyID) {
-                                nav.setCheckedItem(torneyID);
-
                                 Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
 
                                 if (intent != null) {
@@ -319,7 +329,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id != 1) {
+        if (id != Constants.TOURNAMENT_ACTIVITY) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 

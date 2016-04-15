@@ -15,6 +15,8 @@ public class Constants {
     public static final int CLUBS_ACTIVITY_BY_TEAM =100;
     public static final int TOURNAMENT_ACTIVITY =0;
     public static final int NEWS_FEED_DETAILS_ACTIVITY =1;
+    public static final int LOADING_SUCCESS =1;
+    public static final int LOADING_FAILURE =0;
 
     public static final int GOOGLE_API_CLIENT_TIMEOUT_S = 10; // 10 seconds
     public static final String GOOGLE_API_CLIENT_ERROR_MSG =

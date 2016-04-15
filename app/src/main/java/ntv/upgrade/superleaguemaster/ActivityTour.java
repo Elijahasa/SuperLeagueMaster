@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -28,16 +29,24 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import is.arontibo.library.ElasticDownloadView;
+import is.arontibo.library.ProgressDownloadView;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.Utils.Tools;
 import ntv.upgrade.superleaguemaster.Utils.Utils;
 import ntv.upgrade.superleaguemaster.service.UtilityService;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class ActivityTour extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         FragmentAttractionsList.OnFragmentInteractionListener, FragmentMap.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
+
+    @InjectView(R.id.elastic_download_view)
+    ElasticDownloadView mElasticDownloadView;
     // for log porpuses
     private final String TAG = ActivityTour.class.getSimpleName();
     // Client used to interact with Google APIs.
@@ -57,6 +66,8 @@ private Activity thisActivity;
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        ButterKnife.inject(this);
+     //   startLoading(Constants.LOADING_SUCCESS);
     }
 
     @Override
@@ -75,6 +86,7 @@ private Activity thisActivity;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
+
         thisActivity=this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -137,6 +149,55 @@ private Activity thisActivity;
                 .setMessage(bodyResId)
                 .setPositiveButton(android.R.string.ok, null);
         builder.create().show();
+    }
+
+    public boolean startLoading(int id){
+
+        //noinspection SimplifiableIfStatement
+        if (id == Constants.LOADING_SUCCESS) {
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.startIntro();
+                }
+            });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.success();
+                }
+            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+            return true;
+        } else if (id == Constants.LOADING_FAILURE) {
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.startIntro();
+                }
+            });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.setProgress(45);
+                }
+            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mElasticDownloadView.fail();
+                }
+            }, 3 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+
+            return true;
+        }
+
+        return false;
     }
 
     public void createDynamicTournamentMenu(NavigationView navigationView) {
@@ -337,9 +398,9 @@ private Activity thisActivity;
         public CharSequence getPageTitle(int position) {
 
             if (position == 0) {
-                return "Attractions";
+                return "Canchas";
             } else {
-                return "Map View";
+                return "Mapa";
             }
         }
     }
