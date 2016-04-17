@@ -8,6 +8,9 @@
     android:layout_height="250dp"
     card_view:cardElevation="8dp"
     android:layout_marginTop="8dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <TextView

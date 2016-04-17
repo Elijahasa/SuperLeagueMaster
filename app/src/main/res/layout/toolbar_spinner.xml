@@ -13,6 +13,8 @@
         android:dropDownSelector="@color/colorAccent"
         android:clickable="true"
         android:spinnerMode="dropdown"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar" />
 
 

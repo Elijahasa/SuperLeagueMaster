@@ -40,6 +40,7 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context=".FragmentLeaders"
+        android:background="?attr/selectableItemBackground"
         tools:listitem="@layout/fragment_leaders" />
 
 </LinearLayout>

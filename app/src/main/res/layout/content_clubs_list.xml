@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActivityClubSelect"
-    tools:showIn="@layout/app_bar_clubs_list">
+    >
 
     <android.support.v7.widget.RecyclerView
+        android:background="?attr/selectableItemBackground"
         android:id="@+id/clubs_cardList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
         android:onClick="onClickedTeam"
-        />
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ActivityClubSelect"
+        tools:listitem="@layout/activity_club_list"/>
 
 </FrameLayout>

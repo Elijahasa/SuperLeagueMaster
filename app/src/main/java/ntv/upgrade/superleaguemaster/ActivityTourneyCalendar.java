@@ -235,6 +235,8 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
                 mLastSpinnerSelectedItem = position;
 
+
+
                 mLeaderPageAdapter = new LeadersPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
                 mViewPager = (ViewPager) findViewById(R.id.container);

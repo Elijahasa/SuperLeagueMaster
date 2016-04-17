@@ -16,6 +16,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:scrollbars="vertical"
         app:layoutManager="GridLayoutManager"
-        app:spanCount="@integer/list_columns" />
+        app:spanCount="@integer/list_columns"
+        android:background="?attr/selectableItemBackground"/>
 
 </FrameLayout>
