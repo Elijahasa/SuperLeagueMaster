@@ -10,8 +10,7 @@
     >
 
     <include
-        layout="@layout/app_bar_clubs_list"
-        />
+        layout="@layout/app_bar_clubs_list" />
 
 
     <android.support.design.widget.NavigationView

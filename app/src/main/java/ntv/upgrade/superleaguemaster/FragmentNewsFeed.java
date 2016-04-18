@@ -104,11 +104,11 @@ public class FragmentNewsFeed extends Fragment {
 
                 Intent intent = DrawerSelector.onItemSelected(ActivityTourneyCalendar.getReference(),
                         Constants.NEWS_FEED_DETAILS_ACTIVITY);
-                //intent.putExtra("CLUBID", position);
+                intent.putExtra("CLUBID", position);
 
                 if (intent != null) {
                     startActivity(intent);
-
+                getActivity().finish();
                 }
             }
 

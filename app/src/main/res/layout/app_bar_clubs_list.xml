@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context=".ActivityClubSelect">
 
+    <include layout="@layout/content_clubs_list"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,10 +30,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_clubs_list"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"/>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

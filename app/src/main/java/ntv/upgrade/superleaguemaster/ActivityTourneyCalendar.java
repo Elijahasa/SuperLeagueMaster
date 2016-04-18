@@ -1,6 +1,7 @@
 package ntv.upgrade.superleaguemaster;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,8 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +61,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private static ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     public static Activity getReference(){
         return thisActivity;
@@ -75,10 +76,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matches);
+        setContentView(R.layout.activity_tourney_matches);
 
         getSelectedSpinnerItem();
-        this.thisActivity = this;
+        ActivityTourneyCalendar.thisActivity = this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -170,12 +171,12 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 }
                 break;
             case 1:
-                if(mTourneyCalendarPagerAdapter != null ) {
+                if(mNewsFeedPageAdapater != null ) {
                     mNewsFeedPageAdapater.clearAll();
                 }
                 break;
             case 2:
-                if(mTourneyCalendarPagerAdapter != null ) {
+                if(mLeaderPageAdapter != null ) {
                     mLeaderPageAdapter.clearAll();
                 }
                 break;
@@ -186,6 +187,8 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
 
     public void onSpinnerSelectionChangeScreen(int position) {
+
+       // LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (mLastSpinnerSelectedItem != position) {
 
@@ -200,6 +203,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 // Create the adapter that will return a fragment for each of the three
                 // primary sections of the activity.
                 mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
+               // View v =  li.inflate(R.layout.activity_tourney_matches, null);
 
                 // Set up the ViewPager with the sections adapter.
                 mViewPager = (ViewPager) findViewById(R.id.container);
@@ -221,6 +225,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 }
                 cleanAdapters(mLastSpinnerSelectedItem);
                 mLastSpinnerSelectedItem = position;
+
                 mNewsFeedPageAdapater = new NewsPagerAdapter(getSupportFragmentManager());
                 // Set up the ViewPager with the sections adapter.
                 mViewPager = (ViewPager) findViewById(R.id.container);
@@ -228,6 +233,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
 
             } else if (position == 2) {
+
                 if (tabLayout.isShown()) {
                     tabLayout.setVisibility(View.GONE);
                 }
@@ -236,10 +242,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 mLastSpinnerSelectedItem = position;
 
 
-
-                mLeaderPageAdapter = new LeadersPagerAdapter(getSupportFragmentManager());
+                if(mLeaderPageAdapter==null){
+                mLeaderPageAdapter = new LeadersPagerAdapter(getSupportFragmentManager());}
                 // Set up the ViewPager with the sections adapter.
-                mViewPager = (ViewPager) findViewById(R.id.container);
+                mViewPager = (ViewPager)  findViewById(R.id.container);
                 mViewPager.setAdapter(mLeaderPageAdapter);
             }
         }
@@ -349,6 +355,26 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(ActivityTourneyCalendar.this, "onStart tourAct", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(ActivityTourneyCalendar.this, "onDestroy tourAct", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Toast.makeText(ActivityTourneyCalendar.this, "onRestart tourAct", Toast.LENGTH_SHORT).show();
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      * <p>
@@ -372,11 +398,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
 
         public void clearAll() //Clear all page
-        {
+        {if(mPageReferenceMap.size()> 0){
             FragmentManager fm = getSupportFragmentManager();
             for (int i = 0; i < mPageReferenceMap.size(); i++)
                 fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
-        }
+        }}
 
         private String makeFragmentName(int viewId, int index) {
             return "android:switcher:" + viewId + ":" + index;
@@ -445,11 +471,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
 
         public void clearAll() //Clear all page
-        {
+        {if(mPageReferenceMap.size()> 0){
             FragmentManager fm = getSupportFragmentManager();
             for (int i = 0; i < mPageReferenceMap.size(); i++)
                 fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
-        }
+        }}
 
         @Override
         public Fragment getItem(int position) {
@@ -510,11 +536,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
 
         public void clearAll() //Clear all page
-        {
+        { if(mPageReferenceMap.size()> 0){
             FragmentManager fm = getSupportFragmentManager();
             for (int i = 0; i < mPageReferenceMap.size(); i++)
                 fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
-        }
+        }}
 
         private String makeFragmentName(int viewId, int index) {
             return "android:switcher:" + viewId + ":" + index;
