@@ -57,7 +57,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private Spinner spinner;
-    private static int mLastSpinnerSelectedItem = 0;
+    private int mLastSpinnerSelectedItem = 10;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -78,7 +78,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourney_matches);
 
-        getSelectedSpinnerItem();
         ActivityTourneyCalendar.thisActivity = this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -91,37 +90,26 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         toolbar.addView(spinnerContainer, lp);
 
-   /*     LinearLayout mLinearLayout= (LinearLayout) findViewById(R.id.spinner_layout);
-        mLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
         TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this);
-        spinnerAdapter.addItems(setLeagueDivisions());
+        spinnerAdapter.addItems(setTourneySpinner());
 
         spinner = (Spinner) findViewById(R.id.toolbar_spinner);
-
         spinner.setAdapter(spinnerAdapter);
-
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mTourneyCalendarPagerAdapter);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+       // tabLayout.setupWithViewPager(mViewPager);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        // if extras are set to noticias =1, else default
+
+        if(getIntent().hasExtra("Noticias")){
+            int selected = getSelectedSpinnerItem();
+            onSpinnerSelectionChangeScreen(selected);
+        }else{
+            onSpinnerSelectionChangeScreen(0);
+        }
+
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -152,7 +140,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     //catches the extras to set the appropriate display
     public int getSelectedSpinnerItem() {
         int selected = 0;
-        List<String> extras = setLeagueDivisions();
+        List<String> extras = setTourneySpinner();
 
         for (int i = 0; i < extras.size(); i++) {
             if (getIntent().hasExtra(extras.get(i))) {
@@ -182,8 +170,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                 break;
        }
     }
-
-
 
 
     public void onSpinnerSelectionChangeScreen(int position) {
@@ -221,8 +207,12 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
             } else if (position == 1) {
                 if (tabLayout.isShown()) {
+
+                    tabLayout = (TabLayout) findViewById(R.id.tabs);
                     tabLayout.setVisibility(View.GONE);
                 }
+
+                spinner.setSelection(1);
                 cleanAdapters(mLastSpinnerSelectedItem);
                 mLastSpinnerSelectedItem = position;
 
@@ -288,7 +278,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
     }
 
-    public List<String> setLeagueDivisions() {
+    public List<String> setTourneySpinner() {
         List<String> myLeagueDiv = new ArrayList<>(6);
         myLeagueDiv.add("Partidos");
         myLeagueDiv.add("Noticias");

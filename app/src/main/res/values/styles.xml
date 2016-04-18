@@ -17,6 +17,17 @@
 
     </style>
 
+    <style name="AppTheme.NoActionBar.Detail">
+        <item name="windowActionBarOverlay">true</item>
+        <item name="actionBarStyle">@style/ActionBar.Detail</item>
+    </style>
+
+    <style name="ActionBar.Detail" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">showHome|homeAsUp</item>
+        <item name="android:background">@color/transparent_actionbar_background</item>
+    </style>
+
+
     <style name="Color1SwitchStyle">
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ntv.upgrade.superleaguemaster.Adapters.NewsFeedAdapter;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
 
@@ -163,7 +164,12 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(getIntent().hasExtra("tourney_newsfeed") && getIntent().getExtras().getInt("tourney_newsfeed")==1) {
+            Intent intent = DrawerSelector.onItemSelected(this, Constants.TOURNAMENT_ACTIVITY );
+            //will set the newsfeed screen in tourneys
+            intent.putExtra("Noticias", 1);
+            startActivity(intent);
+        }else{
             super.onBackPressed();
         }
     }

@@ -105,6 +105,13 @@
             android:label="@string/title_activity_activity_news_details"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <activity
+            android:name=".ActivityAttractionDetail"
+            android:label="@string/app_name"
+            android:parentActivityName=".ActivityTour"
+            android:theme="@style/AppTheme.NoActionBar.Detail" />
+
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"

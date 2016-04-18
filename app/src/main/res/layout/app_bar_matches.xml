@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabSelectedTextColor="@color/colorAccent"
-            android:scrollIndicators="bottom" />
+            android:scrollIndicators="bottom"
+            android:visibility="gone"/>
 
     </android.support.design.widget.AppBarLayout>
 

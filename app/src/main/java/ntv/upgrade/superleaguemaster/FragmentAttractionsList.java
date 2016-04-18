@@ -249,12 +249,12 @@ public class FragmentAttractionsList extends Fragment {
 
         @Override
         public void onItemClick(View view, int position) {
-           /* if (!mItemClicked) {
+            if (!mItemClicked) {
                 mItemClicked = true;
                 View heroView = view.findViewById(android.R.id.icon);
                 ActivityAttractionDetail.launch(
                         getActivity(), mAdapter.mAttractionList.get(position).getName(), heroView);
-            }*/
+            }
         }
     }
 
