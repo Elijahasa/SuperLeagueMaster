@@ -13,8 +13,6 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:onClick="onClickedTeam"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".ActivityClubSelect"
-        tools:listitem="@layout/activity_club_list"/>
+        app:layoutManager="LinearLayoutManager"/>
 
 </FrameLayout>
