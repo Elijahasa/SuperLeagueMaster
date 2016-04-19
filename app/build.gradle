@@ -37,6 +37,11 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.3.4'
     compile 'com.github.tibolte:elasticdownload:1.0.+'
     compile 'com.nineoldandroids:library:2.4.0'
-
     compile 'com.jakewharton:butterknife:6.1.0'
+
+    repositories {
+        mavenCentral()
+    }
+    compile 'com.sothree.slidinguppanel:library:3.0.0'
+
 }

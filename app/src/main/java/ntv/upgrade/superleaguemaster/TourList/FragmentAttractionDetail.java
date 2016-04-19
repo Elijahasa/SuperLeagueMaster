@@ -59,7 +59,7 @@ public class FragmentAttractionDetail extends Fragment {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.content_attraction_detail, container, false);
         String attractionName = getArguments().getString(EXTRA_ATTRACTION);
-        mAttraction = findAttraction(attractionName);
+        mAttraction = ActivityMain.mAttractionsArrayList.get(0);
 
         if (mAttraction == null) {
             getActivity().finish();
@@ -85,7 +85,7 @@ public class FragmentAttractionDetail extends Fragment {
         int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size)
                 * Constants.IMAGE_ANIM_MULTIPLIER;
         Glide.with(getActivity())
-                .load(mAttraction.getImage())
+                .load(R.drawable.garrincha_newsfeed3)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.color.lighter_gray)
                 .override(imageSize, imageSize)
