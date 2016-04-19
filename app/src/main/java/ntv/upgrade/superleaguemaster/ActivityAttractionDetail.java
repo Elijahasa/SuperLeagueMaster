@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import ntv.upgrade.superleaguemaster.TourList.FragmentAttractionDetail;
@@ -24,7 +25,7 @@ public class ActivityAttractionDetail extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void launch(Activity activity, String attraction, View heroView) {
         Intent intent = getLaunchIntent(activity, attraction);
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     activity, heroView, heroView.getTransitionName());
             ActivityCompat.startActivity(activity, intent, options.toBundle());
@@ -43,6 +44,12 @@ public class ActivityAttractionDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attraction_detail);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         String attraction = getIntent().getStringExtra(EXTRA_ATTRACTION);
         if (savedInstanceState == null) {

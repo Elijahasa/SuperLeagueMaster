@@ -85,7 +85,7 @@ public class FragmentAttractionDetail extends Fragment {
         int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size)
                 * Constants.IMAGE_ANIM_MULTIPLIER;
         Glide.with(getActivity())
-                .load(R.drawable.garrincha_newsfeed3)
+                .load(R.drawable.garrincha_newsfeed3)  //TODO: attraction object needs to hold and int value instead of a drawable
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.color.lighter_gray)
                 .override(imageSize, imageSize)
