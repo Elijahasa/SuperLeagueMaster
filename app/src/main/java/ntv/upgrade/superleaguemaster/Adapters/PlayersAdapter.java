@@ -55,6 +55,10 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
         return new TeamHolder(v);
     }
 
+    public int getPlayerID(int id){
+       return Integer.parseInt(mTeam.getmPlayersList().get(id).getmPlayerNum());
+    }
+
     @Override
     public void onBindViewHolder(PlayersAdapter.TeamHolder holder, int position) {
         // - get element from your dataset at this vPlayerPosition

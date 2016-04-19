@@ -1,6 +1,7 @@
 package ntv.upgrade.superleaguemaster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ntv.upgrade.superleaguemaster.Adapters.PlayersAdapter;
+import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Decorators.DividerItemDecoration;
+import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 
 /**
  * A fragment representing a list of Items.
@@ -65,7 +68,7 @@ public class FragmentPlayers extends Fragment {
         mPlayerAdapter = new PlayersAdapter(mTeamID, getActivity());
 
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -74,6 +77,21 @@ public class FragmentPlayers extends Fragment {
         recyclerView.setAdapter(mPlayerAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(getContext(), recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+           // mPlayerAdapter.getPlayerID(position);
+             mListener.onListFragmentInteraction();
+
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                // ...
+            }
+        }));
 
         return view;
     }

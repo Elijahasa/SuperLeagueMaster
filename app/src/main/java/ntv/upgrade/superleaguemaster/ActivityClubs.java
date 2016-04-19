@@ -2,6 +2,7 @@ package ntv.upgrade.superleaguemaster;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -20,16 +21,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +56,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DrawerLayout drawer;
     private CollapsingToolbarLayout collapsingToolbar;
+    private SlidingUpPanelLayout mLayout;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -129,7 +138,57 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
             }
         });
 
-    }
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                Log.i("ActivityClubs", "onPanelSlide, offset " + slideOffset);
+                if(slideOffset == 0.0){
+                    Log.i("ActivityClubs", "slideOffSet == 0.0 ---- " + slideOffset);
+
+              //mLayout.setPanelHeight(0);
+
+                 //   mLayout.offsetTopAndBottom(0);}
+
+                /*else if (slideOffset >= 0.2){
+                    mLayout.setPanelHeight(68);
+                }*/
+            }}
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED ){mLayout.setPanelHeight(0);}
+
+                Log.i("ActivityClubs", "onPanelStateChanged " + newState);
+
+            }
+        });
+        mLayout.setFadeOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+
+        TextView t = (TextView) findViewById(R.id.name);
+        t.setText("PlayerImage");
+        Button f = (Button) findViewById(R.id.follow);
+        f.setText("PlayerName");
+        f.setMovementMethod(LinkMovementMethod.getInstance());
+        f.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://www.upgrade.do"));
+                startActivity(i);
+            }
+        });
+
+        if (mLayout != null) {
+            if (mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);}
+
+    }}
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
         final NavigationView nav = navigationView;
@@ -155,7 +214,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
                                 if (intent != null) {
 
                                     startActivity(intent);
-                                    finish();
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                                 }
                             }
@@ -196,13 +254,51 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            startActivity(getParentActivityIntent());
-            overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-            finish();
+        } else if (mLayout != null &&
+                (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }else {
+           /* startActivity(getParentActivityIntent());
+          overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);*/
+            super.onBackPressed();
         }
     }
 
+    public void onClickedFragmentPlayer(){
+        int slideablePanelHeight = 200;
+        int animationDuration = 200;
+        SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(mLayout, slideablePanelHeight, animationDuration);
+
+        mLayout.setAnchorPoint(0.6f);
+        mLayout.startAnimation(animation);
+        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
+
+    }
+
+    public class SlidingUpPanelResizeAnimation extends Animation {
+
+        private SlidingUpPanelLayout mLayout;
+
+        private float mTo;
+        private float mFrom = 0;
+
+        public SlidingUpPanelResizeAnimation(SlidingUpPanelLayout layout, float to, int duration) {
+            mLayout = layout;
+            mTo = to;
+
+            setDuration(duration);
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            float dimension = (mTo - mFrom) * interpolatedTime + mFrom;
+
+            mLayout.setPanelHeight((int) dimension);
+
+            mLayout.requestLayout();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -255,7 +351,10 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
     @Override
     public void onListFragmentInteraction() {
-        //fragment players interaction listener
+        Log.i("ActivityClubs", "onPanelStateChanged " + " FRAGMENTCLICk! ");
+       onClickedFragmentPlayer();
+
+
     }
 
     /**
@@ -313,6 +412,8 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
 
         }
+
+
 
         public
         @Nullable
