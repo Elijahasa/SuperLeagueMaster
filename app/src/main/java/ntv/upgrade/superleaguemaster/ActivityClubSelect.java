@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
     private Activity thisActivity;
     private List<Team> clubItems = new ArrayList<>();
     private ClubsAdapter clubsAdapter;
+    private GridLayoutManager lLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,15 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.clubs_cardList);
         recyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        lLayout = new GridLayoutManager(ActivityClubSelect.this, 3);
+        recyclerView.setLayoutManager(lLayout);
 
         clubsAdapter = new ClubsAdapter(clubItems, this);
         recyclerView.setAdapter(clubsAdapter);
+        /*
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, null));*/
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(this, recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
             @Override

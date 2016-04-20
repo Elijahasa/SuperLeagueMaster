@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Vegueta, 77"
+                    android:text="Vegeta, 77"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorAccent" />
 
