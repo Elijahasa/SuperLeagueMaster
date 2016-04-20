@@ -10,8 +10,8 @@
     <color name="colorPrimaryDark">#E64A19</color>
     <color name="colorPrimaryLight">#FF8A65</color>-->
     // Accent Colors
-    <color name="colorAccent">#ff3a1d</color>
-    <color name="colorAccentLight">#ff3a1d</color>
+    <color name="colorAccent">#1dbfff</color>
+    <color name="colorAccentLight">#78d2f5</color>
 
 
     // FAKE Primary Colors

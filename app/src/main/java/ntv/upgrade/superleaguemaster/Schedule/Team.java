@@ -177,6 +177,7 @@ public class Team {
                 }else if( AppConstant.mMatchArrayList[i][j][2] == mTeamID){
                     matchList = mName + " VS " + AppConstant.mTeamArrayList[AppConstant.mMatchArrayList[i][j][1]][1]+" "+ AppConstant.mMatchTimeDateArray[i][j][0];
                 }
+
                     addMatch(matchList);
                 }
             }

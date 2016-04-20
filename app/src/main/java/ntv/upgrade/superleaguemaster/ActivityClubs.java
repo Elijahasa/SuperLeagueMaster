@@ -2,9 +2,7 @@ package ntv.upgrade.superleaguemaster;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -19,10 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,8 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,7 +49,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DrawerLayout drawer;
     private CollapsingToolbarLayout collapsingToolbar;
-    private SlidingUpPanelLayout mLayout;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -86,12 +79,9 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         bindActivity();
         //  setupCollapsingToolbar();
         //  mAppBarLayout.addOnOffsetChangedListener(this);
-
-
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mToolbar.inflateMenu(R.menu.main);
         // startAlphaAnimation(mTitle, 0, View.INVISIBLE);
-
-
         View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
                 mToolbar, false);
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
@@ -100,9 +90,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
         TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this, selectedTeam);
         spinnerAdapter.addItems(setLeagueDivisions());
-
         Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);
-
         spinner.setAdapter(spinnerAdapter);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -112,12 +100,10 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -125,12 +111,11 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_clubs);
-
         createDynamicTournamentMenu(navigationView);
+
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -138,67 +123,106 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
             }
         });
 
-        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                Log.i("ActivityClubs", "onPanelSlide, offset " + slideOffset);
-                if(slideOffset == 0.0){
-                    Log.i("ActivityClubs", "slideOffSet == 0.0 ---- " + slideOffset);
-
-              //mLayout.setPanelHeight(0);
-
-                 //   mLayout.offsetTopAndBottom(0);}
-
-                /*else if (slideOffset >= 0.2){
-                    mLayout.setPanelHeight(68);
-                }*/
-            }}
+                if (slideOffset == 0.0) {
+                    slidingUpPanelLayout.setPanelHeight(0);
+             //       findViewById(R.id.dragView).setVisibility(View.GONE);
+                }
+            }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED ){mLayout.setPanelHeight(0);}
+            /*    if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                    findViewById(R.id.dragView).setVisibility(View.GONE);
+                }*/
 
                 Log.i("ActivityClubs", "onPanelStateChanged " + newState);
 
             }
         });
-        mLayout.setFadeOnClickListener(new View.OnClickListener() {
+        slidingUpPanelLayout.setFadeOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
 
-        TextView t = (TextView) findViewById(R.id.name);
-        t.setText("PlayerImage");
-        Button f = (Button) findViewById(R.id.follow);
-        f.setText("PlayerName");
-        f.setMovementMethod(LinkMovementMethod.getInstance());
-        f.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.upgrade.do"));
-                startActivity(i);
-            }
-        });
 
-        if (mLayout != null) {
-            if (mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);}
+/*
+        TextView vPlayerName = (TextView) findViewById(R.id.leaders_player_name);;
+        CircleImageView vPlayerAvatar ;
+        TextView vPlayerNumber;
+        TextView vLeaderPosition;
+        TextView vPlayerClub;
+        int Id;
 
-    }}
+            vPlayerName = (TextView) findViewById(R.id.leaders_player_name);
+            vPlayerAvatar = (CircleImageView) findViewById(R.id.leaders_player_avatar);
+            vPlayerNumber = (TextView) findViewById(R.id.leaders_player_number);
+            vLeaderPosition = (TextView) findViewById(R.id.leaders_position_text);
+            vPlayerClub = (TextView) findViewById(R.id.leaders_player_club);
+*/
+
+/*
+
+        if (slidingUpPanelLayout != null) {
+            if (slidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);}
+*/
+
+    }
+
+
+    public void onClickedFragmentPlayer() {
+      /*  int slideablePanelHeight = 200;
+        int animationDuration = 200;
+        SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(slidingUpPanelLayout, slideablePanelHeight, animationDuration);
+*/
+        slidingUpPanelLayout.setAnchorPoint(0.7f);
+        findViewById(R.id.dragView).setVisibility(View.VISIBLE);
+
+        // slidingUpPanelLayout.startAnimation(animation);
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
+
+    }
+
+    public class SlidingUpPanelResizeAnimation extends Animation {
+
+        private SlidingUpPanelLayout mLayout;
+
+        private float mTo;
+        private float mFrom = 0;
+
+        public SlidingUpPanelResizeAnimation(SlidingUpPanelLayout layout, float to, int duration) {
+            mLayout = layout;
+            mTo = to;
+
+            setDuration(duration);
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            float dimension = (mTo - mFrom) * interpolatedTime + mFrom;
+
+            mLayout.setPanelHeight((int) dimension);
+            mLayout.requestLayout();
+        }
+    }
+
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
         final NavigationView nav = navigationView;
         //adds all the available tourneys to the navigation Torneos Group
         //TODO:replace the appconstans for the localDB
-        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
-            final int torneyID = tourney ;
+        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
+            final int torneyID = tourney;
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
-                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
                     .setIcon(R.drawable.ic_soccer_ball)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
@@ -254,51 +278,16 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (mLayout != null &&
-                (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
-            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        }else {
+        } else if (slidingUpPanelLayout != null &&
+                (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else {
            /* startActivity(getParentActivityIntent());
           overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);*/
             super.onBackPressed();
         }
     }
 
-    public void onClickedFragmentPlayer(){
-        int slideablePanelHeight = 200;
-        int animationDuration = 200;
-        SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(mLayout, slideablePanelHeight, animationDuration);
-
-        mLayout.setAnchorPoint(0.6f);
-        mLayout.startAnimation(animation);
-        mLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-
-
-    }
-
-    public class SlidingUpPanelResizeAnimation extends Animation {
-
-        private SlidingUpPanelLayout mLayout;
-
-        private float mTo;
-        private float mFrom = 0;
-
-        public SlidingUpPanelResizeAnimation(SlidingUpPanelLayout layout, float to, int duration) {
-            mLayout = layout;
-            mTo = to;
-
-            setDuration(duration);
-        }
-
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            float dimension = (mTo - mFrom) * interpolatedTime + mFrom;
-
-            mLayout.setPanelHeight((int) dimension);
-
-            mLayout.requestLayout();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -352,15 +341,15 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     @Override
     public void onListFragmentInteraction() {
         Log.i("ActivityClubs", "onPanelStateChanged " + " FRAGMENTCLICk! ");
-       onClickedFragmentPlayer();
+        onClickedFragmentPlayer();
 
 
     }
 
     /**
      * A placeholder fragment containing a simple view.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -412,7 +401,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
 
         }
-
 
 
         public

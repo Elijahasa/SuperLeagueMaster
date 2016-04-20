@@ -8,20 +8,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_main"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_news_icon"
             android:title="Noticias" />
         <item
             android:id="@+id/nav_clubs"
-            android:icon="@drawable/ic_group_work_black_24dp"
+            android:icon="@drawable/ic_teams_icon"
             android:title="Clubes" />
 
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_history_24dp"
-            android:title="Historial" />
+            android:icon="@drawable/ic_open_game_icon"
+            android:title="Liga Abierta" />
         <item
             android:id="@+id/nav_location"
-            android:icon="@drawable/ic_place_black_24dp"
+            android:icon="@drawable/ic_soccer_location_icon"
             android:title="Locaciones" />
 
     </group>
@@ -32,8 +32,11 @@
         <item
             android:id="@+id/nav_dynamic_tourney"
             android:title="Torneos"
+            android:icon="@drawable/ic_tourney_icon"
             app:actionLayout="@layout/drawer_switch"
+
             >
+
             <menu>
 
             </menu>
