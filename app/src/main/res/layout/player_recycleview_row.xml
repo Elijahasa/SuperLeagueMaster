@@ -23,14 +23,14 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/player_avatar"
             android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="3"
+            android:layout_height="50dp"
+            android:layout_weight="2"
             android:src="@drawable/player_zidane" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7">
+            android:layout_weight="8">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,16 +45,16 @@
                     android:text="Josian Acevedo"
 
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/player_text_alias"
-                    android:layout_marginTop="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="'Vegeta'"/>
+                    android:textSize="12sp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Vegeta"/>
 
 
 
@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:text="Primera"
+                    android:textSize="12sp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorAccent" />
 
@@ -81,9 +82,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="4dp"
                     android:text="Portero"
-                    android:textStyle="italic"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -93,8 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="77"
-                    android:textSize="35sp"
-                    android:textStyle="italic" />
+                    android:textSize="26sp" />
 
             </LinearLayout>
 
