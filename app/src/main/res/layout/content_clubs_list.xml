@@ -10,5 +10,5 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="onClickedTeam"
-        app:layoutManager="LinearLayoutManager"/>
+        app:layoutManager="GridLayoutManager"/>
 

@@ -161,7 +161,6 @@ public class ActivityMain extends AppCompatActivity
 
                 if (intent != null) {
                     startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }
             }
 

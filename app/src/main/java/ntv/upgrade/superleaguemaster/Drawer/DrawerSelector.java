@@ -65,9 +65,7 @@ public class DrawerSelector {
             case Constants.NEWS_FEED_DETAILS_ACTIVITY:
                 intent = new Intent(callingActivity, ActivityNewsDetails.class);
                 break;
-            case 2:
-                intent = new Intent(callingActivity, ActivityTourneyCalendar.class);
-                break;
+
 
             default:
         }

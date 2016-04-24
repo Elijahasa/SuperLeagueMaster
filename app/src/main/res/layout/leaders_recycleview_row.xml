@@ -43,7 +43,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/leaders_player_avatar"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="56dp"
             android:layout_weight="2.5"
             android:src="@drawable/player_zidane" />
 

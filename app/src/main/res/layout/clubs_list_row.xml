@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/club_row_cardview"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
@@ -19,8 +19,8 @@
     <ImageView
 
         android:id="@+id/club_image_row"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="center"
         android:src="@mipmap/clubbarcelonatransparent_copy" />
 

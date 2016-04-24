@@ -71,7 +71,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teams);
+        setContentView(R.layout.activity_clubs);
         this.thisActivity = this;
         int _teamID = (int) getIntent().getExtras().get("CLUBID");
         Team selectedTeam = new Team(_teamID);

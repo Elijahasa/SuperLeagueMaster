@@ -127,7 +127,7 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
             return true;
         }
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            super.onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,11 +164,7 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(getIntent().hasExtra("tourney_newsfeed") && getIntent().getExtras().getInt("tourney_newsfeed")==1) {
-            Intent intent = DrawerSelector.onItemSelected(this, Constants.TOURNAMENT_ACTIVITY );
-            //will set the newsfeed screen in tourneys
-            intent.putExtra("Noticias", 1);
-            startActivity(intent);
+
         }else{
             super.onBackPressed();
         }

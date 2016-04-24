@@ -36,6 +36,7 @@
                         android:text="Sabado 01"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+
                     <ImageView
                         android:id="@+id/image_team1"
                         android:layout_width="50dp"

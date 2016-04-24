@@ -1,5 +1,6 @@
 package ntv.upgrade.superleaguemaster;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,7 +87,6 @@ public class FragmentNewsFeed extends Fragment {
         populateDummyNewsFeedItems();
         newsFeedAdapter = new NewsFeedAdapter(newsFeedItems);
 
-
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
 
@@ -108,11 +108,17 @@ public class FragmentNewsFeed extends Fragment {
                 //will be used to identify and go back to the  calling fragment newsfeedfragment (#1)
                 intent.putExtra("tourney_newsfeed", 1);
 
+
                 if (intent != null) {
-                    startActivity(intent);
-                    getActivity().finish();
+
+                    getActivity().startActivity(intent);
+                    // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }
             }
+
+            //TODO: replace with local DBSource
+
+
 
             @Override
             public void onItemLongClick(View view, int position) {
