@@ -144,7 +144,7 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
             if (intent != null) {
 
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+              //  overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

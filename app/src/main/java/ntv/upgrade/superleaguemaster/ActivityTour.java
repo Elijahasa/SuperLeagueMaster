@@ -343,7 +343,7 @@ private Activity thisActivity;
             if (intent != null) {
 
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+  //              overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -360,8 +360,8 @@ private Activity thisActivity;
             drawer.closeDrawer(GravityCompat.START);
         } else {
             startActivity(getParentActivityIntent());
-            overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-            finish();
+         //   overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+         //   finish();
         }
     }
 

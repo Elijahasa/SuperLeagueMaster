@@ -48,7 +48,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private TourneyCalendarPagerAdapter mTourneyCalendarPagerAdapter;/*
+    private  TourneyCalendarPagerAdapter mTourneyCalendarPagerAdapter;/*
     private NewsPagerAdapter mNewsFeedPageAdapater;
     private LeadersPagerAdapter mLeaderPageAdapter;*/
     private DrawerLayout drawer;
@@ -64,6 +64,14 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
     public static Activity getReference() {
         return thisActivity;
+    }
+
+    public int getmLastSpinnerSelectedItem() {
+        return mLastSpinnerSelectedItem;
+    }
+
+    public void setmLastSpinnerSelectedItem(int mLastSpinnerSelectedItem) {
+        this.mLastSpinnerSelectedItem = mLastSpinnerSelectedItem;
     }
 
     @Override
@@ -103,13 +111,18 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             tabLayout.setVisibility(View.VISIBLE);
         }
         mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
+        mTourneyCalendarPagerAdapter.setCurrentSpinnerID(0);
+        mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
         // View v =  li.inflate(R.layout.activity_tourney_matches, null);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mTourneyCalendarPagerAdapter);
-        mViewPager.setOffscreenPageLimit(AppConstant.mMatchArrayList.length + 3);
+       // mViewPager.setOffscreenPageLimit(AppConstant.mMatchArrayList.length);
         tabLayout.setupWithViewPager(mViewPager);
+        /*tabLayout.getChildAt(0).setVisibility(View.GONE);
+
+        tabLayout.getChildAt(0).setVisibility(View.GONE);*/
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -141,37 +154,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // onSpinnerSelectionChangeScreen(position);
-                switch (position) {
-                    case 0:
-                        if (!tabLayout.isShown()) {
-                            tabLayout.setVisibility(View.VISIBLE);
-                        }
-                        mViewPager.setCurrentItem(3, false);
-                        break;
-                    case 1:
-                        if (tabLayout.isShown()) {
-                            tabLayout.setVisibility(View.GONE);
-                        }
-                        mViewPager.setCurrentItem(0, false);
-                        break;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {                // onSpinnerSelectionChangeScreen(position);
 
-                    case 2:
-                        if (tabLayout.isShown()) {
-                            tabLayout.setVisibility(View.GONE);
-                        }
-                        mViewPager.setCurrentItem(1, false);
-                        break;
+                onSpinnerSelecterWorker(position);
 
-                    case 3:
-                        if (tabLayout.isShown()) {
-                            tabLayout.setVisibility(View.GONE);
-                        }
-                        mViewPager.setCurrentItem(2, false);
-                        break;
-
-                }}
+                }
 
                 @Override
                 public void onNothingSelected (AdapterView < ? > parent){
@@ -183,6 +170,59 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
         }
 
+public void onSpinnerSelecterWorker(int position){
+    if (mLastSpinnerSelectedItem != position){
+
+        switch (position) {
+            case 0:
+                if (!tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.VISIBLE);
+                }
+                mTourneyCalendarPagerAdapter.clearAll();
+                mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
+                mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
+                mTourneyCalendarPagerAdapter.getItem(0);
+                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                setmLastSpinnerSelectedItem(position);
+                break;
+            case 1:
+                if (tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.GONE);
+                }
+                mTourneyCalendarPagerAdapter.clearAll();
+                mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
+                mTourneyCalendarPagerAdapter.setPagerCount(1);
+                mTourneyCalendarPagerAdapter.getItem(0);
+                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                mViewPager.invalidate();
+                setmLastSpinnerSelectedItem(position);
+                break;
+
+            case 2:
+                if (tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.GONE);
+                }
+                mTourneyCalendarPagerAdapter.clearAll();
+                mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
+                mTourneyCalendarPagerAdapter.setPagerCount(1);
+                mTourneyCalendarPagerAdapter.getItem(0);
+                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                setmLastSpinnerSelectedItem(position);
+                break;
+
+            case 3:
+                if (tabLayout.isShown()) {
+                    tabLayout.setVisibility(View.GONE);
+                }
+                mTourneyCalendarPagerAdapter.clearAll();
+                mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
+                mTourneyCalendarPagerAdapter.setPagerCount(1);
+                mTourneyCalendarPagerAdapter.getItem(0);
+                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                setmLastSpinnerSelectedItem(position);
+                break;
+        }
+}}
                 //catches the extras to set the appropriate display
 
     public int getSelectedSpinnerItem() {
@@ -253,7 +293,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             drawer.closeDrawer(GravityCompat.START);
         } else {
             startActivity(getParentActivityIntent());
-            overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+           // overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
         }
     }
 
@@ -306,20 +346,20 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(ActivityTourneyCalendar.this, "onStart tourAct", Toast.LENGTH_SHORT).show();
+ //       Toast.makeText(ActivityTourneyCalendar.this, "onStart tourAct", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(ActivityTourneyCalendar.this, "onDestroy tourAct", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(ActivityTourneyCalendar.this, "onDestroy tourAct", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        Toast.makeText(ActivityTourneyCalendar.this, "onRestart tourAct", Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(ActivityTourneyCalendar.this, "onRestart tourAct", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -335,6 +375,8 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
     public class TourneyCalendarPagerAdapter extends FragmentPagerAdapter {
         private int mPageCounter = 0;
+        private int currentSpinnerID = 0;
+        private int pagerCount=1;
         private Map<String, Fragment> mPageReferenceMap = new HashMap<>();
 
         public TourneyCalendarPagerAdapter(FragmentManager fm) {
@@ -342,17 +384,34 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
 
         public Fragment getFragment(String key) {
-
             return mPageReferenceMap.get(key);
         }
 
         public void clearAll() //Clear all page
-        {
+        {if(mPageReferenceMap!=null) {
             if (mPageReferenceMap.size() > 0) {
                 FragmentManager fm = getSupportFragmentManager();
                 for (int i = 0; i < mPageReferenceMap.size(); i++)
                     fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
             }
+            mPageReferenceMap.clear();
+        }
+        }
+
+        public int getCurrentSpinnerID() {
+            return currentSpinnerID;
+        }
+
+        public void setCurrentSpinnerID(int currentSpinnerID) {
+            this.currentSpinnerID = currentSpinnerID;
+        }
+
+        public int getPagerCount() {
+            return pagerCount;
+        }
+
+        public void setPagerCount(int pagerCount) {
+            this.pagerCount = pagerCount;
         }
 
         private String makeFragmentName(int viewId, int index) {
@@ -363,38 +422,42 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (mPageCounter == 0) {
+          //  Fragment fm = fragmentType(position);
 
-                String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
-                FragmentNewsFeed fragmentNewsFeed = FragmentNewsFeed.newInstance();
-                mPageReferenceMap.put(tag, fragmentNewsFeed);
-                mPageCounter++;
-                return fragmentNewsFeed;
+            return fragmentType(position);
 
-            } else if (mPageCounter == 1) {
 
-                String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
-                FragmentLeaders fragmentLeaders = FragmentLeaders.newInstance();
-                mPageReferenceMap.put(tag, fragmentLeaders);
-                mPageCounter++;
-                return fragmentLeaders;
+        }
 
-            } else if (mPageCounter == 2) {
+        /**
+         * returns the fragment depending on the spinner selection
+         * **/
+        public Fragment fragmentType(int position){
+            Fragment selectedFragmentType = null;
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            int typeID = getCurrentSpinnerID();
+            switch (typeID){
+                case 0:
+                    selectedFragmentType =  FragmentMatches.newInstance(position + 1);
+                    mPageReferenceMap.put(tag, selectedFragmentType);
+                    break;
 
-                String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
-                FragmentTourneyStats fragmentTourneyStats = FragmentTourneyStats.newInstance();
-                mPageReferenceMap.put(tag, fragmentTourneyStats);
-                mPageCounter++;
-                return fragmentTourneyStats;
+                case 1:
+                    selectedFragmentType =  FragmentNewsFeed.newInstance();
+                    mPageReferenceMap.put(tag, selectedFragmentType);
+                    break;
 
-            } else {
-                String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
-                FragmentMatches fragmentMatches = FragmentMatches.newInstance(position + 1);
-                mPageReferenceMap.put(tag, fragmentMatches);
-                mPageCounter++;
-                return fragmentMatches;
+                case 2:
+                    selectedFragmentType =  FragmentLeaders.newInstance();
+                    mPageReferenceMap.put(tag, selectedFragmentType);
+                    break;
+
+                case 3:
+                    selectedFragmentType =  FragmentTourneyStats.newInstance();
+                    mPageReferenceMap.put(tag, selectedFragmentType);
+                    break;
             }
-
+            return selectedFragmentType;
         }
 
         public
@@ -414,8 +477,14 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         @Override
         public int getCount() {
             // Show 10 total pages.
-            return AppConstant.mMatchArrayList.length + 3;
+            return getPagerCount();
 
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            // POSITION_NONE makes it possible to reload the PagerAdapter
+            return POSITION_NONE;
         }
 
         @Override
@@ -423,25 +492,25 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             Locale l = Locale.getDefault();
 
             switch (position) {
-                case 3:
+                case 0:
                     return getString(R.string.title_section1).toUpperCase(l);
-                case 4:
+                case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
-                case 5:
+                case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
-                case 6:
+                case 3:
                     return getString(R.string.title_section4).toUpperCase(l);
-                case 7:
+                case 4:
                     return getString(R.string.title_section5).toUpperCase(l);
-                case 8:
+                case 5:
                     return getString(R.string.title_section6).toUpperCase(l);
-                case 9:
+                case 6:
                     return getString(R.string.title_section7).toUpperCase(l);
-                case 10:
+                case 7:
                     return getString(R.string.title_section8).toUpperCase(l);
-                case 11:
+                case 8:
                     return getString(R.string.title_section9).toUpperCase(l);
-                case 12:
+                case 9:
                     return getString(R.string.title_section10).toUpperCase(l);
 
 
@@ -450,5 +519,151 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
     }
 
+    /**
+     * A placeholder fragment containing a simple view.
+     * <p>
+     * <p>
+     * /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class NewsPagerAdapter extends FragmentPagerAdapter {
+
+        private Map<String, FragmentNewsFeed> mPageReferenceMap = new HashMap<>();
+
+        public NewsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public FragmentNewsFeed getFragment(String key) {
+
+            return mPageReferenceMap.get(key);
+        }
+
+
+        public void clearAll() //Clear all page
+        {if(mPageReferenceMap.size()> 0){
+            FragmentManager fm = getSupportFragmentManager();
+            for (int i = 0; i < mPageReferenceMap.size(); i++)
+                fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
+        }}
+
+        private String makeFragmentName(int viewId, int index) {
+            return "android:switcher:" + viewId + ":" + index;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            FragmentNewsFeed fragmentNewsFeed = FragmentNewsFeed.newInstance();
+
+            mPageReferenceMap.put(tag, fragmentNewsFeed);
+
+            return fragmentNewsFeed;
+
+        }
+
+        public
+        @Nullable
+        Fragment getFragmentForPosition(int position) {
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            return fragment;
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 1 total pages.
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return "noticias".toUpperCase(l);
+            }
+            return null;
+        }
+    }
+
+    public class LeadersPagerAdapter extends FragmentPagerAdapter {
+
+        private Map<String, FragmentLeaders> mPageReferenceMap = new HashMap<>();
+
+        public LeadersPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public FragmentLeaders getFragment(String key) {
+
+            return mPageReferenceMap.get(key);
+        }
+
+        private String makeFragmentName(int viewId, int index) {
+            return "android:switcher:" + viewId + ":" + index;
+        }
+
+        public void clearAll() //Clear all page
+        {if(mPageReferenceMap.size()> 0){
+            FragmentManager fm = getSupportFragmentManager();
+            for (int i = 0; i < mPageReferenceMap.size(); i++)
+                fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
+        }}
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            FragmentLeaders fragmentLeaders = FragmentLeaders.newInstance();
+
+            mPageReferenceMap.put(tag, fragmentLeaders);
+
+            return fragmentLeaders;
+
+        }
+
+        public
+        @Nullable
+        Fragment getFragmentForPosition(int position) {
+            String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            return fragment;
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 1 total pages.
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return "Lideres".toUpperCase(l);
+            }
+            return null;
+        }
+    }
 
 }

@@ -67,7 +67,7 @@ public class ActivityAbout extends AppCompatActivity implements CollapsingToolba
             drawer.closeDrawer(GravityCompat.START);
         } else {
             startActivity(getParentActivityIntent());
-            overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+          //  overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
 
         }
     }
@@ -125,7 +125,7 @@ public class ActivityAbout extends AppCompatActivity implements CollapsingToolba
 
             if (intent != null) {
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+               // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
