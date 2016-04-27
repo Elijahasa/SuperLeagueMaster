@@ -13,24 +13,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ntv.upgrade.superleaguemaster.Adapters.NewsFeedAdapter;
-import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
 
-public class ActivityNewsDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentNewsFeedDetails.OnListFragmentInteractionListener {
+public class ActivityNewsDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentNewsFeeddetails.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -74,7 +67,7 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, FragmentNewsFeedDetails.getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, FragmentNewsFeeddetails.getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -184,7 +177,7 @@ public class ActivityNewsDetails extends AppCompatActivity implements Navigation
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return FragmentNewsFeedDetails.newInstance();
+            return FragmentNewsFeeddetails.newInstance();
         }
 
         @Override

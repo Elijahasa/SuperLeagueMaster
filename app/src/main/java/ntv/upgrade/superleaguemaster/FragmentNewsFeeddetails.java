@@ -5,19 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TooManyListenersException;
-
-import ntv.upgrade.superleaguemaster.Adapters.NewsFeedAdapter;
-import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
 
 /**
  * A fragment representing a list of Items.
@@ -25,7 +17,7 @@ import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FragmentNewsFeedDetails extends Fragment implements CollapsingToolbarLayout.OnClickListener {
+public class FragmentNewsFeeddetails extends Fragment implements CollapsingToolbarLayout.OnClickListener {
     private DrawerLayout drawer;
     // TODO: Customize parameter argument names
     private static final String NEWS_ID = "news-id";
@@ -38,13 +30,13 @@ public class FragmentNewsFeedDetails extends Fragment implements CollapsingToolb
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public FragmentNewsFeedDetails() {
+    public FragmentNewsFeeddetails() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static FragmentNewsFeedDetails newInstance() {
-        FragmentNewsFeedDetails fragment = new FragmentNewsFeedDetails();
+    public static FragmentNewsFeeddetails newInstance() {
+        FragmentNewsFeeddetails fragment = new FragmentNewsFeeddetails();
         // Bundle args = new Bundle();
         // args.putInt(NEWS_ID, newId);
         // fragment.setArguments(args);

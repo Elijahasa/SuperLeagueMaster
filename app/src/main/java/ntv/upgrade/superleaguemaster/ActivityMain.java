@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -43,7 +44,7 @@ import ntv.upgrade.superleaguemaster.Utils.JsonReader;
 import ntv.upgrade.superleaguemaster.Utils.JsonWriter;
 import ntv.upgrade.superleaguemaster.Utils.Permissions;
 import ntv.upgrade.superleaguemaster.service.UtilityService;
-
+import com.facebook.FacebookSdk;
 
 public class ActivityMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -169,6 +170,9 @@ public class ActivityMain extends AppCompatActivity
                 // ...
             }
         }));
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
 
     }

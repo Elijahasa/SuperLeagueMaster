@@ -29,20 +29,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import is.arontibo.library.ElasticDownloadView;
-import is.arontibo.library.ProgressDownloadView;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
-import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.Utils.Tools;
 import ntv.upgrade.superleaguemaster.Utils.Utils;
 import ntv.upgrade.superleaguemaster.service.UtilityService;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class ActivityTour extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        FragmentAttractionsList.OnFragmentInteractionListener, FragmentMap.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        FragmentAttractionsList.OnFragmentInteractionListener, FragmentMap.OnFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
 
     // for log porpuses

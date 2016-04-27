@@ -1,6 +1,5 @@
 package ntv.upgrade.superleaguemaster;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ntv.upgrade.superleaguemaster.Adapters.NewsFeedAdapter;
-import ntv.upgrade.superleaguemaster.Adapters.PlayersAdapter;
 import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Decorators.DividerItemDecoration;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;

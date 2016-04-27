@@ -16,7 +16,7 @@
             android:title="Clubes" />
 
         <item
-            android:id="@+id/nav_history"
+            android:id="@+id/nav_open_league"
             android:icon="@drawable/ic_open_game_icon"
             android:title="Liga Abierta" />
         <item
