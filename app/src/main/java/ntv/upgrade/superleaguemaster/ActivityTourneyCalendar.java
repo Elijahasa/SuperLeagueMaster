@@ -77,7 +77,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     @Override
     protected void onResume() {
         super.onResume();
-        mLastSpinnerSelectedItem = 0;
+        mLastSpinnerSelectedItem = 10;
     }
 
     @Override
