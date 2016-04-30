@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private  TourneyCalendarPagerAdapter mTourneyCalendarPagerAdapter;/*
+    private TourneyCalendarPagerAdapter mTourneyCalendarPagerAdapter;/*
     private NewsPagerAdapter mNewsFeedPageAdapater;
     private LeadersPagerAdapter mLeaderPageAdapter;*/
     private DrawerLayout drawer;
@@ -56,6 +58,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private Spinner spinner;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     private int mLastSpinnerSelectedItem = 10;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -70,7 +73,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         return mLastSpinnerSelectedItem;
     }
 
-    public void setmLastSpinnerSelectedItem(int mLastSpinnerSelectedItem) {
+    public void setLastSpinnerSelectedItem(int mLastSpinnerSelectedItem) {
         this.mLastSpinnerSelectedItem = mLastSpinnerSelectedItem;
     }
 
@@ -85,6 +88,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourney_matches);
 
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         ActivityTourneyCalendar.thisActivity = this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -137,71 +141,145 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             public void onPageSelected(int position) {/*  actionBar.setSelectedNavigationItem(position);*/}
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                              @Override
+                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {                // onSpinnerSelectionChangeScreen(position);
+
+                                                  onSpinnerSelecterWorker(position);
+
+                                              }
+
+                                              @Override
+                                              public void onNothingSelected(AdapterView<?> parent) {
+                                              }
+                                          }
+
+        );
+
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {                // onSpinnerSelectionChangeScreen(position);
-
-                onSpinnerSelecterWorker(position);
-
-                }
-
-                @Override
-                public void onNothingSelected (AdapterView < ? > parent){
+            public void onPanelSlide(View panel, float slideOffset) {
+                if (slideOffset == 0.0) {
+                    slidingUpPanelLayout.setAnchorPoint(0.0f);
+                    slidingUpPanelLayout.setPanelHeight(0);
+                    //       findViewById(R.id.dragView).setVisibility(View.GONE);
                 }
             }
 
-            );
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                    slidingUpPanelLayout.setAnchorPoint(0.0f);
+                    slidingUpPanelLayout.setPanelHeight(0);
+
+                    Log.i("ActivityClubs", "onPanelStateChanged " + newState.name());
+
+                }
+                if (previousState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                    slidingUpPanelLayout.setAnchorPoint(0.0f);
+
+                }
+                Log.i("ActivityClubs", "onPanelStateChanged " + newState);
+
+            }
+        });
+        slidingUpPanelLayout.setFadeOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
 
 
+/*
+        TextView vPlayerName = (TextView) findViewById(R.id.leaders_player_name);;
+        CircleImageView vPlayerAvatar ;
+        TextView vPlayerNumber;
+        TextView vLeaderPosition;
+        TextView vPlayerClub;
+        int Id;
+
+            vPlayerName = (TextView) findViewById(R.id.leaders_player_name);
+            vPlayerAvatar = (CircleImageView) findViewById(R.id.leaders_player_avatar);
+            vPlayerNumber = (TextView) findViewById(R.id.leaders_player_number);
+            vLeaderPosition = (TextView) findViewById(R.id.leaders_position_text);
+            vPlayerClub = (TextView) findViewById(R.id.leaders_player_club);
+*/
+
+/*
+
+        if (slidingUpPanelLayout != null) {
+            if (slidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);}
+*/
+
+
+    }
+
+    public void onClickedFragmentLeaders() {
+      /*  int slideablePanelHeight = 200;
+        int animationDuration = 200;
+        SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(slidingUpPanelLayout, slideablePanelHeight, animationDuration);
+*/
+
+        findViewById(R.id.dragView).setVisibility(View.VISIBLE);
+        slidingUpPanelLayout.setAnchorPoint(0.7f);
+
+
+        // slidingUpPanelLayout.startAnimation(animation);
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
+
+    }
+
+    public void onSpinnerSelecterWorker(int position) {
+        if (getmLastSpinnerSelectedItem() != position) {
+
+            mTourneyCalendarPagerAdapter.clearAll();
+            mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
+            switch (position) {
+                case 0:
+                    if (!tabLayout.isShown()) {
+                        tabLayout.setVisibility(View.VISIBLE);
+                    }
+
+                    mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
+                    mTourneyCalendarPagerAdapter.getItem(0);
+                    mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    setLastSpinnerSelectedItem(position);
+                    break;
+                case 1:
+                    if (tabLayout.isShown()) {
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                    mTourneyCalendarPagerAdapter.setPagerCount(1);
+                    mTourneyCalendarPagerAdapter.getItem(0);
+                    mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    setLastSpinnerSelectedItem(position);
+                    break;
+
+                case 2:
+                    if (tabLayout.isShown()) {
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                    mTourneyCalendarPagerAdapter.setPagerCount(1);
+                    mTourneyCalendarPagerAdapter.getItem(0);
+                    mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    setLastSpinnerSelectedItem(position);
+                    break;
+
+                case 3:
+                    if (tabLayout.isShown()) {
+                        tabLayout.setVisibility(View.GONE);
+                    }
+                    mTourneyCalendarPagerAdapter.setPagerCount(1);
+                    mTourneyCalendarPagerAdapter.getItem(0);
+                    mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    setLastSpinnerSelectedItem(position);
+                    break;
+            }
         }
-
-public void onSpinnerSelecterWorker(int position){
-    if (mLastSpinnerSelectedItem != position){
-
-        mTourneyCalendarPagerAdapter.clearAll();
-        mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
-        switch (position) {
-            case 0:
-                if (!tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.VISIBLE);
-                }
-
-                mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
-                mTourneyCalendarPagerAdapter.getItem(0);
-                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
-                setmLastSpinnerSelectedItem(position);
-                break;
-            case 1:
-                if (tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.GONE);
-                }
-                mTourneyCalendarPagerAdapter.setPagerCount(1);
-                mTourneyCalendarPagerAdapter.getItem(0);
-                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
-                setmLastSpinnerSelectedItem(position);
-                break;
-
-            case 2:
-                if (tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.GONE);
-                }
-                mTourneyCalendarPagerAdapter.setPagerCount(1);
-                mTourneyCalendarPagerAdapter.getItem(0);
-                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
-                setmLastSpinnerSelectedItem(position);
-                break;
-
-            case 3:
-                if (tabLayout.isShown()) {
-                    tabLayout.setVisibility(View.GONE);
-                }
-                mTourneyCalendarPagerAdapter.setPagerCount(1);
-                mTourneyCalendarPagerAdapter.getItem(0);
-                mTourneyCalendarPagerAdapter.notifyDataSetChanged();
-                setmLastSpinnerSelectedItem(position);
-                break;
-        }
-}}
-                //catches the extras to set the appropriate display
+    }
+    //catches the extras to set the appropriate display
 
     public int getSelectedSpinnerItem() {
         int selected = 0;
@@ -269,9 +347,13 @@ public void onSpinnerSelecterWorker(int position){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (slidingUpPanelLayout != null &&
+                (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
-            startActivity(getParentActivityIntent());
-           // overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+            super.onBackPressed();
+            //startActivity(getParentActivityIntent());
+            // overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
         }
     }
 
@@ -318,26 +400,26 @@ public void onSpinnerSelecterWorker(int position){
 
     @Override
     public void onListFragmentInteraction() {
-
+        onClickedFragmentLeaders();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
- //       Toast.makeText(ActivityTourneyCalendar.this, "onStart tourAct", Toast.LENGTH_SHORT).show();
+        //       Toast.makeText(ActivityTourneyCalendar.this, "onStart tourAct", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    //    Toast.makeText(ActivityTourneyCalendar.this, "onDestroy tourAct", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(ActivityTourneyCalendar.this, "onDestroy tourAct", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-     //   Toast.makeText(ActivityTourneyCalendar.this, "onRestart tourAct", Toast.LENGTH_SHORT).show();
+        //   Toast.makeText(ActivityTourneyCalendar.this, "onRestart tourAct", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -354,7 +436,7 @@ public void onSpinnerSelecterWorker(int position){
     public class TourneyCalendarPagerAdapter extends FragmentPagerAdapter {
 
         private int currentSpinnerID = 0;
-        private int pagerCount=1;
+        private int pagerCount = 1;
         private Map<String, Fragment> mPageReferenceMap = new HashMap<>();
 
         public TourneyCalendarPagerAdapter(FragmentManager fm) {
@@ -362,14 +444,15 @@ public void onSpinnerSelecterWorker(int position){
         }
 
         public void clearAll() //Clear all pages
-        {if(mPageReferenceMap!=null) {
-            if (mPageReferenceMap.size() > 0) {
-                FragmentManager fm = getSupportFragmentManager();
-                for (int i = 0; i < mPageReferenceMap.size(); i++)
-                    fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
+        {
+            if (mPageReferenceMap != null) {
+                if (mPageReferenceMap.size() > 0) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    for (int i = 0; i < mPageReferenceMap.size(); i++)
+                        fm.beginTransaction().remove(getFragmentForPosition(i)).commit();
+                }
+                mPageReferenceMap.clear();
             }
-            mPageReferenceMap.clear();
-        }
         }
 
         public int getCurrentSpinnerID() {
@@ -401,29 +484,29 @@ public void onSpinnerSelecterWorker(int position){
 
         /**
          * returns the fragment depending on the spinner selection
-         * **/
-        public Fragment fragmentType(int position){
+         **/
+        public Fragment fragmentType(int position) {
             Fragment selectedFragmentType = null;
             String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
             int typeID = getCurrentSpinnerID();
-            switch (typeID){
+            switch (typeID) {
                 case 0:
-                    selectedFragmentType =  FragmentMatches.newInstance(position + 1);
+                    selectedFragmentType = FragmentMatches.newInstance(position + 1);
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
                 case 1:
-                    selectedFragmentType =  FragmentNewsFeed.newInstance();
+                    selectedFragmentType = FragmentNewsFeed.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
                 case 2:
-                    selectedFragmentType =  FragmentLeaders.newInstance();
+                    selectedFragmentType = FragmentLeaders.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
                 case 3:
-                    selectedFragmentType =  FragmentTourneyStats.newInstance();
+                    selectedFragmentType = FragmentTourneyStats.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
             }

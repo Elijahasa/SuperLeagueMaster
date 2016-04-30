@@ -103,7 +103,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -128,6 +128,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
                 if (slideOffset == 0.0) {
+                    slidingUpPanelLayout.setAnchorPoint(0.0f);
                     slidingUpPanelLayout.setPanelHeight(0);
              //       findViewById(R.id.dragView).setVisibility(View.GONE);
                 }
@@ -135,10 +136,17 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-            /*    if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                    findViewById(R.id.dragView).setVisibility(View.GONE);
-                }*/
+              if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                  slidingUpPanelLayout.setAnchorPoint(0.0f);
+                  slidingUpPanelLayout.setPanelHeight(0);
 
+                  Log.i("ActivityClubs", "onPanelStateChanged " + newState.name());
+
+                }
+                if(previousState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    slidingUpPanelLayout.setAnchorPoint(0.0f);
+
+                }
                 Log.i("ActivityClubs", "onPanelStateChanged " + newState);
 
             }
@@ -181,8 +189,10 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         int animationDuration = 200;
         SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(slidingUpPanelLayout, slideablePanelHeight, animationDuration);
 */
-        slidingUpPanelLayout.setAnchorPoint(0.7f);
+
         findViewById(R.id.dragView).setVisibility(View.VISIBLE);
+        slidingUpPanelLayout.setAnchorPoint(0.7f);
+
 
         // slidingUpPanelLayout.startAnimation(animation);
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);

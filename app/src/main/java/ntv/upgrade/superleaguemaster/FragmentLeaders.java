@@ -91,6 +91,20 @@ public class FragmentLeaders extends Fragment {
         recyclerView.setAdapter(mLeadersAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(getContext(), recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // mPlayerAdapter.getPlayerID(position);
+                mListener.onListFragmentInteraction();
+
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                // ...
+            }
+        }));
         return view;
     }
 
