@@ -57,9 +57,9 @@ public class FragmentMatches extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(mMatchAdapter);
+        recyclerView.setAdapter(mMatchAdapter);/*
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());*/
 
         return rootView;
     }

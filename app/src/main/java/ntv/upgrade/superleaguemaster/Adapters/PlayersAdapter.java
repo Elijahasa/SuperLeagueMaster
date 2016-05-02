@@ -49,7 +49,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
     public TeamHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.player_recycleview_row, parent, false);
+                .inflate(R.layout.row_player, parent, false);
         // set the view's size, margins, paddings and app_bar_teams parameters
 
         return new TeamHolder(v);

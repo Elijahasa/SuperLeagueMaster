@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import ntv.upgrade.superleaguemaster.R;
 import ntv.upgrade.superleaguemaster.Schedule.Team;
 
@@ -40,7 +39,7 @@ public class TourneyStatsAdapter extends RecyclerView.Adapter<TourneyStatsAdapte
     public TeamStatsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.stats_row, parent, false);
+                .inflate(R.layout.row_stats, parent, false);
         // set the view's size, margins, paddings and app_bar_teams parameters
         return new TeamStatsHolder(v);
     }

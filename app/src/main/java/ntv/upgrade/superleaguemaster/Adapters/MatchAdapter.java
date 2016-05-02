@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
-
-import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.AppConstants.Constants;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.R;
@@ -37,12 +34,6 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ScheduleHold
 
     }
 
-private List<ScheduleHolder> MatchItems;
-
-public MatchAdapter(List<ScheduleHolder> MatchItems){
-        this.MatchItems = MatchItems;
-        }
-
 @Override
 public int getItemCount() {
     return (this.mWeeklySchedule.getmWeeklyMatch().size());
@@ -52,7 +43,7 @@ public int getItemCount() {
 public ScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.match_recycleview_row, parent, false);
+        .inflate(R.layout.row_match, parent, false);
         // set the view's size, margins, paddings and app_bar_teams parameters
 
         return new ScheduleHolder(v);
@@ -63,7 +54,7 @@ public void onBindViewHolder(ScheduleHolder holder, int position) {
         // - get element from your dataset at this vPlayerPosition
         // - replace the contents of the view with that element
 final int pos = position;
-    holder.teamName.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTime());
+    holder.day.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTime());
 
     //     holder.team2.setText( mTeam.getmWeeklyMatch().get(vPlayerPosition).getTeamName(2));
     holder.teamLogo1.setImageResource(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamImage(1));
@@ -100,7 +91,7 @@ final int pos = position;
         }
 
     });
-    holder.time.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getDate());
+    holder.day.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getDate());
 
     holder.stadium.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getStadium());
 
@@ -110,22 +101,22 @@ final int pos = position;
 
 
     public static class ScheduleHolder extends RecyclerView.ViewHolder{
-        TextView teamName;
+        TextView time;
         TextView team2;
         ImageView teamLogo1;
         ImageView teamLogo2;
-        TextView time;
+        TextView day;
         TextView stadium;
 
     public ScheduleHolder(View v){
         super(v);
 
 
-        teamName = (TextView) v.findViewById(R.id.time1);
+        time = (TextView) v.findViewById(R.id.time);
        // team2 = (TextView) v.findViewById(R.id.team_2_id);
         teamLogo1= (ImageView) v.findViewById(R.id.image_team1);
         teamLogo2= (ImageView) v.findViewById(R.id.image_team2);
-        time = (TextView) v.findViewById(R.id.time);
+        day = (TextView) v.findViewById(R.id.day);
         stadium = (TextView) v.findViewById(R.id.stadium);
 
     }

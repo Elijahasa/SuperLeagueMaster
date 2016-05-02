@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class LeadersAdapter extends RecyclerView.Adapter<LeadersAdapter.TeamHold
     public TeamHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.leaders_recycleview_row, parent, false);
+                .inflate(R.layout.row_leaders, parent, false);
         // set the view's size, margins, paddings and app_bar_teams parameters
         return new TeamHolder(v);
     }

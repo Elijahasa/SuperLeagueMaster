@@ -31,7 +31,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.NewsFe
     public NewsFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_newsfeed, parent, false);
+                .inflate(R.layout.row_newsfeed, parent, false);
         // set the view's size, margins, paddings and app_bar_teams parameters
 
         return new NewsFeedViewHolder(v);

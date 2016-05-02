@@ -159,7 +159,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         });
 
 
-/*
+/*      TODO: bind the layout and methods to populate accordingly
         TextView vPlayerName = (TextView) findViewById(R.id.leaders_player_name);;
         CircleImageView vPlayerAvatar ;
         TextView vPlayerNumber;
@@ -184,20 +184,14 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     }
 
 
-    public void onClickedFragmentPlayer() {
+    private void onClickedFragmentPlayer() {
       /*  int slideablePanelHeight = 200;
         int animationDuration = 200;
         SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(slidingUpPanelLayout, slideablePanelHeight, animationDuration);
-*/
-
-        findViewById(R.id.dragView).setVisibility(View.VISIBLE);
+*/        findViewById(R.id.dragView).setVisibility(View.VISIBLE);
         slidingUpPanelLayout.setAnchorPoint(0.7f);
-
-
         // slidingUpPanelLayout.startAnimation(animation);
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-
-
     }
 
     public class SlidingUpPanelResizeAnimation extends Animation {

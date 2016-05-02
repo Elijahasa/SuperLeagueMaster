@@ -21,7 +21,6 @@ import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -210,7 +209,7 @@ public class FragmentAttractionsList extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            View view = inflater.inflate(R.layout.list_item_attraction, parent, false);
+            View view = inflater.inflate(R.layout.row_attraction, parent, false);
             return new ViewHolder(view, this);
         }
 

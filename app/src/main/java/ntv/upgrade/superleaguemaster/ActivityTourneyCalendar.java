@@ -190,7 +190,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         });
 
 
-/*
+/* TODO: bind the layout and methods to populate accordingly
         TextView vPlayerName = (TextView) findViewById(R.id.leaders_player_name);;
         CircleImageView vPlayerAvatar ;
         TextView vPlayerNumber;
@@ -215,20 +215,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
     }
 
-    public void onClickedFragmentLeaders() {
-      /*  int slideablePanelHeight = 200;
-        int animationDuration = 200;
-        SlidingUpPanelResizeAnimation animation = new SlidingUpPanelResizeAnimation(slidingUpPanelLayout, slideablePanelHeight, animationDuration);
-*/
-
+    private void onClickedFragmentLeaders() {
         findViewById(R.id.dragView).setVisibility(View.VISIBLE);
         slidingUpPanelLayout.setAnchorPoint(0.7f);
-
-
-        // slidingUpPanelLayout.startAnimation(animation);
         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-
-
     }
 
     public void onSpinnerSelecterWorker(int position) {
@@ -384,11 +374,8 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id != Constants.TOURNAMENT_ACTIVITY) {
-
             Intent intent = DrawerSelector.onItemSelected(this, id);
-
             if (intent != null) {
                 startActivity(intent);
             }

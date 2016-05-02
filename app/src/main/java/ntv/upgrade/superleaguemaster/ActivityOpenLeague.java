@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +28,8 @@ public class ActivityOpenLeague extends AppCompatActivity
 
     private DrawerLayout drawer;
     private Activity thisActivity;
-    List<OpenLeagueItem> mOpenEventsList = new ArrayList<>();
+    List<OpenLeagueItem> mOpenWeeklyEventsList = new ArrayList<>();
+    List<OpenLeagueItem> mOpenRecurrentEventsList = new ArrayList<>();
 
 
     @Override
@@ -37,7 +37,7 @@ public class ActivityOpenLeague extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.thisActivity=this;
         createDummyEventList();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_open_league);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,15 +54,28 @@ public class ActivityOpenLeague extends AppCompatActivity
         //dynamically adds the tourneys to follow
         createDynamicTournamentMenu(navigationView);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_newsfeed_cardList);
-        recyclerView.setHasFixedSize(true);
+        RecyclerView recyclerViewWeekly = (RecyclerView) findViewById(R.id.open_league_weekly_list);
+        RecyclerView recyclerViewRecurrent = (RecyclerView) findViewById(R.id.open_league_recurrent_list);
+        recyclerViewWeekly.setHasFixedSize(true);
+        recyclerViewRecurrent.setHasFixedSize(true);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        LinearLayoutManager linearLayoutManagerWeekly = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManagerRecurrent = new LinearLayoutManager(this);
 
-        OpenLeagueAdapter openLeagueAdapter = new OpenLeagueAdapter(this, mOpenEventsList);
-        recyclerView.setAdapter(openLeagueAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewWeekly.setLayoutManager(linearLayoutManagerWeekly);
+        recyclerViewRecurrent.setLayoutManager(linearLayoutManagerRecurrent);
+
+        OpenLeagueAdapter openLeagueAdapterWeekly = new OpenLeagueAdapter(this, mOpenWeeklyEventsList);
+        recyclerViewWeekly.setAdapter(openLeagueAdapterWeekly);
+
+        OpenLeagueAdapter openLeagueAdapterRecurrent = new OpenLeagueAdapter(this, mOpenRecurrentEventsList);
+        recyclerViewRecurrent.setAdapter(openLeagueAdapterRecurrent);
+
+
+
+
+
+        // recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
        /* recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(this, recyclerView, new RecyclerItemClickLister.OnItemClickListener() {
@@ -85,23 +98,27 @@ public class ActivityOpenLeague extends AppCompatActivity
     }
 
     public void createDummyEventList(){
-        mOpenEventsList = new ArrayList<>();
+        mOpenWeeklyEventsList = new ArrayList<>();
 
         for (int i = 0; i < 10 ; i++) {
-
             OpenLeagueItem myItem = new OpenLeagueItem();
-            if (i%2==0) {
-                myItem.setEventTypeImage(R.drawable.game);
-            }else{
-                myItem.setEventTypeImage(R.drawable.note);
-            }
             myItem.setEventTitle(AppConstant.mTeamArrayList[i][1] + " Contral el que quiera!");
             myItem.setEventDate("Martes %i de Abril - 5:00pm");
             myItem.setEventLocation("La Media Cancha");
             myItem.setEventDescription("Partido Amistoso");
             myItem.setEventPrice("120"+i+".00 $");
 
-            mOpenEventsList.add(myItem);
+            if (i%2==0) {
+                // weekly id = 0
+                myItem.setEvent_id(0);
+                mOpenWeeklyEventsList.add(myItem);
+            }else{
+                //  recurrent id = 1
+                myItem.setEvent_id(1);
+                mOpenRecurrentEventsList.add(myItem);
+            }
+
+
         }
     }
 

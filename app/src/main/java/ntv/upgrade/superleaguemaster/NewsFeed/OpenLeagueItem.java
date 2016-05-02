@@ -9,7 +9,7 @@ public class OpenLeagueItem{
 
     }
 
-    private  int eventTypeImage;
+    private  int eventTypeImage, event_id;
     private String eventTitle, eventDate, eventLocation, eventDescription, eventPrice;
 
     public int getEventTypeImage() {
@@ -58,5 +58,13 @@ public class OpenLeagueItem{
 
     public void setEventPrice(String eventPrice) {
         this.eventPrice = eventPrice;
+    }
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
     }
 }
