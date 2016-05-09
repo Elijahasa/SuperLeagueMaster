@@ -82,14 +82,8 @@
                     android:textColor="@color/colorBlack"
                     android:textStyle="normal"/>
 
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 
