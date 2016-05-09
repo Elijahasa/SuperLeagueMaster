@@ -6,7 +6,7 @@
     android:id="@+id/menu_newsfeed_cardView"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    card_view:cardElevation="8dp"
+    card_view:cardElevation="4dp"
     android:layout_marginTop="8dp"
     android:focusable="true"
     android:clickable="true"
@@ -24,7 +24,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
-        android:textStyle="bold" />
+         />
 
 
     <ImageView

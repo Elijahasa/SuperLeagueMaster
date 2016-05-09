@@ -8,8 +8,8 @@ public class OpenLeagueItem{
     public OpenLeagueItem() {
 
     }
-
-    private  int eventTypeImage, event_id;
+    long event_id;
+    private  int eventTypeImage;
     private String eventTitle, eventDate, eventLocation, eventDescription, eventPrice;
 
     public int getEventTypeImage() {
@@ -23,6 +23,7 @@ public class OpenLeagueItem{
     public String getEventTitle() {
         return eventTitle;
     }
+
 
     public void setEventTitle(String eventTitle) {
         this.eventTitle = eventTitle;
@@ -60,11 +61,11 @@ public class OpenLeagueItem{
         this.eventPrice = eventPrice;
     }
 
-    public int getEvent_id() {
+    public long getEvent_id() {
         return event_id;
     }
 
-    public void setEvent_id(int event_id) {
+    public void setEvent_id(long event_id) {
         this.event_id = event_id;
     }
 }

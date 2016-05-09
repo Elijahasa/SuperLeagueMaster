@@ -92,7 +92,7 @@ public class FragmentNewsFeed extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(newsFeedAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
+       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(ActivityTourneyCalendar.getReference()

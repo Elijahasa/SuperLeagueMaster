@@ -19,8 +19,8 @@ import ntv.upgrade.superleaguemaster.Schedule.Team;
  */
 public class LeadersAdapter extends RecyclerView.Adapter<LeadersAdapter.TeamHolder>{
 
-    List<Team> mTeamList;
-    Context mContext;
+    private List<Team> mTeamList;
+    private Context mContext;
 
 
     public LeadersAdapter(List<Team> list, Context context) {
@@ -51,7 +51,6 @@ public class LeadersAdapter extends RecyclerView.Adapter<LeadersAdapter.TeamHold
         holder.vPlayerName.setText(mTeamList.get(2).getmPlayersList().get(1).getmPlayerName());
         holder.vPlayerNumber.setText(String.valueOf((int) (Math.random() * ((5) + 1))));
         holder.vPlayerAvatar.setImageResource(mTeamList.get(2).getmPlayersList().get(1).getmPlayer_Avatar());
-        holder.vLeaderPosition.setText(String.valueOf(position));
         holder.vPlayerClub.setText(mTeamList.get(position).getmName());
 
         holder.Id = mTeamList.get(position).getmTeamID();
@@ -63,7 +62,6 @@ public class LeadersAdapter extends RecyclerView.Adapter<LeadersAdapter.TeamHold
         TextView vPlayerName;
         CircleImageView vPlayerAvatar;
         TextView vPlayerNumber;
-        TextView vLeaderPosition;
         TextView vPlayerClub;
         int Id;
 
@@ -72,7 +70,6 @@ public class LeadersAdapter extends RecyclerView.Adapter<LeadersAdapter.TeamHold
             vPlayerName = (TextView) v.findViewById(R.id.leaders_player_name);
             vPlayerAvatar = (CircleImageView) v.findViewById(R.id.leaders_player_avatar);
             vPlayerNumber = (TextView) v.findViewById(R.id.leaders_player_number);
-            vLeaderPosition = (TextView) v.findViewById(R.id.leaders_position_text);
             vPlayerClub = (TextView) v.findViewById(R.id.leaders_player_club);
         }
     }

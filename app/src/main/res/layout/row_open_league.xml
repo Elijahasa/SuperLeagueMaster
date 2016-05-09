@@ -6,14 +6,9 @@
     android:id="@+id/history_matches_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    card_view:cardBackgroundColor="@color/cardview_light_background"
-    card_view:cardCornerRadius="10dp"
     card_view:cardElevation="4dp">
 
     <LinearLayout
@@ -22,13 +17,10 @@
         android:orientation="vertical"
         android:layout_margin="4dp">
 
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="62dp"
+            android:layout_marginStart="48dp"
             android:weightSum="7"
             android:orientation="vertical">
 
@@ -40,7 +32,6 @@
                 android:layout_gravity="clip_horizontal"
                 android:text="Martes 16 de Abril - 5:00pm"
                 android:textSize="14sp"
-                android:textColor="@color/colorAccent"
                 android:textStyle="normal"
                 android:layout_weight="1.5"/>
             <TextView
@@ -51,6 +42,7 @@
                 android:layout_gravity="clip_horizontal"
                 android:text="La Media Cancha"
                 android:textSize="14sp"
+                android:textColor="@color/colorAccent"
                 android:textStyle="normal"
                 android:layout_weight="1.5"/>
             <TextView

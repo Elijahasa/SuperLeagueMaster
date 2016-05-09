@@ -8,7 +8,11 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:elevation="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp">
 
     <!--  card_view:cardCornerRadius="10dp"-->
 
@@ -16,29 +20,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         android:orientation="horizontal"
         android:weightSum="10">
 
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        >
-
-
-        <TextView
-            android:id="@+id/leaders_position_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:text="01"
-            android:textSize="18sp"
-            android:textColor="@color/colorAccent" />
-
-        </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/leaders_player_avatar"
@@ -50,7 +34,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:layout_weight="7.5">
 
             <LinearLayout
                 android:layout_width="wrap_content"

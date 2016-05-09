@@ -13,6 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,8 @@ import ntv.upgrade.superleaguemaster.Adapters.OpenLeagueAdapter;
 import ntv.upgrade.superleaguemaster.AppConstants.AppConstant;
 import ntv.upgrade.superleaguemaster.Drawer.DrawerSelector;
 import ntv.upgrade.superleaguemaster.NewsFeed.OpenLeagueItem;
+
+
 
 public class ActivityOpenLeague extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,32 +54,41 @@ public class ActivityOpenLeague extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_open_league);
 
         //dynamically adds the tourneys to follow
         createDynamicTournamentMenu(navigationView);
 
-        RecyclerView recyclerViewWeekly = (RecyclerView) findViewById(R.id.open_league_weekly_list);
-        RecyclerView recyclerViewRecurrent = (RecyclerView) findViewById(R.id.open_league_recurrent_list);
+        RecyclerView recyclerViewWeekly = (RecyclerView) findViewById(R.id.open_league_sticky_recycleview);
+        assert recyclerViewWeekly != null;
         recyclerViewWeekly.setHasFixedSize(true);
-        recyclerViewRecurrent.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManagerWeekly = new LinearLayoutManager(this);
-        LinearLayoutManager linearLayoutManagerRecurrent = new LinearLayoutManager(this);
-
         recyclerViewWeekly.setLayoutManager(linearLayoutManagerWeekly);
-        recyclerViewRecurrent.setLayoutManager(linearLayoutManagerRecurrent);
 
-        OpenLeagueAdapter openLeagueAdapterWeekly = new OpenLeagueAdapter(this, mOpenWeeklyEventsList);
+        OpenLeagueAdapter openLeagueAdapterWeekly = new OpenLeagueAdapter(this);
+        openLeagueAdapterWeekly.addAll(mOpenWeeklyEventsList);
         recyclerViewWeekly.setAdapter(openLeagueAdapterWeekly);
 
-        OpenLeagueAdapter openLeagueAdapterRecurrent = new OpenLeagueAdapter(this, mOpenRecurrentEventsList);
-        recyclerViewRecurrent.setAdapter(openLeagueAdapterRecurrent);
+        // Add the sticky headers decoration
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(openLeagueAdapterWeekly);
+        recyclerViewWeekly.addItemDecoration(headersDecor);
 
+        // Add touch listeners
+        StickyRecyclerHeadersTouchListener touchListener =
+                new StickyRecyclerHeadersTouchListener(recyclerViewWeekly, headersDecor);
+        touchListener.setOnHeaderClickListener(
+                new StickyRecyclerHeadersTouchListener.OnHeaderClickListener() {
+                    @Override
+                    public void onHeaderClick(View header, int position, long headerId) {
+//                         Toast.makeText(MainActivity.this, "Header position: " + position + ", id: " + headerId + " probando: " + header.getId(),
+//                                 Toast.LENGTH_SHORT).show();
 
-
-
+                    }
+                });
+        recyclerViewWeekly.addOnItemTouchListener(touchListener);
 
         // recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -110,14 +125,16 @@ public class ActivityOpenLeague extends AppCompatActivity
 
             if (i%2==0) {
                 // weekly id = 0
-                myItem.setEvent_id(0);
-                mOpenWeeklyEventsList.add(myItem);
+                myItem.setEvent_id(01L);
+                myItem.setEventTypeImage(R.drawable.open_league_weekly_icon);
+
             }else{
                 //  recurrent id = 1
-                myItem.setEvent_id(1);
-                mOpenRecurrentEventsList.add(myItem);
-            }
+                myItem.setEvent_id(02L);
+                myItem.setEventTypeImage(R.drawable.open_league_recurrent_icon);
 
+            }
+            mOpenWeeklyEventsList.add(myItem);
 
         }
     }
@@ -154,6 +171,7 @@ public class ActivityOpenLeague extends AppCompatActivity
                                 }
                             }
                             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                            assert drawer != null;
                             drawer.closeDrawer(GravityCompat.START);
 
                             return false;
@@ -167,6 +185,7 @@ public class ActivityOpenLeague extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -216,8 +235,13 @@ public class ActivityOpenLeague extends AppCompatActivity
             }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
+
+
+
+
 }

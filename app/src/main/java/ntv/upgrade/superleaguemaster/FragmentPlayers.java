@@ -75,7 +75,7 @@ public class FragmentPlayers extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         recyclerView.setAdapter(mPlayerAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
+       // recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickLister(getContext(), recyclerView, new RecyclerItemClickLister.OnItemClickListener() {

@@ -17,8 +17,6 @@ public class FragmentTeamInfo extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    MatchAdapter mMatchAdapter;
-
     public static FragmentTeamInfo newInstance(int sectionNumber) {
         FragmentTeamInfo fragment = new FragmentTeamInfo();
         Bundle args = new Bundle();
