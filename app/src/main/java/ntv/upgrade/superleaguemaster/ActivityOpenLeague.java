@@ -30,7 +30,7 @@ import ntv.upgrade.superleaguemaster.NewsFeed.OpenLeagueItem;
 
 public class ActivityOpenLeague extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+//initial commit for LDF
 
     private DrawerLayout drawer;
     private Activity thisActivity;
