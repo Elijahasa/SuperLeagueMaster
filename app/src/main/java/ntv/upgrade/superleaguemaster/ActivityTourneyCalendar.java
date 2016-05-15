@@ -134,8 +134,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
 
         navigationView.setCheckedItem(Constants.TOURNAMENT_ACTIVITY);
         //dynamically adds the tourneys to follow
-        createDynamicTournamentMenu(navigationView);
-
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {/*  actionBar.setSelectedNavigationItem(position);*/}
@@ -257,15 +255,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                     setLastSpinnerSelectedItem(position);
                     break;
 
-                case 3:
-                    if (tabLayout.isShown()) {
-                        tabLayout.setVisibility(View.GONE);
-                    }
-                    mTourneyCalendarPagerAdapter.setPagerCount(1);
-                    mTourneyCalendarPagerAdapter.getItem(0);
-                    mTourneyCalendarPagerAdapter.notifyDataSetChanged();
-                    setLastSpinnerSelectedItem(position);
-                    break;
             }
         }
     }
@@ -287,45 +276,10 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     /***
      * add the all the tournament available to follow from the DB
      ***/
-    public void createDynamicTournamentMenu(NavigationView navigationView) {
-        final Menu menu = navigationView.getMenu();
-        final NavigationView nav = navigationView;
-        //adds all the available tourneys to the navigation Torneos Group
-        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
-            final int torneyID = tourney;
-            menu.findItem(R.id.nav_dynamic_tourney)
-                    .getSubMenu()
-                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
-                    .setIcon(R.drawable.ic_soccer_ball)
-                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            item.setChecked(true);
-                            int id = item.getItemId();
-
-                            if (id != torneyID) {
-                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
-
-                                if (intent != null) {
-
-                                    startActivity(intent);
-                                    finish();
-                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                                }
-                            }
-                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                            drawer.closeDrawer(GravityCompat.START);
-
-                            return false;
-                        }
-                    });
-        }
-    }
 
     public List<String> setTourneySpinner() {
         List<String> myLeagueDiv = new ArrayList<>(4);
         myLeagueDiv.add("Partidos");
-        myLeagueDiv.add("Noticias");
         myLeagueDiv.add("Lideres");
         myLeagueDiv.add("Tabla de Posiciones");
 
@@ -483,16 +437,11 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                     break;
 
                 case 1:
-                    selectedFragmentType = FragmentNewsFeed.newInstance();
-                    mPageReferenceMap.put(tag, selectedFragmentType);
-                    break;
-
-                case 2:
                     selectedFragmentType = FragmentLeaders.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
-                case 3:
+                case 2:
                     selectedFragmentType = FragmentTourneyStats.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;

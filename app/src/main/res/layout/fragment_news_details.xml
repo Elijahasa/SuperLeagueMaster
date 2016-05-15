@@ -79,6 +79,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/newsfeeddetails_news_description"
                     android:text="El incansable garrinchero podría volver a los campos de juego el próximo mes para disputar los torneos de futbol 11 y futbol 5 en los que participa el Club.
 
 El juvenil es símbolo de combatividad y posee el respeto de compañeros y mayores.

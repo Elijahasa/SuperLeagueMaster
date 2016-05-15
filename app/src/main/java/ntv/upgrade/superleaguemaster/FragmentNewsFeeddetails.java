@@ -9,6 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ntv.upgrade.superleaguemaster.NewsFeed.NewsFeedItem;
 
 /**
  * A fragment representing a list of Items.
@@ -17,6 +24,8 @@ import android.view.ViewGroup;
  * interface.
  */
 public class FragmentNewsFeeddetails extends Fragment {
+    private static NewsFeedItem  myitem;
+    private NewsFeedItem currentItem;
     private DrawerLayout drawer;
     // TODO: Customize parameter argument names
     private static final String NEWS_ID = "news-id";
@@ -24,7 +33,7 @@ public class FragmentNewsFeeddetails extends Fragment {
     private  Toolbar toolbar;
     private static Context mContext;
     private OnListFragmentInteractionListener mListener;
-
+    private List<NewsFeedItem> newsFeedItems = new ArrayList<>();
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -34,11 +43,12 @@ public class FragmentNewsFeeddetails extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static FragmentNewsFeeddetails newInstance() {
+    public static FragmentNewsFeeddetails newInstance(NewsFeedItem newsItem) {
         FragmentNewsFeeddetails fragment = new FragmentNewsFeeddetails();
-        // Bundle args = new Bundle();
-        // args.putInt(NEWS_ID, newId);
-        // fragment.setArguments(args);
+        myitem=newsItem;
+        Bundle args = new Bundle();
+        args.putParcelable("item", myitem);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -47,7 +57,7 @@ public class FragmentNewsFeeddetails extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mNewsID = getArguments().getInt(NEWS_ID);
+            currentItem = getArguments().getParcelable("item");
         }
 
 
@@ -65,6 +75,21 @@ public class FragmentNewsFeeddetails extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        ImageView imageViewCover = (ImageView) view.findViewById(R.id.app_barr_news_details_imageheader);
+        imageViewCover.setImageResource(currentItem.getImage());
+       TextView textViewTitle = (TextView) view.findViewById(R.id.newsfeeddetails_news_title);
+        textViewTitle.setText(currentItem.getTittle());
+        TextView textViewDescription = (TextView) view.findViewById(R.id.newsfeeddetails_news_description);
+        textViewDescription.setText(currentItem.getDescription());
+
+
+   /*     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
 
 
         return view;

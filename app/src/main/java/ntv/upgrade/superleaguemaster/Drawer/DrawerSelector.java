@@ -8,7 +8,6 @@ import ntv.upgrade.superleaguemaster.ActivityClubSelect;
 import ntv.upgrade.superleaguemaster.ActivityClubs;
 import ntv.upgrade.superleaguemaster.ActivityMain;
 import ntv.upgrade.superleaguemaster.ActivityNewsDetails;
-import ntv.upgrade.superleaguemaster.ActivityOpenLeague;
 import ntv.upgrade.superleaguemaster.ActivityTourneyCalendar;
 import ntv.upgrade.superleaguemaster.ActivityTour;
 import ntv.upgrade.superleaguemaster.AppConstants.Constants;
@@ -48,9 +47,9 @@ public class DrawerSelector {
 
                 break;
 
-            case R.id.nav_open_league:
-                //TODO: add history activity
-                intent = new Intent(callingActivity, ActivityOpenLeague.class);
+            case R.id.nav_dynamic_tourney:
+                intent = new Intent(callingActivity, ActivityTourneyCalendar.class);
+
                 break;
           /*  case R.id.nav_settings:
                 intent = new Intent(callingActivity, ActivitySettings.class);

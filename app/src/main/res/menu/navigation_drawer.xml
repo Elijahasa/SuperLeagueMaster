@@ -16,32 +16,18 @@
             android:title="Clubes" />
 
         <item
-            android:id="@+id/nav_open_league"
-            android:icon="@drawable/ic_open_game_icon"
-            android:title="Liga Abierta" />
+            android:id="@+id/nav_dynamic_tourney"
+            android:title="LDF"
+            android:icon="@drawable/ic_tourney_icon"
+            app:actionLayout="@layout/drawer_switch"/>
+
         <item
             android:id="@+id/nav_location"
             android:icon="@drawable/ic_soccer_location_icon"
-            android:title="Locaciones" />
+            android:title="Estadios" />
 
     </group>
 
-
-    <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/nav_dynamic_tourney"
-            android:title="Torneos"
-            android:icon="@drawable/ic_tourney_icon"
-            app:actionLayout="@layout/drawer_switch"
-
-            >
-
-            <menu>
-
-            </menu>
-        </item>
-    </group>
 
     <item android:title="Communicate">
         <menu><!--
@@ -52,7 +38,7 @@
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_upgraden"
-                android:title="About" />
+                android:title="About Up" />
         </menu>
     </item>
 

@@ -49,7 +49,7 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private DrawerLayout drawer;
     private CollapsingToolbarLayout collapsingToolbar;
-    private SlidingUpPanelLayout slidingUpPanelLayout;
+    private static SlidingUpPanelLayout slidingUpPanelLayout;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -88,10 +88,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mToolbar.addView(spinnerContainer, lp);
 
-        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this, selectedTeam);
-        spinnerAdapter.addItems(setLeagueDivisions());
-        Spinner spinner = (Spinner) findViewById(R.id.toolbar_spinner);
-        spinner.setAdapter(spinnerAdapter);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -114,7 +110,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_clubs);
-        createDynamicTournamentMenu(navigationView);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -137,14 +132,14 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
               if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-                  slidingUpPanelLayout.setAnchorPoint(0.0f);
-                  slidingUpPanelLayout.setPanelHeight(0);
+            //      slidingUpPanelLayout.setAnchorPoint(0.0f);
+              //    slidingUpPanelLayout.setPanelHeight(0);
 
                   Log.i("ActivityClubs", "onPanelStateChanged " + newState.name());
 
                 }
                 if(previousState == SlidingUpPanelLayout.PanelState.COLLAPSED){
-                    slidingUpPanelLayout.setAnchorPoint(0.0f);
+                //    slidingUpPanelLayout.setAnchorPoint(0.0f);
 
                 }
                 Log.i("ActivityClubs", "onPanelStateChanged " + newState);
@@ -157,7 +152,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
-
 
 /*      TODO: bind the layout and methods to populate accordingly
         TextView vPlayerName = (TextView) findViewById(R.id.leaders_player_name);;
@@ -217,56 +211,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         }
     }
 
-    public void createDynamicTournamentMenu(NavigationView navigationView) {
-        final Menu menu = navigationView.getMenu();
-        final NavigationView nav = navigationView;
-        //adds all the available tourneys to the navigation Torneos Group
-        //TODO:replace the appconstans for the localDB
-        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
-            final int torneyID = tourney;
-            menu.findItem(R.id.nav_dynamic_tourney)
-                    .getSubMenu()
-                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
-                    .setIcon(R.drawable.ic_soccer_ball)
-                    .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            item.setChecked(true);
-                            int id = item.getItemId();
-
-                            if (id != torneyID) {
-                                nav.setCheckedItem(torneyID);
-
-                                Intent intent = DrawerSelector.onItemSelected(thisActivity, id);
-
-                                if (intent != null) {
-
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                                }
-                            }
-                            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                            drawer.closeDrawer(GravityCompat.START);
-
-                            return false;
-                        }
-                    });
-        }
-    }
-
-
-    public List<String> setLeagueDivisions() {
-        List<String> myLeagueDiv = new ArrayList<>(6);
-        myLeagueDiv.add("Primera");
-        myLeagueDiv.add("Segunda");
-        myLeagueDiv.add("Tercera");
-        myLeagueDiv.add("Social");
-        myLeagueDiv.add("Femenino");
-        myLeagueDiv.add("Juvenil");
-
-        return myLeagueDiv;
-    }
-
     private void bindActivity() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -286,8 +230,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
                 (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
-           /* startActivity(getParentActivityIntent());
-          overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);*/
             super.onBackPressed();
         }
     }

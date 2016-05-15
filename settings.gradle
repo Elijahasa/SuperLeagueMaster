@@ -1,1 +1,1 @@
-include ':app', ':stickylist'
+include ':app'
