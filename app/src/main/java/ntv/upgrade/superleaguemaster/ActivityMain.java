@@ -105,6 +105,8 @@ public class ActivityMain extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -351,6 +353,10 @@ public class ActivityMain extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Intent intent;
+        
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             intent = new Intent(this, ActivitySettings.class);

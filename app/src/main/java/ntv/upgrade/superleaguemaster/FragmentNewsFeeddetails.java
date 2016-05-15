@@ -2,7 +2,6 @@ package ntv.upgrade.superleaguemaster;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,16 +12,16 @@ import android.view.ViewGroup;
 
 /**
  * A fragment representing a list of Items.
- * <p>
+ * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class FragmentNewsFeeddetails extends Fragment implements CollapsingToolbarLayout.OnClickListener {
+public class FragmentNewsFeeddetails extends Fragment {
     private DrawerLayout drawer;
     // TODO: Customize parameter argument names
     private static final String NEWS_ID = "news-id";
     private static int mNewsID;
-    private static Toolbar toolbar;
+    private  Toolbar toolbar;
     private static Context mContext;
     private OnListFragmentInteractionListener mListener;
 
@@ -54,7 +53,7 @@ public class FragmentNewsFeeddetails extends Fragment implements CollapsingToolb
 
     }
 
-    public static Toolbar getToolbar() {
+    public  Toolbar getToolbar() {
         return toolbar;
     }
 
@@ -62,28 +61,11 @@ public class FragmentNewsFeeddetails extends Fragment implements CollapsingToolb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_bar_news_details, container, false);
-
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) view.findViewById(R.id.collapse_toolbar);
-       toolbar = (Toolbar) collapsingToolbar.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-     /*   toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);*/
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
-/*
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        recyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(newsFeedAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());*/
 
         return view;
     }
@@ -106,18 +88,13 @@ public class FragmentNewsFeeddetails extends Fragment implements CollapsingToolb
         mListener = null;
     }
 
-    @Override
-    public void onClick(View v) {
-        getActivity().onBackPressed();
-    }
-
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.

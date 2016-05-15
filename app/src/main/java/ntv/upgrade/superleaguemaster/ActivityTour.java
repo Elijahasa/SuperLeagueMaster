@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -49,7 +48,7 @@ public class ActivityTour extends AppCompatActivity implements
     private SectionsPagerAdapter mSectionsPagerAdapter;
     // The {@link ViewPager} that will host the section contents.
     private ViewPager mViewPager;
-private Activity thisActivity;
+    private Activity thisActivity;
 
 
     /**
@@ -61,7 +60,7 @@ private Activity thisActivity;
         super.onStart();
         mGoogleApiClient.connect();
 
-     //   startLoading(Constants.LOADING_SUCCESS);
+        //   startLoading(Constants.LOADING_SUCCESS);
     }
 
     @Override
@@ -81,7 +80,7 @@ private Activity thisActivity;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tour);
 
-        thisActivity=this;
+        thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -145,64 +144,64 @@ private Activity thisActivity;
         builder.create().show();
     }
 
-   /* public boolean startLoading(int id){
+    /* public boolean startLoading(int id){
 
-        //noinspection SimplifiableIfStatement
-        if (id == Constants.LOADING_SUCCESS) {
+         //noinspection SimplifiableIfStatement
+         if (id == Constants.LOADING_SUCCESS) {
 
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    mElasticDownloadView.startIntro();
-                }
-            });
+             new Handler().post(new Runnable() {
+                 @Override
+                 public void run() {
+                     mElasticDownloadView.startIntro();
+                 }
+             });
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mElasticDownloadView.success();
-                }
-            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     mElasticDownloadView.success();
+                 }
+             }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
-            return true;
-        } else if (id == Constants.LOADING_FAILURE) {
+             return true;
+         } else if (id == Constants.LOADING_FAILURE) {
 
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    mElasticDownloadView.startIntro();
-                }
-            });
+             new Handler().post(new Runnable() {
+                 @Override
+                 public void run() {
+                     mElasticDownloadView.startIntro();
+                 }
+             });
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mElasticDownloadView.setProgress(45);
-                }
-            }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     mElasticDownloadView.setProgress(45);
+                 }
+             }, 2 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mElasticDownloadView.fail();
-                }
-            }, 3 * ProgressDownloadView.ANIMATION_DURATION_BASE);
+             new Handler().postDelayed(new Runnable() {
+                 @Override
+                 public void run() {
+                     mElasticDownloadView.fail();
+                 }
+             }, 3 * ProgressDownloadView.ANIMATION_DURATION_BASE);
 
-            return true;
-        }
+             return true;
+         }
 
-        return false;
-    }
-*/
+         return false;
+     }
+ */
     public void createDynamicTournamentMenu(NavigationView navigationView) {
         final Menu menu = navigationView.getMenu();
         final NavigationView nav = navigationView;
         //adds all the available tourneys to the navigation Torneos Group
-        for (int tourney = 0; tourney  < AppConstant.availableTourneys.size() ; tourney ++ ){
-            final int torneyID = tourney ;
+        for (int tourney = 0; tourney < AppConstant.availableTourneys.size(); tourney++) {
+            final int torneyID = tourney;
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
-                    .add(Menu.NONE, torneyID  , Menu.NONE, AppConstant.availableTourneys.get(torneyID))
+                    .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
                     .setIcon(R.drawable.ic_soccer_ball)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
@@ -230,6 +229,7 @@ private Activity thisActivity;
                     });
         }
     }
+
     /**
      * Navigates to Google play to download google maps
      */
@@ -270,11 +270,6 @@ private Activity thisActivity;
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
 
     /**
      * Builds Google Api Client to {@link #mGoogleApiClient).
@@ -332,14 +327,14 @@ private Activity thisActivity;
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id != R.id.nav_location) {
+        if (id != R.id.nav_location) {
 
             Intent intent = DrawerSelector.onItemSelected(this, id);
 
             if (intent != null) {
 
                 startActivity(intent);
-  //              overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //              overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -355,9 +350,9 @@ private Activity thisActivity;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            startActivity(getParentActivityIntent());
-         //   overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
-         //   finish();
+            super.onBackPressed();
+            //   overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
+            //   finish();
         }
     }
 
