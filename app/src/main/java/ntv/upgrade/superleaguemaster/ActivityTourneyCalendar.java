@@ -91,31 +91,23 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         ActivityTourneyCalendar.thisActivity = this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        if (toolbar != null) {
+            toolbar.setTitle("Partidos");
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
-                toolbar, false);
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        toolbar.addView(spinnerContainer, lp);
-
-        TeamsToolBarSpinnerAdapter spinnerAdapter = new TeamsToolBarSpinnerAdapter(this);
-        spinnerAdapter.addItems(setTourneySpinner());
-
-        spinner = (Spinner) findViewById(R.id.toolbar_spinner);
-        spinner.setAdapter(spinnerAdapter);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         // tabLayout.setupWithViewPager(mViewPager);
+        assert tabLayout != null;
         if (!tabLayout.isShown()) {
             tabLayout.setVisibility(View.VISIBLE);
         }
         mTourneyCalendarPagerAdapter = new TourneyCalendarPagerAdapter(getSupportFragmentManager());
-        mTourneyCalendarPagerAdapter.setCurrentSpinnerID(0);
+        //set the default id
+        mTourneyCalendarPagerAdapter.setCurrentSpinnerID(R.id.action_matches);
         mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
 
         // Set up the ViewPager with the sections adapter.
@@ -138,20 +130,6 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             @Override
             public void onPageSelected(int position) {/*  actionBar.setSelectedNavigationItem(position);*/}
         });
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                              @Override
-                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {                // onSpinnerSelectionChangeScreen(position);
-
-                                                  onSpinnerSelecterWorker(position);
-
-                                              }
-
-                                              @Override
-                                              public void onNothingSelected(AdapterView<?> parent) {
-                                              }
-                                          }
-
-        );
 
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -225,7 +203,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             mTourneyCalendarPagerAdapter.clearAll();
             mTourneyCalendarPagerAdapter.setCurrentSpinnerID(position);
             switch (position) {
-                case 0:
+                case R.id.action_matches:
                     if (!tabLayout.isShown()) {
                         tabLayout.setVisibility(View.VISIBLE);
                     }
@@ -233,57 +211,69 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
                     mTourneyCalendarPagerAdapter.setPagerCount(AppConstant.mMatchArrayList.length);
                     mTourneyCalendarPagerAdapter.getItem(0);
                     mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    toolbar.setTitle("Partidos");
+
+                    findViewById(R.id.action_matches).setVisibility(View.GONE);
+                    findViewById(R.id.action_leader_board).setVisibility(View.VISIBLE);
+                    findViewById(R.id.action_leader_player).setVisibility(View.VISIBLE);
+                  /*  if(findViewById(R.id.action_leader_player)!= null &&
+                            findViewById(R.id.action_leader_player).getVisibility() == View.GONE){
+                        findViewById(R.id.action_leader_player).setVisibility(View.VISIBLE);
+                    }
+                    if(findViewById(R.id.action_leader_board)!= null &&
+                            findViewById(R.id.action_leader_board).getSystemUiVisibility()==View.GONE){
+                        findViewById(R.id.action_leader_board).setVisibility(View.VISIBLE);
+                    }*/
                     setLastSpinnerSelectedItem(position);
+
                     break;
-                case 1:
+                case R.id.action_leader_board:
                     if (tabLayout.isShown()) {
                         tabLayout.setVisibility(View.GONE);
                     }
                     mTourneyCalendarPagerAdapter.setPagerCount(1);
                     mTourneyCalendarPagerAdapter.getItem(0);
                     mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    toolbar.setTitle("Lideres");
+
+                    findViewById(R.id.action_leader_board).setVisibility(View.GONE);
+                    findViewById(R.id.action_matches).setVisibility(View.VISIBLE);
+                    findViewById(R.id.action_leader_player).setVisibility(View.VISIBLE);
+               /*     if(findViewById(R.id.action_matches)!= null &&
+                            findViewById(R.id.action_matches).getSystemUiVisibility()==View.GONE){
+                        findViewById(R.id.action_matches).setVisibility(View.VISIBLE);
+                    }
+                    if(findViewById(R.id.action_leader_player)!= null &&
+                            findViewById(R.id.action_leader_player).getVisibility() == View.GONE){
+                        findViewById(R.id.action_leader_player).setVisibility(View.VISIBLE);
+                    }*/
                     setLastSpinnerSelectedItem(position);
                     break;
 
-                case 2:
+                case R.id.action_leader_player:
                     if (tabLayout.isShown()) {
                         tabLayout.setVisibility(View.GONE);
                     }
                     mTourneyCalendarPagerAdapter.setPagerCount(1);
                     mTourneyCalendarPagerAdapter.getItem(0);
                     mTourneyCalendarPagerAdapter.notifyDataSetChanged();
+                    toolbar.setTitle("Tabla de Posiciones");
+                    findViewById(R.id.action_leader_player).setVisibility(View.GONE);
+                    findViewById(R.id.action_matches).setVisibility(View.VISIBLE);
+                    findViewById(R.id.action_leader_board).setVisibility(View.VISIBLE);
+                   /* if(findViewById(R.id.action_matches)!= null &&
+                            findViewById(R.id.action_matches).getSystemUiVisibility()==View.GONE){
+                        findViewById(R.id.action_matches).setVisibility(View.VISIBLE);
+                    }
+                    if(findViewById(R.id.action_leader_board)!= null &&
+                            findViewById(R.id.action_leader_board).getSystemUiVisibility()==View.GONE){
+                        findViewById(R.id.action_leader_board).setVisibility(View.VISIBLE);
+                    }*/
                     setLastSpinnerSelectedItem(position);
                     break;
 
             }
         }
-    }
-    //catches the extras to set the appropriate display
-
-    public int getSelectedSpinnerItem() {
-        int selected = 0;
-        List<String> extras = setTourneySpinner();
-
-        for (int i = 0; i < extras.size(); i++) {
-            if (getIntent().hasExtra(extras.get(i))) {
-                selected = (int) getIntent().getExtras().get(extras.get(i));
-            }
-        }
-        return selected;
-    }
-
-
-    /***
-     * add the all the tournament available to follow from the DB
-     ***/
-
-    public List<String> setTourneySpinner() {
-        List<String> myLeagueDiv = new ArrayList<>(4);
-        myLeagueDiv.add("Partidos");
-        myLeagueDiv.add("Lideres");
-        myLeagueDiv.add("Tabla de Posiciones");
-
-        return myLeagueDiv;
     }
 
     @Override
@@ -306,6 +296,8 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_matches_calendar, menu);
+       // toolbar.getMenu().getItem(R.id.action_matches).setVisible(false);
+       // findViewById(R.id.action_matches).setVisibility(View.GONE);
         return true;
     }
 
@@ -316,10 +308,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+       onSpinnerSelecterWorker(id);
 
         return super.onOptionsItemSelected(item);
     }
@@ -431,17 +420,18 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             String tag = makeFragmentName(mViewPager.getId(), (int) getItemId(position));
             int typeID = getCurrentSpinnerID();
             switch (typeID) {
-                case 0:
+                case R.id.action_matches:
                     selectedFragmentType = FragmentMatches.newInstance(position + 1);
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
-                case 1:
+                case R.id.action_leader_board:
                     selectedFragmentType = FragmentLeaders.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;
 
-                case 2:
+                case R.id.action_leader_player
+                        :
                     selectedFragmentType = FragmentTourneyStats.newInstance();
                     mPageReferenceMap.put(tag, selectedFragmentType);
                     break;

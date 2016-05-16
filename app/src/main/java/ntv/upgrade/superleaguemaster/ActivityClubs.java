@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -82,12 +83,6 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mToolbar.inflateMenu(R.menu.main);
         // startAlphaAnimation(mTitle, 0, View.INVISIBLE);
-        View spinnerContainer = LayoutInflater.from(this).inflate(R.layout.toolbar_spinner,
-                mToolbar, false);
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mToolbar.addView(spinnerContainer, lp);
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -118,7 +113,8 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
             }
         });
 
-
+        ImageView img = (ImageView) findViewById(R.id.club_header_img);
+        img.setImageResource(selectedTeam.getmTeamImage());
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -238,8 +234,8 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_matches_calendar, menu);
-        return true;
+       // getMenuInflater().inflate(R.menu.activity_matches_calendar, menu);
+        return false;
     }
 
     @Override
@@ -250,9 +246,9 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -262,15 +258,13 @@ public class ActivityClubs extends AppCompatActivity implements CollapsingToolba
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id != R.id.nav_clubs) {
-
             Intent intent = DrawerSelector.onItemSelected(this, id);
 
             if (intent != null) {
                 startActivity(intent);
                // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
-        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -62,7 +62,7 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
         recyclerView.setHasFixedSize(true);
 
        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        lLayout = new GridLayoutManager(ActivityClubSelect.this, 3);
+        lLayout = new GridLayoutManager(ActivityClubSelect.this, 2);
         recyclerView.setLayoutManager(lLayout);
 
         clubsAdapter = new ClubsAdapter(clubItems, this);
@@ -120,8 +120,8 @@ public class ActivityClubSelect extends AppCompatActivity implements NavigationV
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+      //  getMenuInflater().inflate(R.menu.main, menu);
+        return false;
     }
 
     @Override

@@ -150,7 +150,8 @@ android:textColor="@color/colorBlack"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context=".FragmentTourneyStats"
-        android:background="?attr/selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@color/colorWhite"
         tools:listitem="@layout/fragment_tourney_stats" />
 
 </LinearLayout>

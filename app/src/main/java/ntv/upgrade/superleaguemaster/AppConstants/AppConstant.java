@@ -47,7 +47,7 @@ public class AppConstant {
                    "8", "Atletico Vega Real", "Estadio Olimpico, La Vega " , "PROFILE"
            },
            {
-                   "9",  "Bauger FC", "Olimpico Felix Sanchez " , "PROFILE"
+                   "9",  "Bauger_FC", "Olimpico Felix Sanchez " , "PROFILE"
            },
            {
                    "10", "Romana FC", "Estadio Francisco Micheli " , "PROFILE"
@@ -295,7 +295,7 @@ public class AppConstant {
 
 
         public static int[] mImageList = {
-                R.mipmap.pantojatransparent_copy ,
+                R.mipmap.pantojatransparent_copy,
                 R.mipmap.oym_transparent_new_copy,
                 R.mipmap.moca_fc_e14239432361701_copy,
                 R.mipmap.cibao_futbol_club_e1423943315771_copy,

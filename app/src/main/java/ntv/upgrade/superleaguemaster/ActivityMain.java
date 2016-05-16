@@ -158,7 +158,7 @@ public class ActivityMain extends AppCompatActivity
             public void onItemClick(View view, int position) {
 
                 Intent intent = DrawerSelector.onItemSelected(thisActivity, Constants.NEWS_FEED_DETAILS_ACTIVITY);
-                //intent.putExtra("CLUBID", position);
+                intent.putExtra("position", position);
 
                 if (intent != null) {
                     startActivity(intent);
@@ -216,7 +216,7 @@ public class ActivityMain extends AppCompatActivity
                     "El equipo Atlántico FC compila 17 tantos productos de cinco victorias, dos empates y tres reveses, dejando atrás al AirEuropa San Cristóbal que queda con 11 puntos, como resultado de dos triunfos, cinco partidos empatados y ha caído en dos oportunidades.\n" +
                     "\n" +
                     "Por segundo año seguido el torneo de fútbol de la LDF Banco Popular tiene el patrocinio del Banco Popular Dominicano y el co patrocinio de Kola Real, la empresa de telecomunicaciones Claro y Kelme, proveedor del balón oficial del torneo."));
-            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia3, "DOBLETE DE PABLO CABRERA DA UN TRIUNFO A ATLÉTICO PANTOJA", "SANTO DOMINGO.- El onceno del club Atlético Pantoja consiguió su quinta victoria a expensa de Bauger FC al superarlo 2-1 en partido correspondiente a la novena jornada de la Liga Dominicana de Fútbol (LDF) Banco Popular, celebrado en el Estadio Olímpico Félix Sánchez\n" +
+            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia3, "DOBLETE DE PABLO CABRERA DA UN TRIUNFO A ATLÉTICO PANTOJA", "SANTO DOMINGO.- El onceno del club Atlético Pantoja consiguió su quinta victoria a expensa de Bauger_FC al superarlo 2-1 en partido correspondiente a la novena jornada de la Liga Dominicana de Fútbol (LDF) Banco Popular, celebrado en el Estadio Olímpico Félix Sánchez\n" +
                     "\n" +
                     "Dos goles de Pablo Cabrera fueron claves para dar la victoria a los actuales campeones del Atlético Pantoja. Ahora Cabrera suma cuatro tantos y se encuentra como segundo mejor goleador de la LDF Banco Popular.\n" +
                     "\n" +
@@ -224,15 +224,15 @@ public class ActivityMain extends AppCompatActivity
                     "\n" +
                     "El segundo tanto se produjo en el minuto 75, cuando en un contraataque Cabrera logró dominar un balón, después de ganar la posición a un defensa y produjo un tiro certero que se fue al fondo de la red.\n" +
                     "\n" +
-                    "Bauger FC reaccionó tarde y pudo descontar en el minuto 94 cuando Darío Francois encontró un balón que había sido rebotado por el arquero y remató a puerta de gol.\n" +
+                    "Bauger_FC reaccionó tarde y pudo descontar en el minuto 94 cuando Darío Francois encontró un balón que había sido rebotado por el arquero y remató a puerta de gol.\n" +
                     "\n" +
-                    "El primer tiempo terminó sin goles pero fue dominado por los vigentes capeones del Atlético Pantoja, equipo que tuvo varias llegadas con ocasiones de peligro para el arco defendido por Bauger FC, pero no llegaron a concretizar.\n" +
+                    "El primer tiempo terminó sin goles pero fue dominado por los vigentes capeones del Atlético Pantoja, equipo que tuvo varias llegadas con ocasiones de peligro para el arco defendido por Bauger_FC, pero no llegaron a concretizar.\n" +
                     "\n" +
-                    "Bauger FC también fue amenaza para la portería defendida por Pantoja. En una ocasión, en un pase vertical fue recibido por un delantero que se desplazó solo y encaró al arquero, pero erró el tiro.\n" +
+                    "Bauger_FC también fue amenaza para la portería defendida por Pantoja. En una ocasión, en un pase vertical fue recibido por un delantero que se desplazó solo y encaró al arquero, pero erró el tiro.\n" +
                     "\n" +
                     "Luego de este partido el Pantoja suma cinco triunfos, dos partidos empatados y ha perdido en dos para totalizar 17 punto y ocupa la segunda posición en la tabla de clasificaciones.\n" +
                     "\n" +
-                    "En tanto que Bauger FC tiene 11 puntos, por sus tres victorias y dos empatados. Ha perdido cuatro partidos.\n" +
+                    "En tanto que Bauger_FC tiene 11 puntos, por sus tres victorias y dos empatados. Ha perdido cuatro partidos.\n" +
                     "\n" +
                     "La LDF Banco Popular tiene el patrocinio del Banco Popular Dominicano y el co patrocinio de Kola Real, la empresa de telecomunicaciones Claro y Kelme, proveedor del balón oficial del torneo."));
             newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia4, "VEGA REAL SUPERA A MOCA FC EN LDF BANCO POPULAR", "LA VEGA.- El club Atlético Vega Real se anotó su cuarta victoria luego de superar 3-2 al representativo de Moca FC, en un emocionante partido escenificado en el Estadio Olímpico de La Vega, correspondiente a la novena fecha del torneo de la Liga Dominicana de Fútbol (LDF) Banco Popular 2016.\n" +
@@ -287,8 +287,8 @@ public class ActivityMain extends AppCompatActivity
                     "Otro encuentro será el que sostendrán los clubes AirEuropa San Cristóbal y Atlántico FC, a las 4:00 de la tarde en el estadio Panamericano de San Cristóbal.\n" +
                     "AirEuropa San Cristóbal tiene once tantos y está en el cuarto lugar, como resultado de dos victorias, cinco partidos empatados y una revés, mientras que Atlántico FC, también está en el cuarto puesto con tres triunfos, dos empates y ha caído en dos ocasiones.\n" +
                     "\n" +
-                    "De su lado, el equipo de Atlético Pantoja, vigentes campeones enfrentan a Bauger FC, en un clásico capitalino para jugar en el estadio Félix Sánchez, a partir de las 4:00 de la tarde.\n" +
-                    "Atlético Pantoja tiene 14 puntos y está en el segundo puesto de las clasificaciones con cuatro victorias, dos partidos empatados y dos reveses, mientras que Bauger FC tiene 11 puntos, con tres triunfos, dos encuentros empatados y tres derrotas.\n" +
+                    "De su lado, el equipo de Atlético Pantoja, vigentes campeones enfrentan a Bauger_FC, en un clásico capitalino para jugar en el estadio Félix Sánchez, a partir de las 4:00 de la tarde.\n" +
+                    "Atlético Pantoja tiene 14 puntos y está en el segundo puesto de las clasificaciones con cuatro victorias, dos partidos empatados y dos reveses, mientras que Bauger_FC tiene 11 puntos, con tres triunfos, dos encuentros empatados y tres derrotas.\n" +
                     "\n" +
                     "La novena jornada se cierra con el partido entre el Atlético Vega Real y Moca FC, que se miden en el estadio olímpico de La Vega, a las 4:00 de la tarde.\n" +
                     "\n" +
@@ -334,8 +334,8 @@ public class ActivityMain extends AppCompatActivity
                     "Otro encuentro será el que sostendrán los clubes AirEuropa San Cristóbal y Atlántico FC, a las 4:00 de la tarde en el Estadio Panamericano de San Cristóbal.\n" +
                     "AirEuropa San Cristóbal tiene once tantos y está en el cuarto lugar, como resultado de dos victorias, cinco partidos empatados y una revés, mientras que Atlántico FC, también está en el cuarto puesto con tres triunfos, dos empates y ha caído en dos ocasiones.\n" +
                     "\n" +
-                    "De su lado, el equipo de Atlético Pantoja, vigentes campeones enfrentan a Bauger FC, en un clásico capitalino para jugar en el Estadio Félix Sánchez, a partir de las 4:00 de la tarde.\n" +
-                    "Atlético Pantoja tiene 14 puntos y está en el segundo puesto de las clasificaciones con cuatro victorias, dos partidos empatados y dos reveses, mientras que Bauger FC tiene 11 puntos, con tres triunfos, dos encuentros empatados y tres derrotas.\n" +
+                    "De su lado, el equipo de Atlético Pantoja, vigentes campeones enfrentan a Bauger_FC, en un clásico capitalino para jugar en el Estadio Félix Sánchez, a partir de las 4:00 de la tarde.\n" +
+                    "Atlético Pantoja tiene 14 puntos y está en el segundo puesto de las clasificaciones con cuatro victorias, dos partidos empatados y dos reveses, mientras que Bauger_FC tiene 11 puntos, con tres triunfos, dos encuentros empatados y tres derrotas.\n" +
                     "\n" +
                     "La novena jornada se cierra con el partido entre el Atlético Vega Real y Moca FC, que se miden en el Estadio Olímpico de La Vega, a las 4:00 de la tarde.\n" +
                     "\n" +

@@ -16,15 +16,16 @@
         app:behavior_overlapTop="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@color/colorPrimary"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_drawer"
-        />
+        app:itemTextColor="@color/colorWhite"
+        app:itemIconTint="@color/colorWhite"/>
 
 </android.support.v4.widget.DrawerLayout>
