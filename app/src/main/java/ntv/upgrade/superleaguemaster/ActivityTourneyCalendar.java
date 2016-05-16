@@ -296,7 +296,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
             menu.findItem(R.id.nav_dynamic_tourney)
                     .getSubMenu()
                     .add(Menu.NONE, torneyID, Menu.NONE, AppConstant.availableTourneys.get(torneyID))
-                    .setIcon(R.drawable.ic_soccer_ball)
+                    .setIcon(R.drawable.ic_goals_icon)
                     .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
