@@ -15,11 +15,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="56dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1.8"
+            android:layout_weight="1.4"
             android:text="Jugador"
-            android:textColor="@color/colorBlack" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/_info_next_game_date"
@@ -28,7 +28,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="0.2"
             android:text="Goles"
-            android:textColor="@color/colorBlack" />
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context=".FragmentLeaders"
-        android:background="?attr/selectableItemBackground"
+        android:background="@color/colorWhite"
         tools:listitem="@layout/fragment_leaders" />
 
 </LinearLayout>

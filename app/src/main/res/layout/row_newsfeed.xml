@@ -8,7 +8,7 @@
     android:layout_height="262dp"
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
-    card_view:cardElevation="8dp"
+    card_view:cardElevation="4dp"
     android:layout_marginTop="8dp"
     android:focusable="true"
     android:clickable="true"
@@ -21,7 +21,7 @@
     android:elevation="8dp"
     android:layout_gravity="bottom"
     android:backgroundTintMode="screen"
-    android:background="@color/cardview_shadow_end_color">
+    android:background="@color/cardview_shadow_start_color">
 
     <TextView
         android:id="@+id/newsfeed_text_news_title"

@@ -68,7 +68,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.TeamHold
         holder.vPlayerNumber.setText(mTeam.getmPlayersList().get(position).getmPlayerNum());
         holder.vPlayerAvatar.setImageResource(mTeam.getmPlayersList().get(position).getmPlayer_Avatar());
         holder.vPlayerPosition.setText(mTeam.getmPlayersList().get(position).getmPosition());
-        holder.vPlayerTeamDivision.setText(mTeam.getmPlayersList().get(position).getmDivition());
+        //holder.vPlayerTeamDivision.setText(mTeam.getmPlayersList().get(position).getmDivition());
         holder.vPlayerAlias.setText(mTeam.getmPlayersList().get(position).getmPlayerAlias());
     }
 
