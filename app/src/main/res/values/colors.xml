@@ -10,7 +10,9 @@
     <color name="colorPrimaryDark">#E64A19</color>
     <color name="colorPrimaryLight">#FF8A65</color>-->
     // Accent Colors
-    <color name="colorAccent">#a80022</color>
+  <!--  <color name="colorAccent">#a80022</color>-->
+    <color name="colorAccent">#ed3a43</color>
+    <color name="colorAccent2">#35c1d3</color>
     <color name="colorAccentLight">#ed3a43</color>
 
 

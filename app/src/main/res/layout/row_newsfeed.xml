@@ -6,26 +6,34 @@
     android:id="@+id/menu_newsfeed_cardView"
     android:layout_width="match_parent"
     android:layout_height="262dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     card_view:cardElevation="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
     android:focusable="true"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     >
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:layout_gravity="bottom"
+    android:backgroundTintMode="screen"
+    android:background="@color/cardview_shadow_end_color">
+
     <TextView
         android:id="@+id/newsfeed_text_news_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:elevation="8dp"
+        android:gravity="center_vertical"
         android:text="Equipos masculinos de Garrincha FC jugarán en City FC y Media Cancha."
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-         />
+        android:textSize="18sp"/>
 
+</LinearLayout>
 
     <ImageView
         android:id="@+id/newsfeed_imageView"

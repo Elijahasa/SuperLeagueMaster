@@ -370,7 +370,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         menuItem_1.setTitle("Tabla de Posiciones");
         menuItem_2 = mMenu.findItem(R.id.action_tourney_menu_2);
         menuItem_2.setIcon(R.drawable.ic_leaders);
-        menuItem_1.setTitle("Lideres");
+        menuItem_2.setTitle("Lideres");
         // toolbar.getMenu().getItem(R.id.action_matches).setVisible(false);
         // findViewById(R.id.action_matches).setVisibility(View.GONE);
         return true;
@@ -486,7 +486,7 @@ public class ActivityTourneyCalendar extends AppCompatActivity implements Naviga
         }
 
         /**
-         * returns the fragment depending on the spinner selection
+         * returns the fragment depending on the toolbar icon selection
          **/
         public Fragment fragmentType(int position) {
             Fragment selectedFragmentType = null;

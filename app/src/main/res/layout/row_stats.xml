@@ -17,10 +17,10 @@
         <ImageView
             android:id="@+id/stats_team_icon"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:layout_weight="0.6"/>
+            android:layout_weight="0.9"/>
 
         <TextView
             android:id="@+id/stats_team_name_text"
@@ -32,7 +32,7 @@
             android:text="Pantoja FC"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/stats_pj_text"
