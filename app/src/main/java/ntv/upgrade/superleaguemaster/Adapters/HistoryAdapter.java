@@ -62,7 +62,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Schedule
         final  int pos = position;/*
         holder.teamName1.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamName(1));
         holder.teamName2.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamName(2));*/
-        holder.day.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getTime());
         holder.teamLogo1.setImageResource(mWeeklySchedule.getmWeeklyMatch().get(position).getTeamImage(1));
         holder.teamLogo1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +97,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Schedule
         });
         holder.scoreTeam1.setText( result + " - " + result );
        // holder.scoreTeam2.setText(String.valueOf(5 + (int) (Math.random() * ((5) + 1))));
-        holder.day.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getDate());
+       // holder.day.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getDate());
 
         holder.stadium.setText(mWeeklySchedule.getmWeeklyMatch().get(position).getStadium());
 
@@ -128,7 +127,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Schedule
             teamLogo1 = (ImageView) v.findViewById(R.id.club_history_image_team1 );
             teamLogo2 = (ImageView) v.findViewById(R.id.club_history_image_team2);
             scoreTeam1 = (TextView) v.findViewById(R.id.club_history_final_score_txt);
-            time = (TextView) v.findViewById(R.id.club_history_time_txt);
             day = (TextView) v.findViewById(R.id.club_history_day_txt);
             stadium = (TextView) v.findViewById(R.id.club_history_stadium_txt);
 
