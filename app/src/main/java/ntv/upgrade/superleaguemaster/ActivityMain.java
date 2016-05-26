@@ -179,7 +179,7 @@ public class ActivityMain extends AppCompatActivity
 
         //dummy data for the global news feed
     public void populateDummyNewsFeedItems(){
-            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia1, "CIBAO GOLEA A DELFINES","SANTIAGO.-El goleador Jonathan Faña sigue en la ruta anotadora y con un doblete encabezó la goleada del Cibao FC  4-1 sobre los Delfines del Este, en partido celebrado anoche en la novena jornada de la Liga Dominicana de Fútbol (LDF-Banco Popular).\n" +
+            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia1, "Cibao golea a Delfines ","SANTIAGO.-El goleador Jonathan Faña sigue en la ruta anotadora y con un doblete encabezó la goleada del Cibao FC  4-1 sobre los Delfines del Este, en partido celebrado anoche en la novena jornada de la Liga Dominicana de Fútbol (LDF-Banco Popular).\n" +
                     "\n" +
                     " El encuentro celebrado en la Pontificia Universidad Católica Madre y Maestra, comenzó, se jugó y terminó bajos fuertes aguaceros.\n" +
                     "\n" +
@@ -201,7 +201,7 @@ public class ActivityMain extends AppCompatActivity
                     "\n" +
                     " El cuarto llegó al minuto 90 y lo produjo Sam Colson, quien recibió un balón escamoteado por Patrick Soko para el 4-1 final." +
                     ""));
-            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia2, "DOS GOLES DE ISEA FERNÁNDEZ DA UNA VICTORIA AL ATLÁNTICO","San Cristóbal .-Dos goles anotados por Wuiswel Anderson Isea Fernández fueron determinantes para que el Atlántico FC sacara un apretado triunfo 3-2 ante AirEuropa San Cristóbal, en el encuentro número 42, correspondiente a la novena jornada de la Liga Dominicana de Fútbol (LDF) Banco Popular 2016.\n" +
+            newsFeedItems.add(new NewsFeedItem(R.mipmap.noticia2, "Dos goles de Isea Fernandez da una victoria al Atlantico","San Cristóbal .-Dos goles anotados por Wuiswel Anderson Isea Fernández fueron determinantes para que el Atlántico FC sacara un apretado triunfo 3-2 ante AirEuropa San Cristóbal, en el encuentro número 42, correspondiente a la novena jornada de la Liga Dominicana de Fútbol (LDF) Banco Popular 2016.\n" +
                     "\n" +
                     "Daniel Cadena Sánchez abrió el marcador para los puertoplateños en el minuto 27, cuando encaró al arquero de AirEuropa San Cristóbal y lo venció anotando el gol.\n" +
                     "\n" +
@@ -468,9 +468,10 @@ public class ActivityMain extends AppCompatActivity
         if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
         }
+
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            intent = new Intent(this, ActivitySettings.class);
+        if (id == R.id.action_favorites) {
+            intent = new Intent(this, ActivityFavoriteNFollow.class);
             startActivity(intent);
             return true;
         }

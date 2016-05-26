@@ -17,17 +17,17 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:elevation="8dp"
     android:layout_gravity="bottom"
     android:backgroundTintMode="screen"
-    android:background="@color/cardview_shadow_start_color">
+    android:background="@drawable/news_feed_gradient">
 
     <TextView
         android:id="@+id/newsfeed_text_news_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
         android:text="Equipos masculinos de Garrincha FC jugarán en City FC y Media Cancha."
         android:textAlignment="center"
         android:textColor="@color/colorWhite"

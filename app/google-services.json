@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "15973019674",
+    "firebase_url": "https://earnest-setup-124922.firebaseio.com",
+    "project_id": "earnest-setup-124922",
+    "storage_bucket": "earnest-setup-124922.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15973019674:android:637ca7ff4c533ead",
+        "android_client_info": {
+          "package_name": "ntv.upgrade.superleaguemaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15973019674-nc008a68h8pl9bhgm2re2t3ab4mihigt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWZBt4MP_5mIp_LIKUJrtkH932j9lPY_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

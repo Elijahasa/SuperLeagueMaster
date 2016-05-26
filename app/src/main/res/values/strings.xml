@@ -99,4 +99,8 @@
     <string name="title_activity_activity_news_details">Noticias LDF</string>
     <string name="title_activity_main2">Main2Activity</string>
 
+    <string name="title_activity_activity_favorite_nfollow">ActivityFavoriteNFollow</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>
